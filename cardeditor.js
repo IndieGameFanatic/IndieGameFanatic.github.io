@@ -38,7 +38,9 @@ const addKeyword = () => {
     updateDetailBoxHeight()
 }
 const updateDetailBoxHeight = () => {
-    const detailBoxHeight = Math.max(keywordHolder.offsetHeight + flavorText.offsetHeight - 20, 438.2 - 20)
+    var flavorTextHeight = flavorText.offsetHeight - 20
+    if (!inputFlavorText.value.trim().length) flavorTextHeight = flavorTextHeight - 20
+    const detailBoxHeight = Math.max(keywordHolder.offsetHeight + flavorTextHeight, 438.2 - 20)
     detailBox.style.height = `${detailBoxHeight + 16.8}px`
 }
 const removeKeyword = () => {
@@ -433,6 +435,7 @@ const downloadImg = () => {
     downloadLink.click()
     document.body.removeChild(downloadLink)
   })
+    cardContainer.style.height = "510px"
 }
 
 const startup = () => {
