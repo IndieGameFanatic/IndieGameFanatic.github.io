@@ -21,9 +21,9 @@ const editDetailFlavor = () => {
     const cardText = document.getElementById(`flavor-text-keyword`)
     inputCardText.addEventListener("input", function (event) {
         cardText.textContent = event.target.value
+        updateDetailBoxHeight()
     })
 }
-
 const addKeyword = () => {
     var finalDescription = keywordDescriptions[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
     keywordDescription.textContent = finalDescription
@@ -35,12 +35,18 @@ const addKeyword = () => {
     newKeyword.style.display = "block"
     var addedKeyword = keywordHolder.appendChild(newKeyword)
     keywordList.push(addedKeyword)
+    updateDetailBoxHeight()
+}
+const updateDetailBoxHeight = () => {
+    const detailBoxHeight = Math.max(keywordHolder.offsetHeight + flavorText.offsetHeight - 20, 438.2 - 20)
+    detailBox.style.height = `${detailBoxHeight + 16.8}px`
 }
 const removeKeyword = () => {
     if (keywordList.length > 0) {
         keywordList[keywordList.length - 1].remove()
         keywordList.pop()
     }
+    updateDetailBoxHeight()
 }
 
 
@@ -403,6 +409,8 @@ const setThumbnail = (src) => {
 
 const downloadImg = () => {
     var cardContainer = document.getElementById("card-container")
+    if (detailCheckbox.checked) cardContainer.style.height = `${Math.max(detailBox.offsetHeight + 36, 510)}px`
+    else cardContainer.style.height = "510px"
   html2canvas(cardContainer, {
       backgroundColor: null,
       scale: 5,
@@ -445,6 +453,7 @@ const cardContainer = document.getElementById("card-container")
 const detailCheckbox = document.getElementById(`detail-toggle`)
 const detailBox = document.getElementById("detail-box")
 const keywordHolder = document.getElementById("keyword-list")
+const flavorText = document.getElementById("flavor-text-keyword")
 const keywordList = []
 
 const inputDamageEnabled = document.getElementById("enable-damage-elements")
