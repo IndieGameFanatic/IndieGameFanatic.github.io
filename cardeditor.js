@@ -403,7 +403,6 @@ const setThumbnail = (src) => {
 
 const downloadImg = () => {
     var cardContainer = document.getElementById("card-container")
-    cardContainer.style.height = "510px"
   html2canvas(cardContainer, {
       backgroundColor: null,
       scale: 5,
