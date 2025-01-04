@@ -411,7 +411,7 @@ const setThumbnail = (src) => {
 
 const downloadImg = () => {
     var cardContainer = document.getElementById("card-container")
-    if (detailCheckbox.checked) cardContainer.style.height = `${Math.max(detailBox.offsetHeight + 36, 510)}px`
+    if (detailCheckbox.checked) cardContainer.style.height = `${Math.max(detailBox.offsetHeight + 40, 510)}px`
     else cardContainer.style.height = "510px"
   html2canvas(cardContainer, {
       backgroundColor: null,
