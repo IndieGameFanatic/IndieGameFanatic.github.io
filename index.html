@@ -24,12 +24,22 @@
 					 onclick="updateCardLayout('bloon')" />
 				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
 					 onclick="updateCardLayout('power')" />
+				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
+					 onclick="updateCardLayout('hero')" style="display: none;"/>
 			</div>
-			<div class="form-element">
-				<label for="input-title-text">Title</label><br>
-				<input type="text" id="input-title-text" name="input-title-text" size="22"><br>
-				<label for="input-class-text">Class</label><br>
-				<input type="text" id="input-class-text" name="input-class-text" size="22">
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label for="input-title-text">Title</label><br>
+					<input type="text" id="input-title-text" name="input-title-text" size="24">
+				</div>
+				<div class="form-element">
+					<label for="input-class-text">Class</label><br>
+					<input type="text" id="input-class-text" name="input-class-text" size="24">
+				</div>
+				<div class="form-element">
+					<label for="input-description-text">Description</label><br>
+					<textarea name="input-description-text" id="input-description-text" cols="51" rows="4"></textarea>
+				</div>
 			</div>
 			<div class="form-element">
 				<label for="input-cost-text">Cost</label><br>
@@ -60,50 +70,46 @@
 					<input type="text" id="input-delay-text" name="input-delay-text" size="3" class="disableable">
 				</div>
 			</div>
-			<div class="form-element">
-				<label for="input-description-text">Description</label><br>
-				<textarea name="input-description-text" id="input-description-text" cols="50" rows="4"></textarea>
-			</div>
 			<div class="multi-form-element">
-			<div class="form-element">
-				<label>Rarity</label><br>
-				<select id="rarity-pin-dropdown">
-					<option value="None">None</option>
-					<option value="Common">Common</option>
-					<option value="Uncommon">Uncommon</option>
-					<option value="Rare">Rare</option>
-					<option value="SuperRare">Super Rare</option>
-					<option value="UltraRare">Ultra Rare</option>
-				</select>
-			</div>
-			<div class="form-element">
-				<label for="class-pin-dropdown">Class Pin</label><br>
-				<select name="class-pin-dropdown" id="class-pin-dropdown">
-					<option value="None">None</option>
-					<option value="Primary">Primary</option>
-					<option value="Military">Military</option>
-					<option value="Magic">Magic</option>
-					<option value="Support">Support</option>
-					<option value="BasicBloon">Basic Bloon</option>
-					<option value="AdvancedBloon">Advanced Bloon</option>
-					<option value="LargeBloon">Large Bloon</option>
-					<option value="BasicPower">Basic Power</option>
-					<option value="AdvancedPower">Advanced Power</option>
-					<option value="ExoticPower">Exotic Power</option>
-				</select>
-			</div>
-			<div class="form-element">
-				<label for="hero-pin-dropdown">Hero Restriction</label><br>
-				<select name="hero-pin-dropdown" id="hero-pin-dropdown">
-					<option value="None">None</option>
-					<option value="Quincy">Quincy</option>
-					<option value="Gwendolin">Gwendolin</option>
-					<option value="Obyn">Obyn</option>
-					<option value="Amelia">Amelia</option>
-					<option value="Adora">Adora</option>
-				</select>
-			</div>
+				<div class="form-element">
+					<label>Rarity</label><br>
+					<select id="rarity-pin-dropdown">
+						<option value="None">None</option>
+						<option value="Common">Common</option>
+						<option value="Uncommon">Uncommon</option>
+						<option value="Rare">Rare</option>
+						<option value="SuperRare">Super Rare</option>
+						<option value="UltraRare">Ultra Rare</option>
+					</select>
 				</div>
+				<div class="form-element">
+					<label for="class-pin-dropdown">Class Pin</label><br>
+					<select name="class-pin-dropdown" id="class-pin-dropdown">
+						<option value="None">None</option>
+						<option value="Primary">Primary</option>
+						<option value="Military">Military</option>
+						<option value="Magic">Magic</option>
+						<option value="Support">Support</option>
+						<option value="BasicBloon">Basic Bloon</option>
+						<option value="AdvancedBloon">Advanced Bloon</option>
+						<option value="LargeBloon">Large Bloon</option>
+						<option value="BasicPower">Basic Power</option>
+						<option value="AdvancedPower">Advanced Power</option>
+						<option value="ExoticPower">Exotic Power</option>
+					</select>
+				</div>
+				<div class="form-element">
+					<label for="hero-pin-dropdown">Hero Restriction</label><br>
+					<select name="hero-pin-dropdown" id="hero-pin-dropdown">
+						<option value="None">None</option>
+						<option value="Quincy">Quincy</option>
+						<option value="Gwendolin">Gwendolin</option>
+						<option value="Obyn">Obyn</option>
+						<option value="Amelia">Amelia</option>
+						<option value="Adora">Adora</option>
+					</select>
+				</div>
+			</div>
 			<div class="multi-form-element disabled-text" id="enable-detail-elements">
 				<div class="form-element">
 					<label for="detail-toggle" id="detail-toggle-label">Enable Additional Details</label><br>
@@ -111,7 +117,7 @@
 				</div>
 				<div class="form-element">
 					<label for="input-flavor-text">Flavor</label><br>
-					<textarea name="input-flavor-text" id="input-flavor-text" class="disableable" disabled cols="25" rows="2"> </textarea>
+					<textarea name="input-flavor-text" id="input-flavor-text" class="disableable" disabled cols="27" rows="2"> </textarea>
 				</div>
 				<div class="form-element">
 					<label for="keyword-dropdown" id="keyword-dropdown-label">Keywords</label><br>
@@ -182,6 +188,54 @@
 				</div>
 			</div>
 		</div>
+		<!-- col specifically for heroes -->
+		<div id="card-form-hero" class="form-flex two-col-item" style="display: none;">
+			<div class=form-element>
+				<label>Card Type</label><br>
+				<img class="img-btn img-border" src="src/img/Button/Monkey.png" alt="Monkey"
+					 onclick="updateCardLayout('monkey')" />
+				<img class="img-btn img-border" src="src/img/Button/Bloon.png" alt="Bloon"
+					 onclick="updateCardLayout('bloon')" />
+				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
+					 onclick="updateCardLayout('power')" />
+				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
+					 onclick="updateCardLayout('hero')" />
+			</div>
+			<div class="form-element">
+				<label for="input-hero-name" id="hero-name-label">Hero Name</label><br>
+				<input type="text" id="input-hero-name" name="input-hero-name" size="24">
+			</div>
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label for="input-ability-name" id="ability-name-label">Ability Name</label><br>
+					<input type="text" id="input-ability-name" name="input-ability-name" size="17">
+				</div>
+				<div class="form-element">
+					<label for="input-ability-cost" id="ability-cost-label">Ability Cost</label><br>
+					<input type="number" min="0" id="input-ability-cost" size="3">
+				</div>
+				<div class="form-element">
+					<label for="is-passive-checkbox" id="is-passive-label">Passive</label><br>
+					<input type="checkbox" id="is-passive-checkbox">
+				</div>
+				<div class="form-element">
+					<label for="ability-img-btn" id="ability-img-label">Ability Image</label><br>
+					<button id="ability-img-btn" class="label-btn">Upload Image</button>
+				</div>
+				<div class="form-element">
+					<label for="input-ability-description">Ability Description</label><br>
+					<textarea id="input-ability-description" cols="51" rows="3"></textarea>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="add-ability" class="label-btn">Add Ability</button>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="delete-ability" class="label-btn">Delete Ability</button>
+				</div>
+			</div>
+		</div>
 		<!-- col 2/2 -->
 		<!-- positions card container -->
 		<div class="card-two-col two-col-item" id="card-justifier">
@@ -244,12 +298,12 @@
 							<div class="keyword-text-container" id="keyword-text-container">
 								<span class="bold-text" id="keyword-title" style="display: inline;">Defender +10</span>
 								<span class="thicker-stroke" id="keyword-title-stroke"
-									style="top: 3px; left: -2px;">Defender +10</span>
+									  style="top: 3px; left: -2px;">Defender +10</span>
 							</div>
 							<span class="no-outline" id="keyword-description" style="display: block;"></span>
 						</div>
 					</div>
-					<span class="flavor-text-keyword no-outline" id="flavor-text-keyword"></span>
+					<span class="flavor-text-keyword no-outline" id="flavor-text-keyword" style="display: block;"></span>
 				</div>
 			</div>
 		</div>

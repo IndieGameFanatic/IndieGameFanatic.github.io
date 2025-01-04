@@ -21,7 +21,6 @@ const editDetailFlavor = () => {
     const cardText = document.getElementById(`flavor-text-keyword`)
     inputCardText.addEventListener("input", function (event) {
         cardText.textContent = event.target.value
-        updateDetailBoxHeight()
     })
 }
 const addKeyword = () => {
@@ -35,22 +34,13 @@ const addKeyword = () => {
     newKeyword.style.display = "block"
     var addedKeyword = keywordHolder.appendChild(newKeyword)
     keywordList.push(addedKeyword)
-    updateDetailBoxHeight()
-}
-const updateDetailBoxHeight = () => {
-    var flavorTextHeight = flavorText.offsetHeight - 20
-    if (!inputFlavorText.value.trim().length) flavorTextHeight = flavorTextHeight - 20
-    const detailBoxHeight = Math.max(keywordHolder.offsetHeight + flavorTextHeight, 438.2 - 20)
-    detailBox.style.height = `${detailBoxHeight + 16.8}px`
 }
 const removeKeyword = () => {
     if (keywordList.length > 0) {
         keywordList[keywordList.length - 1].remove()
         keywordList.pop()
     }
-    updateDetailBoxHeight()
 }
-
 
 const toggleDetails = () => {
     detailCheckbox.checked = false
@@ -67,7 +57,7 @@ const toggleDetails = () => {
         inputDetailEnabled.classList.toggle("disabled-text")
         if (detailCheckbox.checked) {
             cardContainer.style.width = "775px"
-            detailBox.style.display = "inline"
+            detailBox.style.display = "flex"
             keywordDropdown.disabled = false
             keywordValue.disabled = false
             addKeywordBtn.disabled = false
@@ -236,8 +226,10 @@ const cardTypes = {
     damageVisibility: false,
     ammoVisibility: false,
     delayVisibility: false,
-
-  }
+    },
+  hero: {
+      isHero: true,
+    }
 };
 
 const keywordTitles = {
@@ -279,8 +271,16 @@ const keywordDescriptions = {
 // occurs when type changes
 const updateCardLayout = (type) => {
   cardType = type
-  const cardTypeObj = cardTypes[type];
-  
+    const cardTypeObj = cardTypes[type];
+    if (cardTypeObj.isHero) {
+        cardForm.style.display = "none"
+        cardFormHero.style.display = ""
+        return
+    }
+    else {
+        cardForm.style.display = ""
+        cardFormHero.style.display = "none"
+    }
   cardBorder.src = cardTypeObj.borderSrc;
   cardBorder.style.transform = cardTypeObj.borderOffset;
   if (cardTypeObj.damageSrc)
@@ -428,14 +428,18 @@ const downloadImg = () => {
       // Example: limit to 50 characters
       .substring(0, 50);
     let imageData = canvas.toDataURL("image/png")
+    downloadButtonMethod(imageData, `bcs-${sanitizedTitleText}.png`)
+  })
+    cardContainer.style.height = "510px"
+}
+
+const downloadButtonMethod = (url, name) => {
     var downloadLink = document.createElement("a")
-    downloadLink.href = imageData
-    downloadLink.download = `bcs-${sanitizedTitleText}.png` // Set the download file name
+    downloadLink.href = url
+    downloadLink.download = name // Set the download file name
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
-  })
-    cardContainer.style.height = "510px"
 }
 
 const startup = () => {
@@ -448,6 +452,8 @@ let cardType = "monkey"
 const copiesSlider = document.getElementById("copies-slider")
 const damageCheckbox = document.getElementById("damage-checkbox")
 
+const cardForm = document.getElementById("card-form")
+const cardFormHero = document.getElementById("card-form-hero")
 const cardBorder = document.getElementById("card-border")
 const cardTypeButtons = document.querySelectorAll(".card-type-button")
 const cardJustifier = document.getElementById("card-justifier")
