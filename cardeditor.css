@@ -40,9 +40,10 @@
 	display: inline-block;
 }
 
-.keyword-element {
+.detail-box-element {
 	padding: 0.75em;
 	display: none;
+	flex-wrap: wrap;
 }
 
 .img-btn {
@@ -261,7 +262,11 @@ input[type="file"] {
 .keyword-img {
 	width: 30px;
 	height: 30px;
-	transform: translate(0%, 20%)
+}
+
+.detail-description {
+	display: block;
+	word-break: break-word;
 }
 
 .thicker-stroke {
@@ -274,6 +279,17 @@ input[type="file"] {
 	margin: 0;
 	font-family: 'Bloons TD';
 	text-align: center;
+}
+
+.thick-stroke-detail {
+	top: 2px;
+	left: 0px;
+	-webkit-text-stroke: 0.16em black;
+	color: transparent;
+	position: absolute;
+	word-break: break-word;
+	margin: 0;
+	font-family: 'Bloons TD';
 }
 
 .thick-stroke {
@@ -300,6 +316,17 @@ input[type="file"] {
 	margin: 0;
 }
 
+.bold-text-detail {
+	display: block;
+	z-index: 1;
+	position: relative;
+	-webkit-text-stroke: 0.1em black;
+	color: var(--text-main);
+	font-family: 'Bloons TD';
+	word-break: break-word;
+	margin: 0;
+}
+
 .title-text-container {
 	position: absolute;
 	font-size: 3.5em;
@@ -309,11 +336,12 @@ input[type="file"] {
 	bottom: 345px;
 }
 
-.keyword-text-container {
+.detail-title-text-container {
 	margin: 0em 0.25em;
 	font-size: 1.5em;
 	position: relative;
-	display: inline;
+	display: inline-block;
+	max-width: 300px;
 }
 
 .class-text-container {
@@ -390,7 +418,7 @@ input[type="file"] {
 
 .flavor-text-keyword {
 	position: relative;
-	display: inherit;
+	display: block;
 	font-family: 'Source Sans 3 MidItalics';
 	white-space: pre-line;
 	font-size: 1em;
@@ -431,7 +459,7 @@ input[type="file"] {
 	/* center stuff in modal box */
 	padding: 20px;
 	border: var(--border-default);
-	width: max(50%, 300px);
+	width: max(45%, 300px);
 	height: max(50%, 400px);
 	border-radius: 50px;
 }

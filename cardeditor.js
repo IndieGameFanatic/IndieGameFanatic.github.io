@@ -31,7 +31,7 @@ const addKeyword = () => {
     keywordTitleStroke.textContent = finalTitle
     keywordImg.src = `src/img/Keyword/${keywordDropdown.value}.png`
     var newKeyword = keywordElement.cloneNode(true)
-    newKeyword.style.display = "block"
+    newKeyword.style.display = "flex"
     var addedKeyword = keywordHolder.appendChild(newKeyword)
     keywordList.push(addedKeyword)
 }
@@ -274,12 +274,16 @@ const updateCardLayout = (type) => {
     const cardTypeObj = cardTypes[type];
     if (cardTypeObj.isHero) {
         cardForm.style.display = "none"
+        cardJustifier.style.display = "none"
         cardFormHero.style.display = ""
+        heroJustifier.style.display =""
         return
     }
     else {
         cardForm.style.display = ""
+        cardJustifier.style.display = ""
         cardFormHero.style.display = "none"
+        heroJustifier.style.display = "none"
     }
   cardBorder.src = cardTypeObj.borderSrc;
   cardBorder.style.transform = cardTypeObj.borderOffset;
@@ -457,6 +461,7 @@ const cardFormHero = document.getElementById("card-form-hero")
 const cardBorder = document.getElementById("card-border")
 const cardTypeButtons = document.querySelectorAll(".card-type-button")
 const cardJustifier = document.getElementById("card-justifier")
+const heroJustifier = document.getElementById("hero-justifier")
 
 const cardContainer = document.getElementById("card-container")
 const detailCheckbox = document.getElementById(`detail-toggle`)

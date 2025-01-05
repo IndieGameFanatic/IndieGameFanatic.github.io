@@ -25,7 +25,7 @@
 				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
 					 onclick="updateCardLayout('power')" />
 				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
-					 onclick="updateCardLayout('hero')" style="display: none;"/>
+					 onclick="updateCardLayout('hero')" style="display:none;"/>
 			</div>
 			<div class="multi-form-element">
 				<div class="form-element">
@@ -188,54 +188,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- col specifically for heroes -->
-		<div id="card-form-hero" class="form-flex two-col-item" style="display: none;">
-			<div class=form-element>
-				<label>Card Type</label><br>
-				<img class="img-btn img-border" src="src/img/Button/Monkey.png" alt="Monkey"
-					 onclick="updateCardLayout('monkey')" />
-				<img class="img-btn img-border" src="src/img/Button/Bloon.png" alt="Bloon"
-					 onclick="updateCardLayout('bloon')" />
-				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
-					 onclick="updateCardLayout('power')" />
-				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
-					 onclick="updateCardLayout('hero')" />
-			</div>
-			<div class="form-element">
-				<label for="input-hero-name" id="hero-name-label">Hero Name</label><br>
-				<input type="text" id="input-hero-name" name="input-hero-name" size="24">
-			</div>
-			<div class="multi-form-element">
-				<div class="form-element">
-					<label for="input-ability-name" id="ability-name-label">Ability Name</label><br>
-					<input type="text" id="input-ability-name" name="input-ability-name" size="17">
-				</div>
-				<div class="form-element">
-					<label for="input-ability-cost" id="ability-cost-label">Ability Cost</label><br>
-					<input type="number" min="0" id="input-ability-cost" size="3">
-				</div>
-				<div class="form-element">
-					<label for="is-passive-checkbox" id="is-passive-label">Passive</label><br>
-					<input type="checkbox" id="is-passive-checkbox">
-				</div>
-				<div class="form-element">
-					<label for="ability-img-btn" id="ability-img-label">Ability Image</label><br>
-					<button id="ability-img-btn" class="label-btn">Upload Image</button>
-				</div>
-				<div class="form-element">
-					<label for="input-ability-description">Ability Description</label><br>
-					<textarea id="input-ability-description" cols="51" rows="3"></textarea>
-				</div>
-				<div class="form-element">
-					<br>
-					<button id="add-ability" class="label-btn">Add Ability</button>
-				</div>
-				<div class="form-element">
-					<br>
-					<button id="delete-ability" class="label-btn">Delete Ability</button>
-				</div>
-			</div>
-		</div>
+
 		<!-- col 2/2 -->
 		<!-- positions card container -->
 		<div class="card-two-col two-col-item" id="card-justifier">
@@ -293,17 +246,82 @@
 				</div>
 				<div class="detail-box" id="detail-box">
 					<div id="keyword-list">
-						<div class="keyword-element" id="keyword-element">
+						<div class="detail-box-element" id="keyword-element">
 							<img src="src/img/Keyword/Defender.png" class="keyword-img" id="keyword-img">
-							<div class="keyword-text-container" id="keyword-text-container">
-								<span class="bold-text" id="keyword-title" style="display: inline;">Defender +10</span>
-								<span class="thicker-stroke" id="keyword-title-stroke"
-									  style="top: 3px; left: -2px;">Defender +10</span>
+							<div class="detail-title-text-container" id="keyword-text-container">
+								<span class="bold-text-detail" id="keyword-title">Defender +10</span>
+								<span class="thick-stroke-detail" id="keyword-title-stroke">Defender +10</span>
 							</div>
-							<span class="no-outline" id="keyword-description" style="display: block;"></span>
+							<span class="no-outline detail-description" id="keyword-description"></span>
 						</div>
 					</div>
-					<span class="flavor-text-keyword no-outline" id="flavor-text-keyword" style="display: block;"></span>
+					<span class="flavor-text-keyword no-outline" id="flavor-text-keyword"></span>
+				</div>
+			</div>
+		</div>
+		<!-- col 1/2 (Heroes Only) -->
+		<div id="card-form-hero" class="form-flex two-col-item" style="display: none;">
+			<div class=form-element>
+				<label>Card Type</label><br>
+				<img class="img-btn img-border" src="src/img/Button/Monkey.png" alt="Monkey"
+					 onclick="updateCardLayout('monkey')" />
+				<img class="img-btn img-border" src="src/img/Button/Bloon.png" alt="Bloon"
+					 onclick="updateCardLayout('bloon')" />
+				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
+					 onclick="updateCardLayout('power')" />
+				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
+					 onclick="updateCardLayout('hero')" />
+			</div>
+			<div class="form-element">
+				<label for="input-hero-name" id="hero-name-label">Hero Name</label><br>
+				<input type="text" id="input-hero-name" name="input-hero-name" size="24">
+			</div>
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label for="input-ability-name" id="ability-name-label">Ability Name</label><br>
+					<input type="text" id="input-ability-name" name="input-ability-name" size="19">
+				</div>
+				<div class="form-element">
+					<label for="is-passive-checkbox" id="is-passive-label">Passive</label><br>
+					<input type="checkbox" id="is-passive-checkbox">
+				</div>
+				<div class="form-element">
+					<label for="input-ability-cost" id="ability-cost-label">Cost</label><br>
+					<input type="number" min="0" id="input-ability-cost" size="3">
+				</div>
+				<div class="form-element">
+					<label for="ability-img-btn" id="ability-img-label">Icon</label><br>
+					<button id="ability-img-btn" class="label-btn">Upload Image</button>
+				</div>
+				<div class="form-element">
+					<label for="input-ability-description">Ability Description</label><br>
+					<textarea id="input-ability-description" cols="51" rows="3"></textarea>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="add-ability" class="label-btn">Add Ability</button>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="delete-ability" class="label-btn">Delete Ability</button>
+				</div>
+			</div>
+		</div>
+		<!-- col 2/2 (Heroes Only) -->
+		<div class="card-two-col two-col-item" id="hero-justifier" style="display: none; justify-content: center;">
+			<!-- contains card and surroundings; gets screenshotted -->
+			<div class="card-container" id="hero-container" style="width: 775px;">
+				<div class="detail-box" id="detail-box-hero" style="display: flex;">
+					<div id="ability-list">
+						<div class="detail-box-element" id="ability-element">
+							<img src="src/img/Keyword/Defender.png" class="keyword-img" id="keyword-img">
+							<div class="detail-title-text-container" id="ability-text-container">
+								<span class="bold-text-detail" id="ability-title">Defender +10</span>
+								<span class="thick-stroke-detail" id="ability-title-stroke">Defender +10</span>
+							</div>
+							<span class="no-outline detail-description" id="keyword-description"></span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
