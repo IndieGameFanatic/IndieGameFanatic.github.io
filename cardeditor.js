@@ -474,7 +474,9 @@ const downloadImg = (isHero) => {
     backgroundColor: null,
     scale: 5,
   }).then(function (canvas) {
-    const titleText = document.getElementById("title-text").textContent.trim();
+    let titleText
+    if (!isHero) titleText = document.getElementById("title-text").textContent.trim();
+    else titleText = document.getElementById("hero-name").textContent.trim();
     let sanitizedTitleText = titleText.replace(/[^\w\s]/gi, '').replace(/ /gi, '-').toLowerCase().substring(0, 50);
     let imageData = canvas.toDataURL("image/png")
     downloadButtonMethod(imageData, `bcs-${sanitizedTitleText}.png`)
