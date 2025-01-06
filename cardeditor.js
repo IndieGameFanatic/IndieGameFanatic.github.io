@@ -166,9 +166,10 @@ const editHeroNameEvent = () => {
     const heroNameContainer = document.getElementById("hero-name-container")
     const heroNameInput = document.getElementById("input-hero-name")
     const heroNameStroke = document.getElementById("hero-name-stroke")
+    
     heroNameInput.addEventListener("input", function (event) {
-        const finalFontSize = fitTextToHeight(heroNameContainer, 2, 90.5)
-        heroNameStroke.style.top = `${13 * finalFontSize}px`
+        const finalFontSize = fitTextToHeight(heroNameContainer, 2, 41)
+        heroNameStroke.style.top = `${1 * finalFontSize}px`
     })
 }
 
