@@ -25,7 +25,7 @@
 				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
 					 onclick="updateCardLayout('power')" />
 				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
-					 onclick="updateCardLayout('hero')" style="display:none;"/>
+					 onclick="updateCardLayout('hero')" style="display:none;" />
 			</div>
 			<div class="multi-form-element">
 				<div class="form-element">
@@ -177,14 +177,14 @@
 			</div>
 			<div class="multi-form-element">
 				<div class="form-element">
-					<button class="label-btn" id="show-img-upload-modal" onclick="openUploadModal()">Upload Image</button>
+					<button class="label-btn" id="show-img-upload-modal" onclick="openUploadModal('cardImg')">Upload Image</button>
 					<!-- <input type="file" name="img-upload" id="img-upload" onchange="uploadImg(event)"> -->
 				</div>
 				<div class="form-element">
 					<button id="reset-btn" class="label-btn" onclick="resetImageValues()">Reset Image</button>
 				</div>
 				<div class="form-element">
-					<button id="download-btn" class="label-btn" onclick="downloadImg()">Download Image</button>
+					<button id="download-btn" class="label-btn" onclick="downloadImg(false)">Download Image</button>
 				</div>
 			</div>
 		</div>
@@ -245,7 +245,7 @@
 					<span class="description-text no-outline" id="description-text"></span>
 				</div>
 				<div class="detail-box" id="detail-box">
-					<div id="keyword-list">
+					<div id="keyword-holder">
 						<div class="detail-box-element" id="keyword-element">
 							<img src="src/img/Keyword/Defender.png" class="keyword-img" id="keyword-img">
 							<div class="detail-title-text-container" id="keyword-text-container">
@@ -272,9 +272,20 @@
 				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
 					 onclick="updateCardLayout('hero')" />
 			</div>
-			<div class="form-element">
-				<label for="input-hero-name" id="hero-name-label">Hero Name</label><br>
-				<input type="text" id="input-hero-name" name="input-hero-name" size="24">
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label for="input-hero-name" id="hero-name-label">Hero Name</label><br>
+					<input type="text" id="input-hero-name" name="input-hero-name" size="24">
+				</div>
+				<div class="form-element">
+					<label for="hero-img-btn" id="hero-img-label">Hero Image</label><br>
+					<button id="hero-img-btn" class="label-btn" onclick="openUploadModal('heroPortrait')">Upload Image</button>
+				</div>
+				<div class="form-element">
+					<label for="hero-template-btn" id="hero-template-label">Hero Template</label><br>
+					<button id="hero-template-btn" class="label-btn" onclick="downloadTemplate()">Download</button>
+					<a href="src/img/HeroCreator/HeroPortraitTemplate.png" id="template-download"></a>
+				</div>
 			</div>
 			<div class="multi-form-element">
 				<div class="form-element">
@@ -282,16 +293,16 @@
 					<input type="text" id="input-ability-name" name="input-ability-name" size="19">
 				</div>
 				<div class="form-element">
-					<label for="is-passive-checkbox" id="is-passive-label">Passive</label><br>
-					<input type="checkbox" id="is-passive-checkbox">
+					<label for="is-passive-toggle" id="is-passive-label">Passive</label><br>
+					<input type="checkbox" id="is-passive-toggle">
 				</div>
 				<div class="form-element">
-					<label for="input-ability-cost" id="ability-cost-label">Cost</label><br>
-					<input type="number" min="0" id="input-ability-cost" size="3">
+					<label for="input-bloontonium-cost" id="ability-cost-label">Cost</label><br>
+					<input type="number" min="0" id="input-bloontonium-cost" size="3">
 				</div>
 				<div class="form-element">
 					<label for="ability-img-btn" id="ability-img-label">Icon</label><br>
-					<button id="ability-img-btn" class="label-btn">Upload Image</button>
+					<button id="ability-img-btn" class="label-btn" onclick="openUploadModal('abilityIcon')">Upload Image</button>
 				</div>
 				<div class="form-element">
 					<label for="input-ability-description">Ability Description</label><br>
@@ -299,27 +310,44 @@
 				</div>
 				<div class="form-element">
 					<br>
-					<button id="add-ability" class="label-btn">Add Ability</button>
+					<button id="add-ability" class="label-btn" onclick="addAbility()">Add Ability</button>
 				</div>
 				<div class="form-element">
 					<br>
-					<button id="delete-ability" class="label-btn">Delete Ability</button>
+					<button id="delete-ability" class="label-btn" onclick="removeAbility()">Delete Ability</button>
 				</div>
+			</div>
+			<div class="form-element">
+				<button id="download-btn" class="label-btn" onclick="downloadImg(true)">Download Image</button>
 			</div>
 		</div>
 		<!-- col 2/2 (Heroes Only) -->
 		<div class="card-two-col two-col-item" id="hero-justifier" style="display: none; justify-content: center;">
 			<!-- contains card and surroundings; gets screenshotted -->
-			<div class="card-container" id="hero-container" style="width: 775px;">
-				<div class="detail-box" id="detail-box-hero" style="display: flex;">
-					<div id="ability-list">
-						<div class="detail-box-element" id="ability-element">
-							<img src="src/img/Keyword/Defender.png" class="keyword-img" id="keyword-img">
-							<div class="detail-title-text-container" id="ability-text-container">
-								<span class="bold-text-detail" id="ability-title">Defender +10</span>
-								<span class="thick-stroke-detail" id="ability-title-stroke">Defender +10</span>
+			<div class="hero-container" id="hero-container">
+				<img src="src/img/HeroCreator/EmptyPortrait.png" class="hero-portrait" id="hero-portrait">
+				<div class="detail-box-hero" id="detail-box-hero">
+					<img src="src/img/HeroCreator/TopBannerYellow.png" class="hero-name-banner" />
+					<div class="hero-name-container" id="hero-name-container">
+						<span class="bold-text" id="hero-name"></span>
+						<span class="thick-stroke" id="hero-name-stroke" style="top: 26px;"></span>
+					</div>
+					<div id="ability-holder">
+						<div class="detail-box-element" id="ability-element" style="min-height: 85.7px;">
+							<div class="ability-icon-container">
+								<img src="src/img/HeroCreator/ActiveAbilityButton.png" class="ability-icon-button" id="ability-icon-button">
+								<img src="src/img/HeroCreator/AdoraAbility1.png" class="ability-icon" id="ability-icon">
 							</div>
-							<span class="no-outline detail-description" id="keyword-description"></span>
+							<img src="src/img/HeroCreator/BloontoniumIcon.png" class="bloontonium-img" id="bloontonium-img">
+							<div class="bloontonium-cost-container">
+								<span class="bold-text-detail" id="bloontonium-cost">0</span>
+								<span class="thick-stroke-detail" id="bloontonium-cost-stroke" style="width: 100%;">0</span>
+							</div>
+							<div class="detail-title-text-container" id="ability-text-container" style="font-size: 1.225em; max-width: 270px;">
+								<span class="bold-text-detail" id="ability-name" style="padding-bottom: 0.25em; min-height: 12.5px;"></span>
+								<span class="thick-stroke-detail" id="ability-name-stroke"></span>
+								<span class="no-outline detail-description" id="ability-description" style="min-height: 56px;"></span>
+							</div>
 						</div>
 					</div>
 				</div>

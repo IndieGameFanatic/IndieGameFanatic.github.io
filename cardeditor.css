@@ -163,6 +163,14 @@ input[type="file"] {
 	position: absolute;
 	top: 20%;
 }
+.hero-container {
+	width: 1000px;
+	height: 510px;
+	display: flex;
+	position: absolute;
+	left: 0px;
+	top: 20%;
+}
 
 .card {
 	max-width: 635px;
@@ -261,7 +269,13 @@ input[type="file"] {
 
 .keyword-img {
 	width: 30px;
-	height: 30px;
+}
+.bloontonium-img {
+	width: 45px;
+	align-self: center;
+	padding-bottom: 1em;
+	left: 96px;
+	position: absolute;
 }
 
 .detail-description {
@@ -282,7 +296,7 @@ input[type="file"] {
 }
 
 .thick-stroke-detail {
-	top: 2px;
+	top: 1px;
 	left: 0px;
 	-webkit-text-stroke: 0.16em black;
 	color: transparent;
@@ -336,12 +350,60 @@ input[type="file"] {
 	bottom: 345px;
 }
 
+.hero-portrait {
+	position: absolute;
+	width: 450px;
+	height: 450px;
+	top: 30px;
+	left: 0px;
+}
+
+.bloontonium-cost-container {
+	position: relative;
+	font-size: 2em;
+	left: -4px;
+	top: 14px;
+	width: 12%;
+	text-align: center;
+}
+.hero-name-banner {
+	position: absolute;
+	height: 65px;
+	left: -61px;
+	top: 17px;
+}
+
+.ability-icon-container {
+	position: relative;
+	width: 85px;
+	top: -6px;
+	left: -4px;
+}
+.ability-icon-button {
+	width: 100%;
+	position: absolute;
+}
+.ability-icon {
+	width: 70%;
+	left: 13.5px;
+	top: 13.5px;
+	position:absolute
+}
+
 .detail-title-text-container {
 	margin: 0em 0.25em;
 	font-size: 1.5em;
 	position: relative;
 	display: inline-block;
-	max-width: 300px;
+}
+
+.hero-name-container {
+	padding-top: 0.75em;
+	padding-bottom: 0.8em;
+	font-size: 2em;
+	position: relative;
+	display: inline-block;
+	min-height: 40.8px;
 }
 
 .class-text-container {
@@ -399,6 +461,7 @@ input[type="file"] {
 	text-align: center;
 	width: 85%;
 	height: auto;
+	word-break: break-word;
 }
 
 .flavor-text {
@@ -520,6 +583,22 @@ input[type="file"] {
 	left: 375px;
 	top: 35px;
 	display: none;
+	user-select: none;
+}
+
+.detail-box-hero {
+	flex: 0.44 1 0%;
+	height: fit-content;
+	flex-direction: column;
+	min-height: 438.2px;
+	width: 375px;
+	border: var(--border-default);
+	background-color: var(--bg-detail-box);
+	border-radius: 3%;
+	position: relative;
+	left: 490px;
+	top: 35px;
+	display: flex;
 	user-select: none;
 }
 

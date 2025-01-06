@@ -24,22 +24,50 @@ const editDetailFlavor = () => {
     })
 }
 const addKeyword = () => {
-    var finalDescription = keywordDescriptions[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
+    let finalDescription = keywordDescriptions[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
     keywordDescription.textContent = finalDescription
-    var finalTitle = keywordTitles[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
+    let finalTitle = keywordTitles[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
     keywordTitle.textContent = finalTitle
     keywordTitleStroke.textContent = finalTitle
     keywordImg.src = `src/img/Keyword/${keywordDropdown.value}.png`
-    var newKeyword = keywordElement.cloneNode(true)
+    let newKeyword = keywordElement.cloneNode(true)
     newKeyword.style.display = "flex"
-    var addedKeyword = keywordHolder.appendChild(newKeyword)
+    let addedKeyword = keywordHolder.appendChild(newKeyword)
     keywordList.push(addedKeyword)
 }
+const addAbility = () => {
+    if (abilityList.length >= 3) return
+
+    abilityElement.style.display = "flex"
+    fitTextToHeight(abilityDescription, 1.2, 56)
+    abilityElement.style.display = ""
+
+    let newAbility = abilityElement.cloneNode(true)
+    newAbility.style.display = "flex"
+    let addedAbility = abilityHolder.appendChild(newAbility)
+    abilityList.push(addedAbility)
+}
+
+const removeAbility = () => {
+    if (abilityList.length > 0) {
+        abilityList[abilityList.length - 1].remove()
+        abilityList.pop()
+    }
+}
+
 const removeKeyword = () => {
     if (keywordList.length > 0) {
         keywordList[keywordList.length - 1].remove()
         keywordList.pop()
     }
+}
+
+const togglePassive = () => {
+    passiveToggle.checked = false
+    passiveToggle.addEventListener("input", function (event) {
+        if (passiveToggle.checked) abilityButton.src = "src/img/HeroCreator/PassiveAbilityButton.png"
+        else abilityButton.src = "src/img/HeroCreator/ActiveAbilityButton.png"
+    })
 }
 
 const toggleDetails = () => {
@@ -94,16 +122,16 @@ const editImagePositionEvent = (ID, variable) => {
     const positionInput = document.getElementById(`${ID}`)
     positionInput.value = 0
     positionInput.addEventListener("input", function (event) {
-        imageValues[variable] = parseFloat(positionInput.value)
-        updateImage()
+        cardImageValues[variable] = parseFloat(positionInput.value)
+        updateCardImage()
     })
 }
 
 const editImageScaleEvent = (ID, variable) => {
     const scaleInput = document.getElementById(`${ID}`)
     scaleInput.addEventListener("input", function (event) {
-        imageValues[variable] = parseFloat(scaleInput.value * imgSize / 100)
-        updateImage()
+        cardImageValues[variable] = parseFloat(scaleInput.value * imgSize / 100)
+        updateCardImage()
     })
 }
 
@@ -117,28 +145,32 @@ const toggleKeepRatio = () => {
 }
 
 const resetImageValues = () => {
-    imageValues.x = 0
-    imageValues.y = 0
-    imageValues.w = imgSize
-    imageValues.h = imgSize
+    cardImageValues.x = 0
+    cardImageValues.y = 0
+    cardImageValues.w = imgSize
+    cardImageValues.h = imgSize
     document.getElementById(`x-input`).value = 0
     document.getElementById(`y-input`).value = 0
     document.getElementById(`w-input`).value = 100
     document.getElementById(`h-input`).value = 100
-    updateImage()
+    updateCardImage()
 }
 
 const editDescriptionEvent = () => {
     const DescriptionBox = document.getElementById("input-description-text")
-    var newFontSize = 2.8
     DescriptionBox.addEventListener("input", function (event) {
-        newFontSize = 2.8
-        do {
-            newFontSize -= 1.0 / 16.0
-            cardDescriptionText.style.fontSize = `${newFontSize}em`
-        }
-        while (cardDescriptionText.clientHeight > 188)
+        fitTextToHeight(cardDescriptionText, 2.7, 188)
     })
+}
+
+const fitTextToHeight = (TextHTML, initFontSize, maxHeight) => {
+    let newFontSize = initFontSize
+    TextHTML.style.fontSize = `${newFontSize}em`
+    while (TextHTML.clientHeight > maxHeight)
+    {
+        newFontSize -= 1.0 / 16.0
+        TextHTML.style.fontSize = `${newFontSize}em`
+    }
 }
 
 // set as many coins visible
@@ -331,8 +363,9 @@ const damageCheckboxClicked = () => {
   toggleVisibilities(cardTypes[cardType])
 };
 
-const openUploadModal = () => {
+const openUploadModal = (targetImg) => {
   const uploadModal = document.getElementById("uploadImgModal")
+  selectedImgTarget = uploadImgTargets[targetImg]
   toggleVisibility(uploadModal, true)
 }
 
@@ -351,13 +384,13 @@ window.onclick = function(event) {
 } 
 
 // resize img to wanted width and height
-const updateImage = () => {
+const updateCardImage = () => {
     if (storedImg == null || drawTimer != null) return;
     drawTimer = window.setTimeout(function () {
-    canvas.width = imageValues.w
-    canvas.height = imageValues.h
-    console.log(imageValues)
-    ctx.drawImage(storedImg, imageValues.x, imageValues.y, imageValues.w, imageValues.h)
+    canvas.width = cardImageValues.w
+    canvas.height = cardImageValues.h
+    console.log(cardImageValues)
+    ctx.drawImage(storedImg, cardImageValues.x, cardImageValues.y, cardImageValues.w, cardImageValues.h)
     cardImg.src = canvas.toDataURL()
     drawTimer = null
     }, 125)
@@ -375,8 +408,11 @@ const uploadImg = (event) => {
     // Resize the image and update card-img element
     newImg.onload = function () {
       setThumbnail(newImg.src)
-      storedImg = newImg;
-      updateImage();
+      if (selectedImgTarget == cardImg) {
+        storedImg = newImg
+        updateCardImage();
+      }
+      else selectedImgTarget.src = newImg.src;
     };
   };
   // Check if the selected file is an image
@@ -398,8 +434,11 @@ const uploadImgFromURL = () => {
 
     newImg.onload = function () {
       setThumbnail(url);
-      storedImg = newImg;
-      updateImage();
+      if (selectedImgTarget == cardImg) {
+        storedImg = newImg
+        updateCardImage();
+      }
+      else selectedImgTarget.src = newImg.src;
     };
 
     newImg.onerror = function () {
@@ -413,28 +452,24 @@ const setThumbnail = (src) => {
   imgThumbnail.src = src
 }
 
-const downloadImg = () => {
-    var cardContainer = document.getElementById("card-container")
-    if (detailCheckbox.checked) cardContainer.style.height = `${Math.max(detailBox.offsetHeight + 40, 510)}px`
-    else cardContainer.style.height = "510px"
-  html2canvas(cardContainer, {
-      backgroundColor: null,
-      scale: 5,
+const downloadImg = (isHero) => {
+    let downloadedContainer
+    if (!isHero) {
+        downloadedContainer = document.getElementById("card-container")
+        if (detailCheckbox.checked) downloadedContainer.style.height = `${Math.max(detailBox.offsetHeight + 40, 510)}px`
+        else downloadedContainer.style.height = "510px"
+    }
+    else downloadedContainer = document.getElementById("hero-container")
+  html2canvas(downloadedContainer, {
+    backgroundColor: null,
+    scale: 5,
   }).then(function (canvas) {
     const titleText = document.getElementById("title-text").textContent.trim();
-    
-    let sanitizedTitleText = titleText
-      // remove unsuitable characters
-      .replace(/[^\w\s]/gi, '')
-      // more consistent with rest of download name
-      .replace(/ /gi, '-')
-      .toLowerCase()
-      // Example: limit to 50 characters
-      .substring(0, 50);
+    let sanitizedTitleText = titleText.replace(/[^\w\s]/gi, '').replace(/ /gi, '-').toLowerCase().substring(0, 50);
     let imageData = canvas.toDataURL("image/png")
     downloadButtonMethod(imageData, `bcs-${sanitizedTitleText}.png`)
   })
-    cardContainer.style.height = "510px"
+    downloadedContainer.style.height = "510px"
 }
 
 const downloadButtonMethod = (url, name) => {
@@ -444,6 +479,11 @@ const downloadButtonMethod = (url, name) => {
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
+}
+
+downloadTemplate = () => {
+    const downloadLink = document.getElementById("template-download")
+    downloadLink.click()
 }
 
 const startup = () => {
@@ -466,7 +506,7 @@ const heroJustifier = document.getElementById("hero-justifier")
 const cardContainer = document.getElementById("card-container")
 const detailCheckbox = document.getElementById(`detail-toggle`)
 const detailBox = document.getElementById("detail-box")
-const keywordHolder = document.getElementById("keyword-list")
+const keywordHolder = document.getElementById("keyword-holder")
 const flavorText = document.getElementById("flavor-text-keyword")
 const keywordList = []
 
@@ -487,6 +527,21 @@ const keywordValue = document.getElementById("keyword-value")
 const addKeywordBtn = document.getElementById("add-keyword")
 const removeKeywordBtn = document.getElementById("remove-keyword")
 
+const abilityElement = document.getElementById("ability-element")
+const abilityHolder = document.getElementById("ability-holder")
+const abilityButton = document.getElementById("ability-icon-button")
+const passiveToggle = document.getElementById("is-passive-toggle")
+const abilityDescription = document.getElementById("ability-description")
+const abilityList = []
+
+const uploadImgTargets = {
+    cardImg: document.getElementById("card-img"),
+    abilityIcon: document.getElementById("ability-icon"),
+    heroPortrait: document.getElementById("hero-portrait")
+}
+var selectedImgTarget = null
+
+
 const cardDamage = document.getElementById("card-damage")
 const cardAmmo = document.getElementById("card-ammo")
 const cardDelay = document.getElementById("card-delay")
@@ -503,12 +558,11 @@ const ctx = canvas.getContext("2d")
 var storedImg = null
 var drawTimer = null
 
-// const imgUploadElement = document.getElementById("img-upload")
-const cardImg = document.getElementById("card-img")
+const cardImg = uploadImgTargets["cardImg"]
 
 // img size in pixels
 const imgSize = 512
-const imageValues = { x: 0, y: 0, w: imgSize, h: imgSize }
+const cardImageValues = { x: 0, y: 0, w: imgSize, h: imgSize }
 
 // make text editable
 editCardTextEvent("title-text", true)
@@ -517,6 +571,10 @@ editCardTextEvent("cost-text", true)
 editCardTextEvent("damage-text", true)
 editCardTextEvent("ammo-text", true)
 editCardTextEvent("delay-text", true)
+editCardTextEvent("ability-name", true)
+editCardTextEvent("hero-name", true)
+editCardTextEvent("bloontonium-cost", true)
+editCardTextEvent("ability-description", false)
 editCardTextEvent("description-text", false)
 // editCardTextEvent("flavor-text", false)
 editDetailFlavor()
@@ -530,5 +588,6 @@ editImageScaleEvent("h-input", "h")
 toggleKeepRatio()
 editDescriptionEvent()
 toggleDetails()
+togglePassive()
 // other things which need to happen at startup
 startup()
