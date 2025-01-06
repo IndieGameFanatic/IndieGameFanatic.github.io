@@ -162,6 +162,15 @@ const editDescriptionEvent = () => {
         fitTextToHeight(cardDescriptionText, 2.7, 188)
     })
 }
+const editHeroNameEvent = () => {
+    const heroNameContainer = document.getElementById("hero-name-container")
+    const heroNameInput = document.getElementById("input-hero-name")
+    const heroNameStroke = document.getElementById("hero-name-stroke")
+    heroNameInput.addEventListener("input", function (event) {
+        const finalFontSize = fitTextToHeight(heroNameContainer, 2, 90.5)
+        heroNameStroke.style.top = `${13 * finalFontSize}px`
+    })
+}
 
 const fitTextToHeight = (TextHTML, initFontSize, maxHeight) => {
     let newFontSize = initFontSize
@@ -171,6 +180,7 @@ const fitTextToHeight = (TextHTML, initFontSize, maxHeight) => {
         newFontSize -= 1.0 / 16.0
         TextHTML.style.fontSize = `${newFontSize}em`
     }
+    return newFontSize
 }
 
 // set as many coins visible
@@ -587,6 +597,7 @@ editImageScaleEvent("w-input", "w")
 editImageScaleEvent("h-input", "h")
 toggleKeepRatio()
 editDescriptionEvent()
+editHeroNameEvent()
 toggleDetails()
 togglePassive()
 // other things which need to happen at startup
