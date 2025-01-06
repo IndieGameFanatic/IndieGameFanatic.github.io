@@ -491,11 +491,6 @@ const downloadButtonMethod = (url, name) => {
     document.body.removeChild(downloadLink)
 }
 
-downloadTemplate = () => {
-    const downloadLink = document.getElementById("template-download")
-    downloadLink.click()
-}
-
 const startup = () => {
   damageCheckbox.checked = true
   copiesSlider.value = 1
