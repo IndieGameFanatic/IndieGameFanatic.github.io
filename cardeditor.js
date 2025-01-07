@@ -36,8 +36,6 @@ const addKeyword = () => {
     keywordList.push(addedKeyword)
 }
 const addAbility = () => {
-    if (abilityList.length >= 3) return
-
     abilityElement.style.display = "flex"
     fitTextToHeight(abilityDescription, 1.2, 56)
     abilityElement.style.display = ""
@@ -470,7 +468,10 @@ const downloadImg = (isHero) => {
         if (detailCheckbox.checked) downloadedContainer.style.height = `${Math.max(detailBox.offsetHeight + 40, 510)}px`
         else downloadedContainer.style.height = "510px"
     }
-    else downloadedContainer = document.getElementById("hero-container")
+    else {
+        downloadedContainer = document.getElementById("hero-container")
+        downloadedContainer.style.height = `${Math.max(detailBoxHero.offsetHeight + 40, 510)}px`
+    }
   html2canvas(downloadedContainer, {
     backgroundColor: null,
     scale: 5,
@@ -514,6 +515,7 @@ const heroJustifier = document.getElementById("hero-justifier")
 const cardContainer = document.getElementById("card-container")
 const detailCheckbox = document.getElementById(`detail-toggle`)
 const detailBox = document.getElementById("detail-box")
+const detailBoxHero = document.getElementById("detail-box-hero")
 const keywordHolder = document.getElementById("keyword-holder")
 const flavorText = document.getElementById("flavor-text-keyword")
 const keywordList = []
