@@ -38,6 +38,8 @@ const addKeyword = () => {
 const addAbility = () => {
     abilityElement.style.display = "flex"
     fitTextToHeight(abilityDescription, 1.2, 56)
+    const abilityTitleContainer = document.getElementById("ability-name-container")
+    fitTextToHeight(abilityTitleContainer, 1.225, 35)
     abilityElement.style.display = ""
 
     let newAbility = abilityElement.cloneNode(true)
@@ -163,11 +165,9 @@ const editDescriptionEvent = () => {
 const editHeroNameEvent = () => {
     const heroNameContainer = document.getElementById("hero-name-container")
     const heroNameInput = document.getElementById("input-hero-name")
-    const heroNameStroke = document.getElementById("hero-name-stroke")
     
     heroNameInput.addEventListener("input", function (event) {
-        const finalFontSize = fitTextToHeight(heroNameContainer, 2, 41)
-        heroNameStroke.style.top = `${1 * finalFontSize}px`
+        fitTextToHeight(heroNameContainer, 2, 41)
     })
 }
 
