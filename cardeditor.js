@@ -383,6 +383,27 @@ const closeUploadModal = () => {
   toggleVisibility(uploadModal, false)
 }
 
+const toggleHeroPortrait = () => {
+    const heroPortraitToggle = document.getElementById("enable-portrait-toggle")
+    heroPortraitToggle.checked = true
+    const heroContainer = document.getElementById("hero-container")
+    heroPortraitToggle.addEventListener("input", function (event) {
+        if (heroPortraitToggle.checked) {
+            uploadImgTargets["heroPortrait"].style.display = ""
+            heroContainer.style.width = ""
+            detailBoxHero.style.left = ""
+            detailBoxHero.style.flex = ""
+            heroContainer.style.left = ""
+        }
+        else {
+            uploadImgTargets["heroPortrait"].style.display = "none"
+            heroContainer.style.width = "600px"
+            detailBoxHero.style.left = "77px"
+            detailBoxHero.style.flex = "0.74"
+            heroContainer.style.left = "auto"
+        }
+    })
+}
 
 // if click out of modal, close it
 window.onclick = function(event) {
@@ -600,5 +621,6 @@ editDescriptionEvent()
 editHeroNameEvent()
 toggleDetails()
 togglePassive()
+toggleHeroPortrait()
 // other things which need to happen at startup
 startup()

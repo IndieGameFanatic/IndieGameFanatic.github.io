@@ -282,8 +282,12 @@
 					<button id="hero-img-btn" class="label-btn" onclick="openUploadModal('heroPortrait')">Upload Image</button>
 				</div>
 				<div class="form-element">
-					<label for="hero-template-btn" id="hero-template-label">Hero Template</label><br>
-					<button id="hero-template-btn" class="label-btn" onclick="downloadButtonMethod('src/img/HeroCreator/HeroPortraitTemplate.png', 'HeroTemplate.png')">Download</button>
+					<label for="enable-portrait-toggle" id="enable-portrait-label" checked>Enable Hero Portrait</label><br>
+					<input type="checkbox" id="enable-portrait-toggle">
+				</div>
+				<div class="form-element">
+					<label for="hero-template-btn" id="hero-template-label">Hero Portrait Template</label><br>
+					<button id="hero-template-btn" class="label-btn" onclick="downloadButtonMethod('src/img/HeroCreator/HeroPortraitTemplate.png', 'HeroTemplate.png')">Download Template</button>
 				</div>
 			</div>
 			<div class="multi-form-element">
