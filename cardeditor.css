@@ -193,6 +193,15 @@ input[type="file"] {
 	z-index: -1;
 }
 
+.hero-portrait {
+	position: absolute;
+	object-fit: contain;
+	width: 45%;
+	height: 88.25%;
+	top: 5.9%;
+	left: 0%;
+}
+
 .card-border {
 	transform: translate(0% -0.8%);
 }
@@ -348,14 +357,6 @@ input[type="file"] {
 	width: 85%;
 	max-height: 30%;
 	bottom: 345px;
-}
-
-.hero-portrait {
-	position: absolute;
-	width: 450px;
-	height: 450px;
-	top: 30px;
-	left: 0px;
 }
 
 .bloontonium-cost-container {

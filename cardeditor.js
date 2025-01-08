@@ -419,7 +419,6 @@ const updateCardImage = () => {
     drawTimer = window.setTimeout(function () {
     canvas.width = cardImageValues.w
     canvas.height = cardImageValues.h
-    console.log(cardImageValues)
     ctx.drawImage(storedImg, cardImageValues.x, cardImageValues.y, cardImageValues.w, cardImageValues.h)
     cardImg.src = canvas.toDataURL()
     drawTimer = null
