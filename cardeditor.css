@@ -290,6 +290,7 @@ input[type="file"] {
 .detail-description {
 	display: block;
 	word-break: break-word;
+	width: 100%;
 }
 
 .thicker-stroke {
