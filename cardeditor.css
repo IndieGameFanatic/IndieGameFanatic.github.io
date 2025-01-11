@@ -278,6 +278,7 @@ input[type="file"] {
 
 .keyword-img {
 	width: 30px;
+	object-fit: contain;
 }
 .bloontonium-img {
 	width: 45px;
