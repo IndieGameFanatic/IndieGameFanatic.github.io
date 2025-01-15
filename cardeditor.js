@@ -493,9 +493,10 @@ const downloadImg = (isHero) => {
         downloadedContainer.style.height = `${Math.max(detailBoxHero.offsetHeight + 40, 510)}px`
     }
   html2canvas(downloadedContainer, {
-      backgroundColor: null,
+    backgroundColor: null,
       allowTaint: true,
-    scale: 5,
+      useCORS: true,
+      scale: 5,
   }).then(function (canvas) {
     let titleText
     if (!isHero) titleText = document.getElementById("title-text").textContent.trim();
