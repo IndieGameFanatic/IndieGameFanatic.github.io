@@ -494,9 +494,8 @@ const downloadImg = (isHero) => {
     }
   html2canvas(downloadedContainer, {
     backgroundColor: null,
-      allowTaint: true,
-      useCORS: true,
-      scale: 5,
+    useCORS: true,
+    scale: 5,
   }).then(function (canvas) {
     let titleText
     if (!isHero) titleText = document.getElementById("title-text").textContent.trim();
