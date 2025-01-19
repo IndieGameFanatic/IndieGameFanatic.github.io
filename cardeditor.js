@@ -16,6 +16,28 @@ const editCardTextEvent = (element, hasStroke) => {
     }
 }
 
+const editAbilityTextEvent = (element, hasStroke) => {
+    const inputCardText = document.getElementById(`input-${element}`)
+    // on reload, remove text from input
+    // ideally you would keep everything but that's a lot harder
+    inputCardText.value = ""
+    inputCardText.addEventListener("input", function (event) {
+        const cardText = document.getElementById(`${element}-${abilityOptions.value}`)
+        cardText.textContent = event.target.value
+    })
+    if (hasStroke) {
+        
+        inputCardText.addEventListener("input", function (event) {
+            const cardStroke = document.getElementById(`${element}-stroke-${abilityOptions.value}`)
+            cardStroke.textContent = event.target.value
+        })
+    }
+}
+
+const switchAbilityToEdit = () => {
+
+}
+
 const editDetailFlavor = () => {
     const inputCardText = document.getElementById(`input-flavor-text`)
     const cardText = document.getElementById(`flavor-text-keyword`)
@@ -36,23 +58,72 @@ const addKeyword = () => {
     keywordList.push(addedKeyword)
 }
 const addAbility = () => {
-    abilityElement.style.display = "flex"
-    fitTextToHeight(abilityDescription, 1.2, 56)
-    const abilityTitleContainer = document.getElementById("ability-name-container")
-    fitTextToHeight(abilityTitleContainer, 1.225, 35)
-    abilityElement.style.display = ""
+    abilityCount += 1
+    currentAbilityCount += 1
+    for (let property in abilityElement) {
+        abilityElement[property].id = `${abilityElementIDs[property]}-${abilityCount}`
+    }
 
-    let newAbility = abilityElement.cloneNode(true)
+    let newOption = document.createElement("option")
+    newOption.value = abilityCount
+    newOption.textContent = `Ability ${abilityCount}`
+    newOption.id = `ability-option-${abilityCount}`
+    abilityOptions.appendChild(newOption)
+
+    abilityElement.Name.textContent = `Ability ${abilityCount}`
+    abilityElement.NameStroke.textContent = `Ability ${abilityCount}`
+    abilityElement.Description.textContent = `Ability Description`
+
+    let newAbility = abilityElement.Element.cloneNode(true)
     newAbility.style.display = "flex"
-    let addedAbility = abilityHolder.appendChild(newAbility)
-    abilityList.push(addedAbility)
+    abilityHolder.appendChild(newAbility)
+    abilityOptions.value = abilityCount
+
+    for (let property in abilityElement) {
+        abilityElement[property].id = `${abilityElementIDs[property]}`
+    }
+
+    refreshSelectedAbility()
+    toggleAbilityInputs()
 }
 
 const removeAbility = () => {
-    if (abilityList.length > 0) {
-        abilityList[abilityList.length - 1].remove()
-        abilityList.pop()
+    if (currentAbilityCount == 0) return
+    currentAbilityCount -= 1
+    const removedAbility = document.getElementById(`ability-element-${abilityOptions.value}`)
+    const removedAbilityOption = document.getElementById(`ability-option-${abilityOptions.value}`)
+
+    removedAbility.remove()
+    removedAbilityOption.remove()
+
+    if (currentAbilityCount != 0) {
+        refreshSelectedAbility()
     }
+
+    toggleAbilityInputs()
+}
+
+const refreshSelectedAbility = () => {
+    const abilityButton = document.getElementById(`ability-icon-button-${abilityOptions.value}`)
+    const abilityName = document.getElementById(`ability-name-${abilityOptions.value}`)
+    const abilityDescription = document.getElementById(`ability-description-${abilityOptions.value}`)
+    const bloontoniumCost = document.getElementById(`bloontonium-cost-${abilityOptions.value}`)
+
+    abilityNameInput.value = abilityName.textContent
+    abilityDescriptionInput.value = abilityDescription.textContent
+    bloontoniumCostInput.value = bloontoniumCost.textContent
+    passiveToggle.checked = abilityButton.src.includes("Passive")
+}
+
+const toggleAbilityInputs = () => {
+    const isDisabled = currentAbilityCount == 0
+    inputAbilityEnabled.classList.toggle("disabled-text", isDisabled)
+    abilityNameInput.disabled = isDisabled
+    abilityDescriptionInput.disabled = isDisabled
+    passiveToggle.disabled = isDisabled
+    bloontoniumCostInput.disabled = isDisabled
+    abilityIconUpload.disabled = isDisabled
+    abilityOptions.disabled = isDisabled
 }
 
 const removeKeyword = () => {
@@ -65,6 +136,7 @@ const removeKeyword = () => {
 const togglePassive = () => {
     passiveToggle.checked = false
     passiveToggle.addEventListener("input", function (event) {
+        const abilityButton = document.getElementById(`ability-icon-button-${abilityOptions.value}`)
         if (passiveToggle.checked) abilityButton.src = "src/img/HeroCreator/PassiveAbilityButton.png"
         else abilityButton.src = "src/img/HeroCreator/ActiveAbilityButton.png"
     })
@@ -118,6 +190,12 @@ const editDropdownEvent = (ID, folderName) => {
     DropdownImg.src = `src/img/${folderName}/${Dropdown.value}.png`})
 }
 
+const editAbilityOptionEvent = () => {
+    abilityOptions.addEventListener("input", function (event) {
+        refreshSelectedAbility()
+    })
+}
+
 const editImagePositionEvent = (ID, variable) => {
     const positionInput = document.getElementById(`${ID}`)
     positionInput.value = 0
@@ -168,6 +246,21 @@ const editHeroNameEvent = () => {
     
     heroNameInput.addEventListener("input", function (event) {
         fitTextToHeight(heroNameContainer, 2, 41)
+    })
+}
+
+const editAbilityNameEvent = () => {
+    abilityNameInput.addEventListener("input", function (event) {
+        const option = document.getElementById(`ability-option-${abilityOptions.value}`)
+        option.textContent = abilityNameInput.value
+        fitTextToHeight(document.getElementById(`ability-name-container-${abilityOptions.value}`), 1.225, 35)
+    })
+}
+
+const editAbilityDescriptionEvent = () => {
+    const abilityDescriptionInput = document.getElementById("input-ability-description")
+    abilityDescriptionInput.addEventListener("input", function (event) {
+        fitTextToHeight(document.getElementById(`ability-description-${abilityOptions.value}`), 1.2, 56)
     })
 }
 
@@ -389,14 +482,14 @@ const toggleHeroPortrait = () => {
     const heroContainer = document.getElementById("hero-container")
     heroPortraitToggle.addEventListener("input", function (event) {
         if (heroPortraitToggle.checked) {
-            uploadImgTargets["heroPortrait"].style.display = ""
+            uploadImgTargets.heroPortrait.style.display = ""
             heroContainer.style.width = ""
             detailBoxHero.style.left = ""
             detailBoxHero.style.flex = ""
             heroContainer.style.left = ""
         }
         else {
-            uploadImgTargets["heroPortrait"].style.display = "none"
+            uploadImgTargets.heroPortrait.style.display = "none"
             heroContainer.style.width = "600px"
             detailBoxHero.style.left = "77px"
             detailBoxHero.style.flex = "0.74"
@@ -440,6 +533,10 @@ const uploadImg = (event) => {
       if (selectedImgTarget == cardImg) {
         storedImg = newImg
         updateCardImage();
+      }
+      else if (selectedImgTarget == uploadImgTargets.abilityIcon) {
+          let abilityIcon = document.getElementById(`ability-icon-${abilityOptions.value}`)
+          abilityIcon.src = newImg.src
       }
       else selectedImgTarget.src = newImg.src;
     };
@@ -558,12 +655,40 @@ const keywordValue = document.getElementById("keyword-value")
 const addKeywordBtn = document.getElementById("add-keyword")
 const removeKeywordBtn = document.getElementById("remove-keyword")
 
-const abilityElement = document.getElementById("ability-element")
+const abilityElement = {
+    Element: document.getElementById("ability-element"),
+    Button: document.getElementById("ability-icon-button"),
+    Icon: document.getElementById("ability-icon"),
+    Name: document.getElementById("ability-name"),
+    NameStroke: document.getElementById("ability-name-stroke"),
+    NameContainer: document.getElementById("ability-name-container"),
+    Description: document.getElementById("ability-description"),
+    Cost: document.getElementById("bloontonium-cost"),
+    CostStroke: document.getElementById("bloontonium-cost-stroke"),
+}
+const abilityElementIDs = {
+    Element: "ability-element",
+    Button: "ability-icon-button",
+    Icon: "ability-icon",
+    Name: "ability-name",
+    NameStroke: "ability-name-stroke",
+    NameContainer: "ability-name-container",
+    Description: "ability-description",
+    Cost: "bloontonium-cost",
+    CostStroke: "bloontonium-cost-stroke",
+}
+const inputAbilityEnabled = document.getElementById("enable-ability-elements")
 const abilityHolder = document.getElementById("ability-holder")
-const abilityButton = document.getElementById("ability-icon-button")
+const abilityOptions = document.getElementById("ability-options")
+
 const passiveToggle = document.getElementById("is-passive-toggle")
-const abilityDescription = document.getElementById("ability-description")
-const abilityList = []
+const abilityNameInput = document.getElementById("input-ability-name")
+const abilityDescriptionInput = document.getElementById("input-ability-description")
+const bloontoniumCostInput = document.getElementById("input-bloontonium-cost")
+const abilityIconUpload = document.getElementById("ability-img-btn")
+
+var abilityCount = 0
+var currentAbilityCount = 0
 
 const uploadImgTargets = {
     cardImg: document.getElementById("card-img"),
@@ -589,7 +714,7 @@ const ctx = canvas.getContext("2d")
 var storedImg = null
 var drawTimer = null
 
-const cardImg = uploadImgTargets["cardImg"]
+const cardImg = uploadImgTargets.cardImg
 
 // img size in pixels
 const imgSize = 512
@@ -602,11 +727,16 @@ editCardTextEvent("cost-text", true)
 editCardTextEvent("damage-text", true)
 editCardTextEvent("ammo-text", true)
 editCardTextEvent("delay-text", true)
-editCardTextEvent("ability-name", true)
-editCardTextEvent("hero-name", true)
-editCardTextEvent("bloontonium-cost", true)
-editCardTextEvent("ability-description", false)
 editCardTextEvent("description-text", false)
+
+editCardTextEvent("hero-name", true)
+editAbilityTextEvent("ability-name", true)
+editAbilityTextEvent("bloontonium-cost", true)
+editAbilityTextEvent("ability-description", false)
+editAbilityNameEvent()
+editAbilityDescriptionEvent()
+
+
 // editCardTextEvent("flavor-text", false)
 editDetailFlavor()
 editDropdownEvent("rarity-pin", "RarityPin")
@@ -622,5 +752,7 @@ editHeroNameEvent()
 toggleDetails()
 togglePassive()
 toggleHeroPortrait()
+editAbilityOptionEvent()
 // other things which need to happen at startup
 startup()
+toggleAbilityInputs()

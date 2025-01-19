@@ -291,25 +291,32 @@
 				</div>
 			</div>
 			<div class="multi-form-element">
-				<div class="form-element">
-					<label for="input-ability-name" id="ability-name-label">Ability Name</label><br>
-					<input type="text" id="input-ability-name" name="input-ability-name" size="19">
-				</div>
-				<div class="form-element">
-					<label for="is-passive-toggle" id="is-passive-label">Passive</label><br>
-					<input type="checkbox" id="is-passive-toggle">
-				</div>
-				<div class="form-element">
-					<label for="input-bloontonium-cost" id="ability-cost-label">Cost</label><br>
-					<input type="number" min="0" id="input-bloontonium-cost" size="3">
-				</div>
-				<div class="form-element">
-					<label for="ability-img-btn" id="ability-img-label">Icon</label><br>
-					<button id="ability-img-btn" class="label-btn" onclick="openUploadModal('abilityIcon')">Upload Image</button>
-				</div>
-				<div class="form-element">
-					<label for="input-ability-description">Ability Description</label><br>
-					<textarea id="input-ability-description" cols="51" rows="3"></textarea>
+				<div class="multi-form-element disabled-text" id="enable-ability-elements">
+					<div class="form-element disableable" style="width: 100%;" disabled>
+						<label for="ability-options" id="ability-options-label">Ability to Edit</label><br>
+						<select id="ability-options" class="disableable" style="width: 260px;">
+						</select>
+					</div>
+					<div class="form-element">
+						<label for="input-ability-name" id="ability-name-label">Ability Name</label><br>
+						<input type="text" id="input-ability-name" name="input-ability-name" size="19" class="disableable">
+					</div>
+					<div class="form-element">
+						<label for="is-passive-toggle" id="is-passive-label">Passive</label><br>
+						<input type="checkbox" id="is-passive-toggle" class="disableable">
+					</div>
+					<div class="form-element">
+						<label for="input-bloontonium-cost" id="ability-cost-label">Cost</label><br>
+						<input type="number" min="0" id="input-bloontonium-cost" size="3" class="disableable">
+					</div>
+					<div class="form-element">
+						<label for="ability-img-btn" id="ability-img-label">Icon</label><br>
+						<button id="ability-img-btn" class="label-btn disableable" onclick="openUploadModal('abilityIcon')">Upload Image</button>
+					</div>
+					<div class="form-element">
+						<label for="input-ability-description">Ability Description</label><br>
+						<textarea id="input-ability-description" cols="51" rows="3" class="disableable"></textarea>
+					</div>
 				</div>
 				<div class="form-element">
 					<br>
@@ -335,7 +342,7 @@
 						<span class="bold-text" id="hero-name"></span>
 						<span class="thick-stroke" id="hero-name-stroke" style="top: 0.0625em;"></span>
 					</div>
-					<div id="ability-holder">
+					<div id="ability-holder" class="ability-holder">
 						<div class="detail-box-element" id="ability-element" style="min-height: 85.7px;">
 							<div class="ability-icon-container">
 								<img src="src/img/HeroCreator/ActiveAbilityButton.png" class="ability-icon-button" id="ability-icon-button">
@@ -349,7 +356,7 @@
 								</div>
 							</div>
 							<div class="ability-text-container" id="ability-text-container">
-								<div id="ability-name-container">
+								<div id="ability-name-container" style="min-height: 35px">
 									<span class="bold-text-detail" id="ability-name" style="padding-bottom: 4.9px; min-height: 12.5px;"></span>
 									<span class="thick-stroke-detail" id="ability-name-stroke" style="top: 0.051em;"></span>
 								</div>

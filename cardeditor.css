@@ -280,6 +280,12 @@ input[type="file"] {
 	width: 30px;
 	object-fit: contain;
 }
+
+.ability-holder {
+	display: flex;
+	flex-direction: column;
+}
+
 .bloontonium-img {
 	width: 45px;
 	align-self: center;
@@ -365,7 +371,7 @@ input[type="file"] {
 	position: absolute;
 	font-size: 2em;
 	left: -62px;
-	top: 14px;
+	top: 16px;
 	width: 55px;
 	text-align: center;
 }
