@@ -57,49 +57,57 @@ const addKeyword = () => {
     let addedKeyword = keywordHolder.appendChild(newKeyword)
     keywordList.push(addedKeyword)
 }
+
+const LongMax = (numArray) => {
+    let largest = numArray[0]
+    for (let i = 1; i < numArray.length; i++) {
+        if (numArray[i] > largest) largest = numArray[i]
+    }
+    return largest;
+}
+
 const addAbility = () => {
-    abilityCount += 1
-    currentAbilityCount += 1
+    let i = 1
+    while (abilityArray.includes(i) || i < LongMax(abilityArray)) i++
     for (let property in abilityElement) {
-        abilityElement[property].id = `${abilityElementIDs[property]}-${abilityCount}`
+        abilityElement[property].id = `${abilityElementIDs[property]}-${i}`
     }
 
     let newOption = document.createElement("option")
-    newOption.value = abilityCount
-    newOption.textContent = `Ability ${abilityCount}`
-    newOption.id = `ability-option-${abilityCount}`
+    newOption.value = i
+    newOption.textContent = `Ability ${i}`
+    newOption.id = `ability-option-${i}`
     abilityOptions.appendChild(newOption)
 
-    abilityElement.Name.textContent = `Ability ${abilityCount}`
-    abilityElement.NameStroke.textContent = `Ability ${abilityCount}`
+    abilityElement.Name.textContent = `Ability ${i}`
+    abilityElement.NameStroke.textContent = `Ability ${i}`
     abilityElement.Description.textContent = `Ability Description`
+    abilityElement.Element.style.order = `${i}`
 
     let newAbility = abilityElement.Element.cloneNode(true)
     newAbility.style.display = "flex"
     abilityHolder.appendChild(newAbility)
-    abilityOptions.value = abilityCount
+    abilityOptions.value = i
 
     for (let property in abilityElement) {
         abilityElement[property].id = `${abilityElementIDs[property]}`
     }
 
+    abilityArray.push(i)
     refreshSelectedAbility()
     toggleAbilityInputs()
 }
 
 const removeAbility = () => {
-    if (currentAbilityCount == 0) return
-    currentAbilityCount -= 1
+    if (abilityArray.length == 0) return;
+    let index = abilityArray.indexOf(Number(abilityOptions.value))
     const removedAbility = document.getElementById(`ability-element-${abilityOptions.value}`)
     const removedAbilityOption = document.getElementById(`ability-option-${abilityOptions.value}`)
-
     removedAbility.remove()
     removedAbilityOption.remove()
+    abilityArray.splice(index, 1)
 
-    if (currentAbilityCount != 0) {
-        refreshSelectedAbility()
-    }
-
+    if (abilityArray.length != 0) refreshSelectedAbility();
     toggleAbilityInputs()
 }
 
@@ -116,7 +124,7 @@ const refreshSelectedAbility = () => {
 }
 
 const toggleAbilityInputs = () => {
-    const isDisabled = currentAbilityCount == 0
+    const isDisabled = abilityArray.length == 0
     inputAbilityEnabled.classList.toggle("disabled-text", isDisabled)
     abilityNameInput.disabled = isDisabled
     abilityDescriptionInput.disabled = isDisabled
@@ -124,8 +132,33 @@ const toggleAbilityInputs = () => {
     bloontoniumCostInput.disabled = isDisabled
     abilityIconUpload.disabled = isDisabled
     abilityOptions.disabled = isDisabled
+    moveAbilityUp.disabled = isDisabled
+    moveAbilityDown.disabled = isDisabled
 }
 
+const moveAbility = (movement) => {
+    const selectedValue = abilityOptions.value;
+    const selectedIndex = abilityArray.indexOf(Number(selectedValue));
+    const movedIndex = selectedIndex + movement;
+    console.log(abilityArray);
+    if (movedIndex >= abilityArray.length || movedIndex < 0) return;
+    const movedValue = abilityArray[movedIndex];
+    console.log(`selected value: ${selectedValue}, moved value: ${movedValue}`);
+
+    const selectedElement = document.getElementById(`ability-element-${selectedValue}`);
+    const movedElement = document.getElementById(`ability-element-${movedValue}`);
+    const selectedOption = document.getElementById(`ability-option-${selectedValue}`);
+    const movedOption = document.getElementById(`ability-option-${movedValue}`);
+
+
+    [selectedElement.style.order, movedElement.style.order] = [movedElement.style.order, selectedElement.style.order];
+    [selectedOption.textContent, movedOption.textContent] = [movedOption.textContent, selectedOption.textContent];
+    [selectedOption.value, movedOption.value] = [movedOption.value, selectedOption.value];
+    [selectedOption.id, movedOption.id] = [movedOption.id, selectedOption.id];
+    [abilityArray[selectedIndex], abilityArray[movedIndex]] = [abilityArray[movedIndex], abilityArray[selectedIndex]];
+
+    abilityOptions.value = selectedValue;
+}
 const removeKeyword = () => {
     if (keywordList.length > 0) {
         keywordList[keywordList.length - 1].remove()
@@ -680,6 +713,8 @@ const abilityElementIDs = {
 const inputAbilityEnabled = document.getElementById("enable-ability-elements")
 const abilityHolder = document.getElementById("ability-holder")
 const abilityOptions = document.getElementById("ability-options")
+const moveAbilityUp = document.getElementById("move-ability-up")
+const moveAbilityDown = document.getElementById("move-ability-down")
 
 const passiveToggle = document.getElementById("is-passive-toggle")
 const abilityNameInput = document.getElementById("input-ability-name")
@@ -687,8 +722,7 @@ const abilityDescriptionInput = document.getElementById("input-ability-descripti
 const bloontoniumCostInput = document.getElementById("input-bloontonium-cost")
 const abilityIconUpload = document.getElementById("ability-img-btn")
 
-var abilityCount = 0
-var currentAbilityCount = 0
+var abilityArray = []
 
 const uploadImgTargets = {
     cardImg: document.getElementById("card-img"),

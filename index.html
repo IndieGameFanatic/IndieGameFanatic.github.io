@@ -292,10 +292,18 @@
 			</div>
 			<div class="multi-form-element">
 				<div class="multi-form-element disabled-text" id="enable-ability-elements">
-					<div class="form-element disableable" style="width: 100%;" disabled>
+					<div class="form-element disableable">
 						<label for="ability-options" id="ability-options-label">Ability to Edit</label><br>
 						<select id="ability-options" class="disableable" style="width: 260px;">
 						</select>
+					</div>
+					<div class="form-element">
+						<br>
+						<button id="move-ability-up" class="label-btn disableable" onclick="moveAbility(-1)">Move Up</button>
+					</div>
+					<div class="form-element">
+						<br>
+						<button id="move-ability-down" class="label-btn disableable" onclick="moveAbility(+1)">Move Down</button>
 					</div>
 					<div class="form-element">
 						<label for="input-ability-name" id="ability-name-label">Ability Name</label><br>
