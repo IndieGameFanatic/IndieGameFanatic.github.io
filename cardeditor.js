@@ -543,12 +543,35 @@ window.onclick = function(event) {
 const updateCardImage = () => {
     if (storedImg == null || drawTimer != null) return;
     drawTimer = window.setTimeout(function () {
+        const keepRatioCheckbox = document.getElementById(`ratio-toggle`)
+        if (keepRatioCheckbox.checked) updateWithKeepRatio()
+        else updateWithoutKeepRatio()
+        cardImg.src = canvas.toDataURL()
+        drawTimer = null
+    }, 125)
+}
+
+const updateWithKeepRatio = () => {
     canvas.width = cardImageValues.w
     canvas.height = cardImageValues.h
     ctx.drawImage(storedImg, cardImageValues.x, cardImageValues.y, cardImageValues.w, cardImageValues.h)
-    cardImg.src = canvas.toDataURL()
-    drawTimer = null
-    }, 125)
+}
+
+const updateWithoutKeepRatio = () => {
+    let canvasSize = Math.max(cardImageValues.w, cardImageValues.h)
+    canvas.width = canvasSize
+    canvas.height = canvasSize
+    let scaleDifference = cardImageValues.w / cardImageValues.h
+    let isHeightBigger = false
+    let smallerScale = Math.min(cardImageValues.w, cardImageValues.h) / 512
+    if (scaleDifference < 1) {
+        scaleDifference = 1 / scaleDifference
+        isHeightBigger = true
+    }
+    scaleDifference -= 1
+    let offset = 256 * scaleDifference * smallerScale
+    if (isHeightBigger) ctx.drawImage(storedImg, cardImageValues.x + offset, cardImageValues.y, cardImageValues.w, cardImageValues.h)
+    else ctx.drawImage(storedImg, cardImageValues.x, cardImageValues.y + offset, cardImageValues.w, cardImageValues.h)
 }
 
 const uploadImg = (event) => {
@@ -627,9 +650,11 @@ const downloadImg = (isHero) => {
     useCORS: true,
     scale: 5,
   }).then(function (canvas) {
+
     let titleText
     if (!isHero) titleText = document.getElementById("title-text").textContent.trim();
     else titleText = document.getElementById("hero-name").textContent.trim();
+
     let sanitizedTitleText = titleText.replace(/[^\w\s]/gi, '').replace(/ /gi, '-').toLowerCase().substring(0, 50);
     let imageData = canvas.toDataURL("image/png")
     downloadButtonMethod(imageData, `bcs-${sanitizedTitleText}.png`)
