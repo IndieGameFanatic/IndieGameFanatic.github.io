@@ -251,7 +251,7 @@ const toggleKeepRatio = () => {
     keepRatioCheckbox.checked = true;
     keepRatioCheckbox.addEventListener("input", function (event) {
         if (keepRatioCheckbox.checked) cardImg.style.objectFit = "cover"
-        else cardImg.style.objectFit = "none"
+        else cardImg.style.objectFit = "contain"
     })
 }
 
@@ -558,20 +558,13 @@ const updateWithKeepRatio = () => {
 }
 
 const updateWithoutKeepRatio = () => {
-    let canvasSize = Math.max(cardImageValues.w, cardImageValues.h)
-    canvas.width = canvasSize
-    canvas.height = canvasSize
-    let scaleDifference = cardImageValues.w / cardImageValues.h
-    let isHeightBigger = false
-    let smallerScale = Math.min(cardImageValues.w, cardImageValues.h) / 512
-    if (scaleDifference < 1) {
-        scaleDifference = 1 / scaleDifference
-        isHeightBigger = true
-    }
-    scaleDifference -= 1
-    let offset = 256 * scaleDifference * smallerScale
-    if (isHeightBigger) ctx.drawImage(storedImg, cardImageValues.x + offset, cardImageValues.y, cardImageValues.w, cardImageValues.h)
-    else ctx.drawImage(storedImg, cardImageValues.x, cardImageValues.y + offset, cardImageValues.w, cardImageValues.h)
+    canvas.width = 512
+    canvas.height = 512
+    widthDifference = cardImageValues.w / 512 - 1
+    heightDifference = cardImageValues.h / 512 - 1
+    let widthOffset = 256 * widthDifference
+    let heightOffset = 256 * heightDifference
+    ctx.drawImage(storedImg, cardImageValues.x - widthOffset, cardImageValues.y - heightOffset, cardImageValues.w, cardImageValues.h)
 }
 
 const uploadImg = (event) => {
