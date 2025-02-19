@@ -46,6 +46,10 @@
 				<input type="text" id="input-cost-text" name="input-cost-text" size="3">
 			</div>
 			<div class="form-element">
+				<label for="bloontonium-toggle">Costs Bloontonium</label><br>
+				<input type="checkbox" id="bloontonium-toggle">
+			</div>
+			<div class="form-element">
 				<label for="copies-slider" id="copies-label">Copies: 1</label><br>
 				<input type="range" min="1" max="4" value="1" name="copies-slider" id="copies-slider"
 					   oninput="setCoinQuantity()">
@@ -137,6 +141,7 @@
 						<option value="OnTurnEnd">On Turn End</option>
 						<option value="Shield">Shield</option>
 						<option value="Pick">Pick</option>
+						<option value="Doomed">Doomed</option>
 						<option value="Unique">Unique</option>
 					</select>
 				</div>

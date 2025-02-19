@@ -175,6 +175,17 @@ const togglePassive = () => {
     })
 }
 
+const toggleBloontoniumCost = () => {
+    const BloontoniumToggle = document.getElementById("bloontonium-toggle")
+    const Coins = document.getElementsByClassName("cost")
+    BloontoniumToggle.checked = false
+    BloontoniumToggle.addEventListener("input", function (event) {
+        let CostImg = "src/img/CardIcon/Coin.png"
+        if (BloontoniumToggle.checked) CostImg = "src/img/CardIcon/Bloontonium.png"
+        for (let i = 0; i < Coins.length - 1; i++) Coins[i].src = CostImg
+    })
+}
+
 const toggleDetails = () => {
     detailCheckbox.checked = false
     keywordDropdown.disabled = true
@@ -345,11 +356,11 @@ const cardTypes = {
     imgBorderRadius: "10%",
     borderOffset: "translate(0%, -0.8%)",
     imgObjFit: "cover",
-    delayTop: "39%",
+    delayTop: "36%",
     delayLeft: "95%",
     delayFontSize: "4em",
-    classPinTransform: "translate(-66.2%, 60%)",
-    heroPinTransform: "translate(-50%, -50%)",
+    classPinLeft: "7%",
+    classPinTop: "23.5%",
     heroPinLeft: "50%",
     heroPinTop: "0%",
     damageVisibility: true,
@@ -362,17 +373,17 @@ const cardTypes = {
     imgHeight: "55%",
     imgWidth: "75%",
     damageLeft: "88%",
-    damageTop: "5%",
+    damageTop: "4%",
     imgTransform: "translate(-50%, -7%)",
-    borderOffset: "translate(0%, -6%)",
-    classPinTransform: "translate(-50%, -50%)",
-    heroPinTransform: "translate(-50%, -50%)",
+    borderOffset: "translate(0%, -7.25%)",
+    classPinLeft: "9%",
+    classPinTop: "39%",
     heroPinLeft: "89%",
-    heroPinTop: "43%",
+    heroPinTop: "39.5%",
     imgBorderRadius: "50%",
     imgObjFit: "fill",
     delayTop: "22.25%",
-    delayLeft: "88%",
+    delayLeft: "94%",
     delayFontSize: "6em",
     damageVisibility: true,
     ammoVisibility: false,
@@ -383,11 +394,11 @@ const cardTypes = {
     imgHeight: "55%",
     imgWidth: "86%",
     imgTransform: "translate(-51%, -5%)",
-    borderOffset: "translate(0%, -5.5%)",
-    classPinTransform: "translate(-50%, -50%)",
-    heroPinTransform: "translate(-50%, -50%)",
+    borderOffset: "translate(0%, -7.25%)",
+    classPinLeft: "9%",
+    classPinTop: "39%",
     heroPinLeft: "89%",
-    heroPinTop: "43%",
+    heroPinTop: "39.5%",
     imgBorderRadius: "40%",
     imgObjFit: "fill",
     damageVisibility: false,
@@ -402,6 +413,7 @@ const cardTypes = {
 const keywordTitles = {
     Defender: "Defender +{VALUE}",
     DoubleAttack: "Double Attack",
+    Doomed: "Doomed",
     OnDamaged: "On Damaged",
     OnDestroyed: "On Destroyed",
     OnFire: "On Fire",
@@ -420,6 +432,7 @@ const keywordTitles = {
 const keywordDescriptions = {
     Defender: "Can defend on opponent's turn, has +{VALUE} damage on opponent's turn.",
     DoubleAttack: "Attacks twice.",
+    Doomed: "This Monkey will be removed at the start of its next turn.",
     OnDamaged: "Triggers on losing health from any source.",
     OnDestroyed: "Triggers when Bloon is Popped (by damage or effect) or when it hits opposoing Hero.",
     OnFire: "Will take 30 damage at the end of its turn and before attacking.",
@@ -472,8 +485,8 @@ const updateCardLayout = (type) => {
   cardDelayTextContainer.style.top = cardTypeObj.delayTop;
   cardDelayTextContainer.style.left = cardTypeObj.delayLeft;
   cardDelayTextContainer.style.fontSize = cardTypeObj.delayFontSize;
-  classPin.style.transform = cardTypeObj.classPinTransform;
-  heroPin.style.transform = cardTypeObj.heroPinTransform;
+  classPin.style.left = cardTypeObj.classPinLeft;
+  classPin.style.top = cardTypeObj.classPinTop;
   heroPin.style.left = cardTypeObj.heroPinLeft;
   heroPin.style.top = cardTypeObj.heroPinTop;
   toggleVisibilities(cardTypeObj)
@@ -804,6 +817,7 @@ editHeroNameEvent()
 toggleDetails()
 togglePassive()
 toggleHeroPortrait()
+toggleBloontoniumCost()
 editAbilityOptionEvent()
 // other things which need to happen at startup
 startup()

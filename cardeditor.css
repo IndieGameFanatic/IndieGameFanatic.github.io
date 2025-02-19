@@ -244,7 +244,7 @@ input[type="file"] {
 .ammo {
 	position: absolute;
 	transform: translate(-50%, -50%);
-	left: 88%;
+	left: 95%;
 	top: 22%
 }
 
@@ -252,7 +252,7 @@ input[type="file"] {
 	position: absolute;
 	transform: translate(-50%, -50%);
 	left: 95%;
-	top: 39%
+	top: 36%
 }
 
 .rarity-pin {
@@ -266,14 +266,15 @@ input[type="file"] {
 	position: absolute;
 	transform: translate(-50%, -50%);
 	left: 50%;
-	top: 0%
+	top: 0%;
+	width: 96px;
 }
 
 .class-pin {
 	position: absolute;
-	transform: translate(-66.2%, 60%);
-	left: 8%;
-	top: 43%;
+	transform: translate(-50%, -50%);
+	left: 7%;
+	top: 23.5%;
 }
 
 .keyword-img {
@@ -364,7 +365,7 @@ input[type="file"] {
 	left: 7.5%;
 	width: 85%;
 	max-height: 30%;
-	bottom: 345px;
+	bottom: 375px;
 }
 
 .bloontonium-cost-container {
@@ -428,7 +429,7 @@ input[type="file"] {
 	transform: translate(-50%, -50%);
 	font-size: 2.3em;
 	left: 50%;
-	top: 64%;
+	top: 60%;
 	width: 90%;
 	max-height: 20%;
 }
@@ -454,7 +455,7 @@ input[type="file"] {
 	position: absolute;
 	transform: translate(-50%, -50%);
 	font-size: 6em;
-	left: 88%;
+	left: 95%;
 	top: 20%;
 }
 
@@ -463,7 +464,7 @@ input[type="file"] {
 	transform: translate(-50%, -50%);
 	font-size: 4em;
 	left: 95%;
-	top: 39%;
+	top: 36%;
 }
 
 .description-text {
