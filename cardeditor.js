@@ -360,7 +360,7 @@ const cardTypes = {
     delayLeft: "95%",
     delayFontSize: "4em",
     classPinLeft: "7%",
-    classPinTop: "23.5%",
+    classPinTop: "24.5%",
     heroPinLeft: "50%",
     heroPinTop: "0%",
     damageVisibility: true,
