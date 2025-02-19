@@ -181,8 +181,15 @@ const toggleBloontoniumCost = () => {
     BloontoniumToggle.checked = false
     BloontoniumToggle.addEventListener("input", function (event) {
         let CostImg = "src/img/CardIcon/Coin.png"
-        if (BloontoniumToggle.checked) CostImg = "src/img/CardIcon/Bloontonium.png"
-        for (let i = 0; i < Coins.length - 1; i++) Coins[i].src = CostImg
+        let CostTop = "4%"
+        if (BloontoniumToggle.checked) {
+            CostImg = "src/img/CardIcon/Bloontonium.png"
+            CostTop = "5%"
+        }
+        for (let i = 0; i < Coins.length - 1; i++) {
+            Coins[i].src = CostImg
+            Coins[i].style.top = CostTop
+        }
     })
 }
 
