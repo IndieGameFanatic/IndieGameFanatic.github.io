@@ -286,12 +286,15 @@ const resetImageValues = () => {
     updateCardImage()
 }
 
+var descriptionMaxHeight = 250
+
 const editDescriptionEvent = () => {
     const DescriptionBox = document.getElementById("input-description-text")
     DescriptionBox.addEventListener("input", function (event) {
-        fitTextToHeight(cardDescriptionText, 3.2, 221)
+        fitTextToHeight(cardDescriptionText, 3.2, descriptionMaxHeight)
     })
 }
+
 const editHeroNameEvent = () => {
     const heroNameContainer = document.getElementById("hero-name-container")
     const heroNameInput = document.getElementById("input-hero-name")
@@ -326,6 +329,7 @@ const fitTextToHeight = (TextHTML, initFontSize, maxHeight) => {
     }
     return newFontSize
 }
+
 
 // set as many coins visible
 const setCoinQuantity = () => {
@@ -482,6 +486,8 @@ const updateCardLayout = (type) => {
         cardFormHero.style.display = "none"
         heroJustifier.style.display = "none"
     }
+  if (type == 'monkey') descriptionMaxHeight = 250
+  else descriptionMaxHeight = 221
   const Title = document.getElementById("title-text-container")
   const Class = document.getElementById("class-text-container")
   const Description = document.getElementById("description-text")
