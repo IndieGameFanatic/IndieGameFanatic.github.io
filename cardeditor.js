@@ -488,6 +488,8 @@ const updateCardLayout = (type) => {
     }
   if (type == 'monkey') descriptionMaxHeight = 250
   else descriptionMaxHeight = 221
+  fitTextToHeight(cardDescriptionText, 3.2, descriptionMaxHeight)
+
   const Title = document.getElementById("title-text-container")
   const Class = document.getElementById("class-text-container")
   const Description = document.getElementById("description-text")
