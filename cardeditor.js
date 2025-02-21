@@ -270,8 +270,7 @@ const toggleKeepRatio = () => {
     const keepRatioCheckbox = document.getElementById(`ratio-toggle`)
     keepRatioCheckbox.checked = true;
     keepRatioCheckbox.addEventListener("input", function (event) {
-        if (keepRatioCheckbox.checked) cardImg.style.objectFit = "cover"
-        else cardImg.style.objectFit = "contain"
+        updateCardImage()
     })
 }
 
@@ -290,7 +289,7 @@ const resetImageValues = () => {
 const editDescriptionEvent = () => {
     const DescriptionBox = document.getElementById("input-description-text")
     DescriptionBox.addEventListener("input", function (event) {
-        fitTextToHeight(cardDescriptionText, 2.7, 188)
+        fitTextToHeight(cardDescriptionText, 3.2, 221)
     })
 }
 const editHeroNameEvent = () => {
@@ -372,6 +371,9 @@ const cardTypes = {
     classPinTop: "24.5%",
     heroPinLeft: "50%",
     heroPinTop: "0%",
+    titleBottom: "45.25%",
+    classTop: "57%",
+    descriptionTop: "74%",
     damageVisibility: true,
     ammoVisibility: true,
     delayVisibility: true
@@ -394,6 +396,9 @@ const cardTypes = {
     delayTop: "22.25%",
     delayLeft: "94%",
     delayFontSize: "6em",
+    titleBottom: "42.25%",
+    classTop: "60%",
+    descriptionTop: "77.5%",
     damageVisibility: true,
     ammoVisibility: false,
     delayVisibility: true
@@ -410,6 +415,9 @@ const cardTypes = {
     heroPinTop: "39.5%",
     imgBorderRadius: "40%",
     imgObjFit: "fill",
+    titleBottom: "42.25%",
+    classTop: "60%",
+    descriptionTop: "77.5%",
     damageVisibility: false,
     ammoVisibility: false,
     delayVisibility: false,
@@ -474,6 +482,12 @@ const updateCardLayout = (type) => {
         cardFormHero.style.display = "none"
         heroJustifier.style.display = "none"
     }
+  const Title = document.getElementById("title-text-container")
+  const Class = document.getElementById("class-text-container")
+  const Description = document.getElementById("description-text")
+  Title.style.bottom = cardTypeObj.titleBottom
+  Class.style.top = cardTypeObj.classTop
+  Description.style.top = cardTypeObj.descriptionTop
   cardBorder.src = cardTypeObj.borderSrc;
   cardBorder.style.transform = cardTypeObj.borderOffset;
   if (cardTypeObj.damageSrc)
