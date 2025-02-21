@@ -590,7 +590,7 @@ const updateCardImage = () => {
 const updateWithKeepRatio = () => {
     canvas.width = cardImageValues.w
     canvas.height = cardImageValues.h
-    ctx.drawImage(storedImg, cardImageValues.x, cardImageValues.y, cardImageValues.w, cardImageValues.h)
+    ctx.drawImage(storedImg, cardImageValues.x, -cardImageValues.y, cardImageValues.w, cardImageValues.h)
 }
 
 const updateWithoutKeepRatio = () => {
@@ -600,7 +600,7 @@ const updateWithoutKeepRatio = () => {
     heightDifference = cardImageValues.h / 512 - 1
     let widthOffset = 256 * widthDifference
     let heightOffset = 256 * heightDifference
-    ctx.drawImage(storedImg, cardImageValues.x - widthOffset, cardImageValues.y - heightOffset, cardImageValues.w, cardImageValues.h)
+    ctx.drawImage(storedImg, cardImageValues.x - widthOffset, -cardImageValues.y - heightOffset, cardImageValues.w, cardImageValues.h)
 }
 
 const uploadImg = (event) => {
