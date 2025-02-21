@@ -178,6 +178,7 @@ const togglePassive = () => {
 const toggleBloontoniumCost = () => {
     const BloontoniumToggle = document.getElementById("bloontonium-toggle")
     const Coins = document.getElementsByClassName("cost")
+    const CostText = document.getElementById("cost-text-container")
     BloontoniumToggle.checked = false
     BloontoniumToggle.addEventListener("input", function (event) {
         let CostImg = "src/img/CardIcon/Coin.png"
@@ -190,6 +191,7 @@ const toggleBloontoniumCost = () => {
             Coins[i].src = CostImg
             Coins[i].style.top = CostTop
         }
+        CostText.style.top = CostTop
     })
 }
 
