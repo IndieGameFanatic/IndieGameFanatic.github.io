@@ -661,6 +661,10 @@ const uploadImgFromURL = () => {
         storedImg = newImg
         updateCardImage();
       }
+      else if (selectedImgTarget == uploadImgTargets.abilityIcon) {
+          let abilityIcon = document.getElementById(`ability-icon-${abilityOptions.value}`)
+          abilityIcon.src = newImg.src
+      }
       else selectedImgTarget.src = newImg.src;
     };
 
