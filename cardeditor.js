@@ -469,7 +469,7 @@ const keywordDescriptions = {
     OnTurnEnd: "Triggers once turn has ended",
     Pick: "Look at the next {VALUE} cards in your deck. Choose one and add it to your hand. Other cards go to the bottom of your deck.",
     Shield: "Shield will block {VALUE} incoming damage.",
-    Stunned: "Monkey can't attack or reload until stun wears off.",
+    Stunned: "Monkey can't attack or reload until stun wears off. Bloon delay does not reduce at end of turn.",
     Unique: "You can only have one copy of this card."
 }
 
