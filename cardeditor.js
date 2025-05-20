@@ -130,7 +130,11 @@ const addDraftAbilities = (Abilities) => {
 
         abilityElement.Name.textContent = ability.Name
         abilityElement.NameStroke.textContent = ability.Name
+        fitTextToHeight(document.getElementById(abilityElement.NameContainer), 1.225, 35)
+
         abilityElement.Description.textContent = ability.Description
+        fitTextToHeight(abilityElement.Description, 1.2, 56)
+
         abilityElement.Element.style.order = `${i}`
         abilityElement.Cost.textContent = ability.Cost
         abilityElement.CostStroke.textContent = ability.Cost
@@ -531,7 +535,10 @@ const loadDraft = (event) => {
 
 const heroDraftLoaded = (cardData) => {
     updateCardLayout(cardData.Type)
+
     setCardValue("input-hero-name", cardData.Title)
+    fitTextToHeight(document.getElementById("hero-name-container"), 2, 41)
+
     if (cardData.Image.includes("data:image/")) document.getElementById("hero-portrait").src = cardData.Image
     addDraftAbilities(cardData.Abilities)
 }
@@ -548,7 +555,10 @@ const draftLoaded = (cardData) => {
     setCardValue("rarity-pin-dropdown", cardData.Rarity)
     setCardValue("hero-pin-dropdown", cardData.Hero)
     setCardValue("class-pin-dropdown", cardData.ClassPin)
+
     setCardValue("input-description-text", cardData.Description)
+    fitTextToHeight(cardDescriptionText, 3.2, descriptionMaxHeight)
+
     setCardValue("input-flavor-text", cardData.Flavor)
     setToggleCheck("damage-checkbox", cardData.hasDamage)
     setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
