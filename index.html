@@ -185,14 +185,21 @@
 			</div>
 			<div class="multi-form-element">
 				<div class="form-element">
+					<button id="reset-btn" class="label-btn" onclick="resetImageValues()">Reset</button>
+				</div>
+				<div class="form-element">
 					<button class="label-btn" id="show-img-upload-modal" onclick="openUploadModal('cardImg')">Upload Image</button>
 					<!-- <input type="file" name="img-upload" id="img-upload" onchange="uploadImg(event)"> -->
 				</div>
 				<div class="form-element">
-					<button id="reset-btn" class="label-btn" onclick="resetImageValues()">Reset Image</button>
+					<button id="save-draft-btn" class="label-btn" onclick="saveDraft()">Save Draft</button>
 				</div>
 				<div class="form-element">
-					<button id="download-btn" class="label-btn" onclick="downloadImg(false)">Download Image</button>
+					<label class="label-btn" for="load-draft">Load Draft</label>
+					<input type="file" name="load-draft" id="load-draft" onchange="loadDraft(event)" accept="application/json">
+				</div>
+				<div class="form-element">
+					<button id="download-btn" class="label-btn" onclick="downloadImg()">Download Image</button>
 				</div>
 			</div>
 		</div>
@@ -344,7 +351,14 @@
 				</div>
 			</div>
 			<div class="form-element">
-				<button id="download-btn" class="label-btn" onclick="downloadImg(true)">Download Image</button>
+				<button id="save-draft-btn" class="label-btn" onclick="saveDraft()">Save Draft</button>
+			</div>
+			<div class="form-element">
+				<label class="label-btn" for="load-draft">Load Draft</label>
+				<input type="file" name="load-draft" id="load-draft" onchange="loadDraft(event)" accept="application/json">
+			</div>
+			<div class="form-element">
+				<button id="download-btn" class="label-btn" onclick="downloadImg()">Download Image</button>
 			</div>
 		</div>
 		<!-- col 2/2 (Heroes Only) -->

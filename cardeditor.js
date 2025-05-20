@@ -56,6 +56,7 @@ const addKeyword = () => {
     newKeyword.style.display = "flex"
     let addedKeyword = keywordHolder.appendChild(newKeyword)
     keywordList.push(addedKeyword)
+    keywordListData.push({keyword: keywordDropdown.value, value: keywordValue.value})
 }
 
 const LongMax = (numArray) => {
@@ -65,6 +66,7 @@ const LongMax = (numArray) => {
     }
     return largest;
 }
+
 
 const addAbility = () => {
     let i = 1
@@ -99,7 +101,7 @@ const addAbility = () => {
 }
 
 const removeAbility = () => {
-    if (abilityArray.length == 0) return;
+    if (abilityArray.length <= 0) return;
     let index = abilityArray.indexOf(Number(abilityOptions.value))
     const removedAbility = document.getElementById(`ability-element-${abilityOptions.value}`)
     const removedAbilityOption = document.getElementById(`ability-option-${abilityOptions.value}`)
@@ -109,6 +111,46 @@ const removeAbility = () => {
 
     if (abilityArray.length != 0) refreshSelectedAbility();
     toggleAbilityInputs()
+}
+
+const addDraftAbilities = (Abilities) => {
+    while (abilityArray.length > 0) removeAbility()
+    for (let k in Abilities) {
+        let i = 1
+        while (abilityArray.includes(i) || i < LongMax(abilityArray)) i++
+        for (let property in abilityElement) {
+            abilityElement[property].id = `${abilityElementIDs[property]}-${i}`
+        }
+        const ability = Abilities[k]
+        let newOption = document.createElement("option")
+        newOption.value = i
+        newOption.textContent = `Ability ${i}`
+        newOption.id = `ability-option-${i}`
+        abilityOptions.appendChild(newOption)
+
+        abilityElement.Name.textContent = ability.Name
+        abilityElement.NameStroke.textContent = ability.Name
+        abilityElement.Description.textContent = ability.Description
+        abilityElement.Element.style.order = `${i}`
+        abilityElement.Cost.textContent = ability.Cost
+        abilityElement.CostStroke.textContent = ability.Cost
+        if (ability.Icon) abilityElement.Icon.src = ability.Icon
+        abilityElement.Button.src = ability.Button
+
+
+        let newAbility = abilityElement.Element.cloneNode(true)
+        newAbility.style.display = "flex"
+        abilityHolder.appendChild(newAbility)
+        abilityOptions.value = i
+
+        for (let property in abilityElement) {
+            abilityElement[property].id = `${abilityElementIDs[property]}`
+        }
+
+        abilityArray.push(i)
+        refreshSelectedAbility()
+        toggleAbilityInputs()
+    }
 }
 
 const refreshSelectedAbility = () => {
@@ -163,6 +205,7 @@ const removeKeyword = () => {
     if (keywordList.length > 0) {
         keywordList[keywordList.length - 1].remove()
         keywordList.pop()
+        keywordListData.pop()
     }
 }
 
@@ -250,7 +293,7 @@ const editAbilityOptionEvent = () => {
 }
 
 const editImagePositionEvent = (ID, variable) => {
-    const positionInput = document.getElementById(`${ID}`)
+    const positionInput = document.getElementById(ID)
     positionInput.value = 0
     positionInput.addEventListener("input", function (event) {
         cardImageValues[variable] = parseFloat(positionInput.value)
@@ -259,7 +302,7 @@ const editImagePositionEvent = (ID, variable) => {
 }
 
 const editImageScaleEvent = (ID, variable) => {
-    const scaleInput = document.getElementById(`${ID}`)
+    const scaleInput = document.getElementById(ID)
     scaleInput.addEventListener("input", function (event) {
         cardImageValues[variable] = parseFloat(scaleInput.value * imgSize / 100)
         updateCardImage()
@@ -472,11 +515,177 @@ const keywordDescriptions = {
     Stunned: "Monkey can't attack or reload until stun wears off. Bloon delay does not reduce at end of turn.",
     Unique: "You can only have one copy of this card."
 }
+const loadDraft = (event) => {
+    const fileList = event.target.files;
+    const firstFile = fileList[0];
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        const cardData = JSON.parse(event.target.result)
+        if (cardData.isHero) heroDraftLoaded(cardData)
+        else draftLoaded(cardData)
+    }
+
+    if (firstFile.type.startsWith("application/json")) reader.readAsText(firstFile)
+}
+
+const heroDraftLoaded = (cardData) => {
+    updateCardLayout(cardData.Type)
+    setCardValue("input-hero-name", cardData.Title)
+    document.getElementById("hero-portrait").src = cardData.Image
+    addDraftAbilities(cardData.Abilities)
+}
+
+const draftLoaded = (cardData) => {
+    updateCardLayout(cardData.Type)
+    setCardValue("input-title-text", cardData.Title)
+    setCardValue("input-cost-text", cardData.Cost)
+    setCardValue("input-damage-text", cardData.Damage)
+    setCardValue("input-delay-text", cardData.Delay)
+    setCardValue("input-ammo-text", cardData.Ammo)
+    setCardValue("copies-slider", cardData.Copies)
+    setCardValue("input-class-text", cardData.Class)
+    setCardValue("rarity-pin-dropdown", cardData.Rarity)
+    setCardValue("hero-pin-dropdown", cardData.Hero)
+    setCardValue("class-pin-dropdown", cardData.ClassPin)
+    setCardValue("input-description-text", cardData.Description)
+    setCardValue("input-flavor-text", cardData.Flavor)
+    setToggleCheck("damage-checkbox", cardData.hasDamage)
+    setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
+    setToggleCheck("detail-toggle", cardData.isDetailsEnabled)
+    storedImg = document.createElement("img");
+    storedImg.src = cardData.Image
+    setCardValue("x-input", cardData.ImageTransform[0])
+    setCardValue("y-input", cardData.ImageTransform[1])
+    setCardValue("w-input", cardData.ImageTransform[2])
+    setCardValue("h-input", cardData.ImageTransform[3])
+    setToggleCheck("ratio-toggle", cardData.KeepRatio)
+    updateCardImage()
+    addDraftKeywords(cardData.Keywords)
+}
+
+const addDraftKeywords = (Keywords) => {
+    while (keywordList.length > 0) removeKeyword()
+    for (let i = 0; i < Keywords.length; i++) {
+
+        let Keyword = Keywords[i].keyword
+        let Value = Keywords[i].value
+
+        let finalDescription = keywordDescriptions[Keyword].replace("{VALUE}", Value)
+        keywordDescription.textContent = finalDescription
+
+        let finalTitle = keywordTitles[Keyword].replace("{VALUE}", Value)
+        keywordTitle.textContent = finalTitle
+        keywordTitleStroke.textContent = finalTitle
+
+        keywordImg.src = `src/img/Keyword/${Keyword}.png`
+        let newKeyword = keywordElement.cloneNode(true)
+        newKeyword.style.display = "flex"
+        let addedKeyword = keywordHolder.appendChild(newKeyword)
+        keywordList.push(addedKeyword)
+        keywordListData.push({ keyword: Keyword, value: Value })
+    }
+}
+const saveAbilities = () => {
+    const abilities = []
+    for (let i = 0; i < abilityArray.length; i++) {
+        var abilityDetails = {
+            Name: "",
+            Description: "",
+            Cost: "",
+            Button: "",
+            Icon: "",
+        }
+        for (let property in abilityDetails) {
+            const str = `${abilityElementIDs[property]}-${abilityArray[i]}`
+
+            const savedElement = document.getElementById(str)
+            if (property == "Button" || property == "Icon") {
+                console.log(savedElement.id)
+                abilityDetails[property] = savedElement.src
+            }
+            else abilityDetails[property] = savedElement.textContent
+        }
+        abilities.push(abilityDetails)
+    }
+    return abilities
+}
+const saveDraft = () => {
+    var cardData
+    const isHero = cardTypes[cardType].isHero
+    if (isHero) {
+        cardData = {
+            Type: cardType,
+            isHero: isHero,
+            Title: titleText(true, false),
+            Abilities: saveAbilities(),
+            Image: document.getElementById("hero-portrait").src,
+
+        }
+    }
+    else {
+        cardData = {
+            Type: cardType,
+            isHero: isHero,
+            Title: titleText(false, false),
+            Cost: getCardValue("input-cost-text"),
+            Damage: getCardValue("input-damage-text"),
+            Delay: getCardValue("input-delay-text"),
+            Ammo: getCardValue("input-ammo-text"),
+            Copies: getCardValue("copies-slider"),
+            Class: getCardValue("input-class-text"),
+            Rarity: getCardValue("rarity-pin-dropdown"),
+            Hero: getCardValue("hero-pin-dropdown"),
+            ClassPin: getCardValue("class-pin-dropdown"),
+            Description: getCardValue("input-description-text"),
+            Flavor: getCardValue("input-flavor-text"),
+            hasDamage: getToggleCheck("damage-checkbox"),
+            costsBloontonium: getToggleCheck("bloontonium-toggle"),
+            isDetailsEnabled: getToggleCheck("detail-toggle"),
+            Keywords: keywordListData,
+            ImageTransform: [getCardValue("x-input"), getCardValue("y-input"), getCardValue("w-input"), getCardValue("h-input")],
+            KeepRatio: getToggleCheck("ratio-toggle"),
+            Image: storedImg.src,
+        }
+    }
+    const JSONData = JSON.stringify(cardData)
+    console.log(JSON.stringify(cardData))
+
+    var downloadLink = document.createElement("a")
+    const blob = new Blob([JSONData], { type: 'text/plain' })
+    downloadLink.href = window.URL.createObjectURL(blob)
+    downloadLink.download = `bcs-draft-${titleText(isHero, true)}.json`
+    document.body.appendChild(downloadLink)
+    downloadLink.click()
+    document.body.removeChild(downloadLink)
+
+}
+const getCardValue = (element) => {
+    return sanitizeText(document.getElementById(element).value);
+}
+const ManualInput = new Event("input")
+const ManualChange = new Event("change")
+const setCardValue = (element, value) => {
+    const e = document.getElementById(element)
+    e.value = value
+    e.dispatchEvent(ManualInput)
+    e.dispatchEvent(ManualChange)
+}
+
+const getToggleCheck = (element) => {
+    return document.getElementById(element).checked
+}
+
+const setToggleCheck = (element, checked) => {
+    const e = document.getElementById(element)
+    e.checked = checked
+    e.dispatchEvent(ManualInput)
+}
 
 // occurs when type changes
 const updateCardLayout = (type) => {
   cardType = type
-    const cardTypeObj = cardTypes[type];
+    const cardTypeObj = cardTypes[cardType];
     if (cardTypeObj.isHero) {
         cardForm.style.display = "none"
         cardJustifier.style.display = "none"
@@ -679,7 +888,8 @@ const setThumbnail = (src) => {
   imgThumbnail.src = src
 }
 
-const downloadImg = (isHero) => {
+const downloadImg = () => {
+    let isHero = cardTypes[cardType].isHero
     let downloadedContainer
     if (!isHero) {
         downloadedContainer = document.getElementById("card-container")
@@ -697,14 +907,23 @@ const downloadImg = (isHero) => {
   }).then(function (canvas) {
 
     let titleText
-    if (!isHero) titleText = document.getElementById("title-text").textContent.trim();
-    else titleText = document.getElementById("hero-name").textContent.trim();
-
-    let sanitizedTitleText = titleText.replace(/[^\w\s]/gi, '').replace(/ /gi, '-').toLowerCase().substring(0, 50);
     let imageData = canvas.toDataURL("image/png")
-    downloadButtonMethod(imageData, `bcs-${sanitizedTitleText}.png`)
+    downloadButtonMethod(imageData, `bcs-${titleText(isHero, true)}.png`)
   })
     downloadedContainer.style.height = "510px"
+}
+
+const titleText = (isHero, isFileName) => {
+    let titleText
+    if (!isHero) titleText = document.getElementById("title-text").textContent;
+    else titleText = document.getElementById("hero-name").textContent;
+    let sanitizedTitleText = sanitizeText(titleText);
+    if (isFileName) sanitizedTitleText = sanitizedTitleText.replace(/ /gi, '-').toLowerCase();
+    return sanitizedTitleText
+}
+
+const sanitizeText = (text) => {
+    return text.replace(/[^\w\s]/gi, '').substring(0, 50).trim();
 }
 
 const downloadButtonMethod = (url, name) => {
@@ -716,12 +935,14 @@ const downloadButtonMethod = (url, name) => {
     document.body.removeChild(downloadLink)
 }
 
+
+
 const startup = () => {
   damageCheckbox.checked = true
   copiesSlider.value = 1
 }
 
-let cardType = "monkey"
+var cardType = "monkey"
 
 const copiesSlider = document.getElementById("copies-slider")
 const damageCheckbox = document.getElementById("damage-checkbox")
@@ -740,6 +961,7 @@ const detailBoxHero = document.getElementById("detail-box-hero")
 const keywordHolder = document.getElementById("keyword-holder")
 const flavorText = document.getElementById("flavor-text-keyword")
 const keywordList = []
+const keywordListData = []
 
 const inputDamageEnabled = document.getElementById("enable-damage-elements")
 const inputDamage = document.getElementById("input-damage-text")
