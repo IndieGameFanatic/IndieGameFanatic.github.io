@@ -906,7 +906,6 @@ const downloadImg = () => {
     scale: 5,
   }).then(function (canvas) {
 
-    let titleText
     let imageData = canvas.toDataURL("image/png")
     downloadButtonMethod(imageData, `bcs-${titleText(isHero, true)}.png`)
   })
@@ -914,10 +913,10 @@ const downloadImg = () => {
 }
 
 const titleText = (isHero, isFileName) => {
-    let titleText
-    if (!isHero) titleText = document.getElementById("title-text").textContent;
-    else titleText = document.getElementById("hero-name").textContent;
-    let sanitizedTitleText = sanitizeText(titleText);
+    let title
+    if (!isHero) title = document.getElementById("title-text").textContent;
+    else title = document.getElementById("hero-name").textContent;
+    let sanitizedTitleText = sanitizeText(title);
     if (isFileName) sanitizedTitleText = sanitizedTitleText.replace(/ /gi, '-').toLowerCase();
     return sanitizedTitleText
 }
