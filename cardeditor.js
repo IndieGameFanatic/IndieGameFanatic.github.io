@@ -130,7 +130,7 @@ const addDraftAbilities = (Abilities) => {
 
         abilityElement.Name.textContent = ability.Name
         abilityElement.NameStroke.textContent = ability.Name
-        fitTextToHeight(document.getElementById(abilityElement.NameContainer), 1.225, 35)
+        fitTextToHeight(abilityElement.NameContainer, 1.225, 35)
 
         abilityElement.Description.textContent = ability.Description
         fitTextToHeight(abilityElement.Description, 1.2, 56)
