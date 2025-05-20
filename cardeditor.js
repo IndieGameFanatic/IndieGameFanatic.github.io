@@ -134,7 +134,7 @@ const addDraftAbilities = (Abilities) => {
         abilityElement.Element.style.order = `${i}`
         abilityElement.Cost.textContent = ability.Cost
         abilityElement.CostStroke.textContent = ability.Cost
-        if (ability.Icon) abilityElement.Icon.src = ability.Icon
+        if (ability.Icon.includes("data:image/")) abilityElement.Icon.src = ability.Icon
         abilityElement.Button.src = ability.Button
 
 
@@ -532,7 +532,7 @@ const loadDraft = (event) => {
 const heroDraftLoaded = (cardData) => {
     updateCardLayout(cardData.Type)
     setCardValue("input-hero-name", cardData.Title)
-    document.getElementById("hero-portrait").src = cardData.Image
+    if (cardData.Image.includes("data:image/")) document.getElementById("hero-portrait").src = cardData.Image
     addDraftAbilities(cardData.Abilities)
 }
 
@@ -554,7 +554,7 @@ const draftLoaded = (cardData) => {
     setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
     setToggleCheck("detail-toggle", cardData.isDetailsEnabled)
     storedImg = document.createElement("img");
-    storedImg.src = cardData.Image
+    if (cardData.image.includes("data:image/")) storedImg.src = cardData.Image
     setCardValue("x-input", cardData.ImageTransform[0])
     setCardValue("y-input", cardData.ImageTransform[1])
     setCardValue("w-input", cardData.ImageTransform[2])
