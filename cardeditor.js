@@ -521,7 +521,7 @@ const loadDraft = (event) => {
     const reader = new FileReader();
 
     reader.onload = function (event) {
-        const cardData = JSON.parse(sanitizeText(event.target.result))
+        const cardData = JSON.parse(event.target.result)
         if (cardData.isHero) heroDraftLoaded(cardData)
         else draftLoaded(cardData)
     }
