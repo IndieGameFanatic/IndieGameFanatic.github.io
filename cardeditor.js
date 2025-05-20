@@ -127,29 +127,28 @@ const addDraftAbilities = (Abilities) => {
         newOption.textContent = `Ability ${i}`
         newOption.id = `ability-option-${i}`
         abilityOptions.appendChild(newOption)
-
         abilityElement.Name.textContent = ability.Name
         abilityElement.NameStroke.textContent = ability.Name
-        fitTextToHeight(abilityElement.NameContainer, 1.225, 35)
-
         abilityElement.Description.textContent = ability.Description
-        fitTextToHeight(abilityElement.Description, 1.2, 56)
-
         abilityElement.Element.style.order = `${i}`
         abilityElement.Cost.textContent = ability.Cost
         abilityElement.CostStroke.textContent = ability.Cost
-        if (ability.Icon.includes("data:image/")) abilityElement.Icon.src = ability.Icon
+        if (ability.Icon && ability.Icon.includes("data:image/")) abilityElement.Icon.src = ability.Icon
         abilityElement.Button.src = ability.Button
-
-
         let newAbility = abilityElement.Element.cloneNode(true)
         newAbility.style.display = "flex"
         abilityHolder.appendChild(newAbility)
         abilityOptions.value = i
 
+        const nameContainerID = abilityElement.NameContainer.id
+        const descriptionID = abilityElement.Description.id
+
         for (let property in abilityElement) {
             abilityElement[property].id = `${abilityElementIDs[property]}`
         }
+
+        fitTextToHeight(document.getElementById(nameContainerID), 1.225, 35)
+        fitTextToHeight(document.getElementById(descriptionID), 1.2, 56)
 
         abilityArray.push(i)
         refreshSelectedAbility()
@@ -253,8 +252,13 @@ const toggleDetails = () => {
     cardJustifier.style.justifyContent = "center"
     inputFlavorText.value = ""
     keywordValue.value = 0
+    var checked = false
     detailCheckbox.addEventListener("input", function (event) {
-        inputDetailEnabled.classList.toggle("disabled-text")
+        console.log(`${checked} ${detailCheckbox.checked}`)
+        if (checked != detailCheckbox.checked) {
+            checked = detailCheckbox.checked
+            inputDetailEnabled.classList.toggle("disabled-text")
+        }
         if (detailCheckbox.checked) {
             cardContainer.style.width = "775px"
             detailBox.style.display = "flex"
@@ -538,8 +542,9 @@ const heroDraftLoaded = (cardData) => {
 
     setCardValue("input-hero-name", cardData.Title)
     fitTextToHeight(document.getElementById("hero-name-container"), 2, 41)
+    setToggleCheck("enable-portrait-toggle", cardData.PortraitEnabled)
 
-    if (cardData.Image.includes("data:image/")) document.getElementById("hero-portrait").src = cardData.Image
+    if (cardData.Image && cardData.Image.includes("data:image/")) document.getElementById("hero-portrait").src = cardData.Image
     addDraftAbilities(cardData.Abilities)
 }
 
@@ -563,8 +568,9 @@ const draftLoaded = (cardData) => {
     setToggleCheck("damage-checkbox", cardData.hasDamage)
     setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
     setToggleCheck("detail-toggle", cardData.isDetailsEnabled)
+    damageCheckboxClicked()
     storedImg = document.createElement("img");
-    if (cardData.image.includes("data:image/")) storedImg.src = cardData.Image
+    if (cardData.Image && cardData.Image.includes("data:image/")) storedImg.src = cardData.Image
     setCardValue("x-input", cardData.ImageTransform[0])
     setCardValue("y-input", cardData.ImageTransform[1])
     setCardValue("w-input", cardData.ImageTransform[2])
@@ -629,8 +635,8 @@ const saveDraft = () => {
             isHero: isHero,
             Title: titleText(true, false),
             Abilities: saveAbilities(),
+            PortraitEnabled: getToggleCheck("enable-portrait-toggle"),
             Image: document.getElementById("hero-portrait").src,
-
         }
     }
     else {
@@ -655,7 +661,7 @@ const saveDraft = () => {
             Keywords: keywordListData,
             ImageTransform: [getCardValue("x-input"), getCardValue("y-input"), getCardValue("w-input"), getCardValue("h-input")],
             KeepRatio: getToggleCheck("ratio-toggle"),
-            Image: storedImg.src,
+            Image: saveCardImage(),
         }
     }
     const JSONData = JSON.stringify(cardData)
@@ -668,7 +674,10 @@ const saveDraft = () => {
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
-
+}
+const saveCardImage = () => {
+    if (storedImg) return storedImg.src
+    else return null
 }
 const getCardValue = (element) => {
     return sanitizeText(document.getElementById(element).value);
@@ -746,12 +755,16 @@ const updateCardLayout = (type) => {
   toggleVisibilities(cardTypeObj)
 };
 
-
+var damageChecked = true
 const damageCheckboxClicked = () => {
   cardTypes.monkey.damageVisibility = damageCheckbox.checked
   cardTypes.monkey.ammoVisibility = damageCheckbox.checked
   cardTypes.monkey.delayVisibility = damageCheckbox.checked
-  inputDamageEnabled.classList.toggle("disabled-text")
+    if (damageChecked != damageCheckbox.checked)
+    {
+        inputDamageEnabled.classList.toggle("disabled-text")
+        damageChecked = !damageChecked
+    }
   if (damageCheckbox.checked) {
     inputDamage.disabled = false
     inputAmmo.disabled = false
@@ -927,12 +940,12 @@ const titleText = (isHero, isFileName) => {
     if (!isHero) title = document.getElementById("title-text").textContent;
     else title = document.getElementById("hero-name").textContent;
     let sanitizedTitleText = sanitizeText(title);
-    if (isFileName) sanitizedTitleText = sanitizedTitleText.replace(/ /gi, '-').toLowerCase();
+    if (isFileName) sanitizedTitleText = sanitizedTitleText.replace(/ /gi, '-').toLowerCase().substring(0, 50);
     return sanitizedTitleText
 }
 
 const sanitizeText = (text) => {
-    return text.replace(/[^\w\s]/gi, '').substring(0, 50).trim();
+    return text.replace(/[^\w\s]/gi, '').trim();
 }
 
 const downloadButtonMethod = (url, name) => {
