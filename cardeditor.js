@@ -784,6 +784,7 @@ const damageCheckboxClicked = () => {
 const openUploadModal = (targetImg) => {
   const uploadModal = document.getElementById("uploadImgModal")
   selectedImgTarget = uploadImgTargets[targetImg]
+  setThumbnail(selectedImgTarget.src)
   toggleVisibility(uploadModal, true)
 }
 
