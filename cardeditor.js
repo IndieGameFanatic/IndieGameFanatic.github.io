@@ -113,7 +113,7 @@ const removeAbility = () => {
     toggleAbilityInputs()
 }
 
-const addDraftAbilities = (Abilities) => {
+async function addDraftAbilities(Abilities) {
     while (abilityArray.length > 0) removeAbility()
     for (let k in Abilities) {
         let i = 1
@@ -133,9 +133,10 @@ const addDraftAbilities = (Abilities) => {
         abilityElement.Element.style.order = `${i}`
         abilityElement.Cost.textContent = ability.Cost
         abilityElement.CostStroke.textContent = ability.Cost
-        if (ability.Icon) abilityElement.Icon.src = ability.Icon
-        else abilityElement.Icon.src = "src/img/None.png"
         abilityElement.Button.src = ability.Button
+
+        let loadImgPromise = new Promise(function (resolve) { addDraftImagePromise(ability.Icon, abilityElement.Icon, resolve) })
+        const n = await loadImgPromise
         let newAbility = abilityElement.Element.cloneNode(true)
         newAbility.style.display = "flex"
         abilityHolder.appendChild(newAbility)
@@ -255,7 +256,6 @@ const toggleDetails = () => {
     keywordValue.value = 0
     var checked = false
     detailCheckbox.addEventListener("input", function (event) {
-        console.log(`${checked} ${detailCheckbox.checked}`)
         if (checked != detailCheckbox.checked) {
             checked = detailCheckbox.checked
             inputDetailEnabled.classList.toggle("disabled-text")
@@ -545,8 +545,7 @@ const heroDraftLoaded = (cardData) => {
     fitTextToHeight(document.getElementById("hero-name-container"), 2, 41)
     setToggleCheck("enable-portrait-toggle", cardData.PortraitEnabled)
     const heroPortrait = document.getElementById("hero-portrait")
-    if (cardData.Image) heroPortrait.src = cardData.Image
-    else heroPortrait.src = "src/img/HeroCreator/EmptyPortrait.png"
+    addDraftImage(cardData.Image, heroPortrait, "src/img/HeroCreator/EmptyPortrait.png")
     addDraftAbilities(cardData.Abilities)
 }
 
@@ -572,8 +571,8 @@ const draftLoaded = (cardData) => {
     setToggleCheck("detail-toggle", cardData.isDetailsEnabled)
     damageCheckboxClicked()
     storedImg = document.createElement("img");
-    if (cardData.Image) storedImg.src = cardData.Image
-    else storedImg.src = "src/img/None.png"
+    addDraftImage(cardData.Image, storedImg)
+
     setCardValue("x-input", cardData.ImageTransform[0])
     setCardValue("y-input", cardData.ImageTransform[1])
     setCardValue("w-input", cardData.ImageTransform[2])
@@ -581,6 +580,37 @@ const draftLoaded = (cardData) => {
     setToggleCheck("ratio-toggle", cardData.KeepRatio)
     updateCardImage()
     addDraftKeywords(cardData.Keywords)
+}
+
+function addDraftImage(imgData, imgSrc, emptyImg = "src/img/None.png") {
+    if (imgData) {
+        const newImg = document.createElement("img");
+        newImg.crossOrigin = "anonymous";
+        newImg.src = imgData;
+        newImg.onload = function () {
+            imgSrc.src = newImg.src
+        }
+    }
+    else
+    {
+        imgSrc.src = emptyImg
+    }
+}
+
+function addDraftImagePromise(imgData, imgSrc, resolve, emptyImg = "src/img/None.png") {
+    if (imgData) {
+        const newImg = document.createElement("img");
+        newImg.crossOrigin = "anonymous";
+        newImg.src = imgData;
+        newImg.onload = function () {
+            imgSrc.src = newImg.src
+            resolve("Loaded Image")
+        }
+    }
+    else {
+        imgSrc.src = emptyImg
+        resolve("Loaded Nothing")
+    }
 }
 
 const addDraftKeywords = (Keywords) => {
