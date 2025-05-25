@@ -135,7 +135,8 @@ async function addDraftAbilities(Abilities) {
         abilityElement.CostStroke.textContent = ability.Cost
         abilityElement.Button.src = ability.Button
 
-        let loadImgPromise = new Promise(function (resolve) { addDraftImagePromise(ability.Icon, abilityElement.Icon, resolve) })
+        let loadImgPromise = new Promise(
+            function (resolve) { addDraftImagePromise(ability.Icon, abilityElement.Icon, resolve) })
         const n = await loadImgPromise
         let newAbility = abilityElement.Element.cloneNode(true)
         newAbility.style.display = "flex"
@@ -156,6 +157,7 @@ async function addDraftAbilities(Abilities) {
         refreshSelectedAbility()
         toggleAbilityInputs()
     }
+    AbilityElement.Icon.src = "src/img/None.png"
 }
 
 const refreshSelectedAbility = () => {
