@@ -705,7 +705,7 @@ const saveDraft = () => {
     var downloadLink = document.createElement("a")
     const blob = new Blob([JSONData], { type: 'application/json' })
     downloadLink.href = window.URL.createObjectURL(blob)
-    downloadLink.download = `bcs-draft-${titleText(isHero, true)}.json`
+    downloadLink.download = `bcs-draft-${titleText(isHero, true)}`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
