@@ -133,7 +133,8 @@ const addDraftAbilities = (Abilities) => {
         abilityElement.Element.style.order = `${i}`
         abilityElement.Cost.textContent = ability.Cost
         abilityElement.CostStroke.textContent = ability.Cost
-        if (ability.Icon && ability.Icon.includes("data:image/")) abilityElement.Icon.src = ability.Icon
+        if (ability.Icon) abilityElement.Icon.src = ability.Icon
+        else abilityElement.Icon.src = "src/img/None.png"
         abilityElement.Button.src = ability.Button
         let newAbility = abilityElement.Element.cloneNode(true)
         newAbility.style.display = "flex"
@@ -543,8 +544,9 @@ const heroDraftLoaded = (cardData) => {
     setCardValue("input-hero-name", cardData.Title)
     fitTextToHeight(document.getElementById("hero-name-container"), 2, 41)
     setToggleCheck("enable-portrait-toggle", cardData.PortraitEnabled)
-
-    if (cardData.Image && cardData.Image.includes("data:image/")) document.getElementById("hero-portrait").src = cardData.Image
+    const heroPortrait = document.getElementById("hero-portrait")
+    if (cardData.Image) heroPortrait.src = cardData.Image
+    else heroPortrait.src = "src/img/HeroCreator/EmptyPortrait.png"
     addDraftAbilities(cardData.Abilities)
 }
 
@@ -570,7 +572,8 @@ const draftLoaded = (cardData) => {
     setToggleCheck("detail-toggle", cardData.isDetailsEnabled)
     damageCheckboxClicked()
     storedImg = document.createElement("img");
-    if (cardData.Image && cardData.Image.includes("data:image/")) storedImg.src = cardData.Image
+    if (cardData.Image) storedImg.src = cardData.Image
+    else storedImg.src = "src/img/None.png"
     setCardValue("x-input", cardData.ImageTransform[0])
     setCardValue("y-input", cardData.ImageTransform[1])
     setCardValue("w-input", cardData.ImageTransform[2])
