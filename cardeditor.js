@@ -703,7 +703,7 @@ const saveDraft = () => {
     console.log(JSON.stringify(cardData))
 
     var downloadLink = document.createElement("a")
-    const blob = new Blob([JSONData], { type: 'text/plain' })
+    const blob = new Blob([JSONData], { type: 'application/json' })
     downloadLink.href = window.URL.createObjectURL(blob)
     downloadLink.download = `bcs-draft-${titleText(isHero, true)}.json`
     document.body.appendChild(downloadLink)
