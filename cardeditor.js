@@ -157,7 +157,7 @@ async function addDraftAbilities(Abilities) {
         refreshSelectedAbility()
         toggleAbilityInputs()
     }
-    AbilityElement.Icon.src = "src/img/None.png"
+    abilityElement.Icon.src = "src/img/None.png"
 }
 
 const refreshSelectedAbility = () => {
