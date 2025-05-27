@@ -25,6 +25,7 @@ const editAbilityTextEvent = (element, hasStroke) => {
     // ideally you would keep everything but that's a lot harder
     inputCardText.value = ""
     inputCardText.addEventListener("input", function (event) {
+        inputCardText.value = event.target.value.replace("$/inf", infSym)
         const cardText = document.getElementById(`${element}-${abilityOptions.value}`)
         cardText.textContent = event.target.value
     })
@@ -39,14 +40,6 @@ const editAbilityTextEvent = (element, hasStroke) => {
 
 const switchAbilityToEdit = () => {
 
-}
-
-const editDetailFlavor = () => {
-    const inputCardText = document.getElementById(`input-flavor-text`)
-    const cardText = document.getElementById(`flavor-text-keyword`)
-    inputCardText.addEventListener("input", function (event) {
-        cardText.textContent = event.target.value
-    })
 }
 const addKeyword = () => {
     let finalDescription = keywordDescriptions[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
@@ -1020,7 +1013,7 @@ const detailCheckbox = document.getElementById(`detail-toggle`)
 const detailBox = document.getElementById("detail-box")
 const detailBoxHero = document.getElementById("detail-box-hero")
 const keywordHolder = document.getElementById("keyword-holder")
-const flavorText = document.getElementById("flavor-text-keyword")
+const flavorText = document.getElementById("flavor-text")
 const keywordList = []
 const keywordListData = []
 
@@ -1115,6 +1108,7 @@ editCardTextEvent("damage-text", true)
 editCardTextEvent("ammo-text", true)
 editCardTextEvent("delay-text", true)
 editCardTextEvent("description-text", false)
+editCardTextEvent("flavor-text", false)
 
 editCardTextEvent("hero-name", true)
 editAbilityTextEvent("ability-name", true)
@@ -1124,8 +1118,6 @@ editAbilityNameEvent()
 editAbilityDescriptionEvent()
 
 
-// editCardTextEvent("flavor-text", false)
-editDetailFlavor()
 editDropdownEvent("rarity-pin", "RarityPin")
 editDropdownEvent("hero-pin", "HeroPin")
 editDropdownEvent("class-pin", "ClassPin")

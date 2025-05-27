@@ -484,7 +484,7 @@ input[type="file"] {
 	word-break: break-word;
 }
 
-.flavor-text {
+.flavor-text-unused {
 	font-family: 'Source Sans 3 MidItalics';
 	paint-order: stroke fill;
 	white-space: pre-line;
@@ -499,7 +499,7 @@ input[type="file"] {
 	top: 105%;
 }
 
-.flavor-text-keyword {
+.flavor-text {
 	position: relative;
 	display: block;
 	font-family: 'Source Sans 3 MidItalics';
