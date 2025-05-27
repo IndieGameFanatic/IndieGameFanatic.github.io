@@ -5,8 +5,9 @@ const editCardTextEvent = (element, hasStroke) => {
   // on reload, remove text from input
   // ideally you would keep everything but that's a lot harder
   inputCardText.value = ""
-  inputCardText.addEventListener("input", function (event) {
-    cardText.textContent = event.target.value
+    inputCardText.addEventListener("input", function (event) {
+        inputCardText.value = event.target.value.replace("$/inf", infSym)
+        cardText.textContent = event.target.value
   })
     if (hasStroke) {
         const cardStroke = document.getElementById(`${element}-stroke`)
@@ -15,6 +16,8 @@ const editCardTextEvent = (element, hasStroke) => {
         })
     }
 }
+
+const infSym = String.fromCharCode(0x221E)
 
 const editAbilityTextEvent = (element, hasStroke) => {
     const inputCardText = document.getElementById(`input-${element}`)
