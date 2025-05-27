@@ -6,7 +6,7 @@ const editCardTextEvent = (element, hasStroke) => {
   // ideally you would keep everything but that's a lot harder
   inputCardText.value = ""
     inputCardText.addEventListener("input", function (event) {
-        inputCardText.value = event.target.value.replace("$/inf", infSym)
+        inputCardText.value = event.target.value.replace("$/inf", "∞")
         cardText.textContent = event.target.value
   })
     if (hasStroke) {
@@ -17,15 +17,13 @@ const editCardTextEvent = (element, hasStroke) => {
     }
 }
 
-const infSym = String.fromCharCode(0x221E)
-
 const editAbilityTextEvent = (element, hasStroke) => {
     const inputCardText = document.getElementById(`input-${element}`)
     // on reload, remove text from input
     // ideally you would keep everything but that's a lot harder
     inputCardText.value = ""
     inputCardText.addEventListener("input", function (event) {
-        inputCardText.value = event.target.value.replace("$/inf", infSym)
+        inputCardText.value = event.target.value.replace("$/inf", "∞")
         const cardText = document.getElementById(`${element}-${abilityOptions.value}`)
         cardText.textContent = event.target.value
     })
