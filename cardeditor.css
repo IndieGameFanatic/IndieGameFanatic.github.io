@@ -509,6 +509,7 @@ input[type="file"] {
 	color: var(--text-main);
 	text-align: center;
 	height: auto;
+	word-break: break-word;
 }
 
 .no-outline {
