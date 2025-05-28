@@ -30,6 +30,48 @@
 	border-radius: 5%;
 }
 
+.format-help {
+	margin: 0;
+	color: #705480;
+	-webkit-text-stroke: 0;
+	display: inline-block;
+	font-size: 20px;
+	position: relative;
+	left: 100px;
+	top: -5px;
+}
+
+.format-help:hover .format-help-tooltip {
+	visibility: visible;
+}
+
+.format-help .format-help-tooltip::after {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent transparent #242424D8 transparent;
+}
+
+.format-help-tooltip {
+	visibility: hidden;
+	background-color: #242424D8;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	top: 100%;
+	left: 0%;
+	width: 100%;
+	text-align: center;
+	font-size: 13px;
+}
+
 .multi-form-element {
 	display: flex;
 	flex-wrap: wrap;
@@ -625,11 +667,12 @@ input[type="file"] {
 
 h1 {
 	font-family: 'Bloons TD';
-	font-size: 3.5em;
+	font-size: 2.5em;
 	color: var(--text-main);
 	margin: 0;
 	-webkit-text-stroke: 0.05em black;
 	text-shadow: 0em 0.10em black;
+	display: inline;
 }
 
 p {
