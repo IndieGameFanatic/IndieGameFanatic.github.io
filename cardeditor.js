@@ -40,9 +40,9 @@ const switchAbilityToEdit = () => {
 
 }
 const addKeyword = () => {
-    let finalDescription = keywordDescriptions[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
+    let finalDescription = keywords[keywordDropdown.value].Description.replace("{VALUE}", keywordValue.value)
     keywordDescription.textContent = finalDescription
-    let finalTitle = keywordTitles[keywordDropdown.value].replace("{VALUE}", keywordValue.value)
+    let finalTitle = keywords[keywordDropdown.value].Title.replace("{VALUE}", keywordValue.value)
     keywordTitle.textContent = finalTitle
     keywordTitleStroke.textContent = finalTitle
     keywordImg.src = `src/img/Keyword/${keywordDropdown.value}.png`
@@ -281,6 +281,8 @@ const toggleDetails = () => {
         }
     })
 }
+
+
 // make dropdown affect card images
 const editDropdownEvent = (ID, folderName) => {
     const Dropdown = document.getElementById(`${ID}-dropdown`)
@@ -479,47 +481,105 @@ const cardTypes = {
     }
 };
 
-const keywordTitles = {
-    Defender: "Defender +{VALUE}",
-    DoubleAttack: "Double Attack",
-    Doomed: "Doomed",
-    OnDamaged: "On Damaged",
-    OnDestroyed: "On Destroyed",
-    OnFire: "On Fire",
-    OnLeak: "On Leak",
-    OnPlay: "On Play",
-    OnPopped: "On Popped",
-    OnReplace: "On Replace",
-    OnAttack: "On Attack",
-    OnReload: "On Reload",
-    OnTurnStart: "On Turn Start",
-    OnTurnEnd: "On Turn End",
-    Pick: "Pick {VALUE}",
-    Shield: "Shield {VALUE}",
-    Stunned: "Stunned",
-    Unique: "Unique"
+const keywords = {
+    Armor: {
+        Title: "Armor {VALUE}",
+        Description: "Reduce damage recieved by {VALUE}",
+    },
+    ArmorPiercing: {
+        Title: "Armor-Piercing",
+        Description: "Hit Bloons lose all Armor",
+    },
+    Defender: {
+        Title: "Defender +{VALUE}",
+        Description: "Can defend on opponent's turn, has +{VALUE} damage on opponent's turn.",
+    },
+    DoubleAttack: {
+        Title: "Double Attack",
+        Description: "Attacks twice.",
+    },
+    TripleAttack: {
+        Title: "Triple Attack",
+        Description: "Attacks three times."
+    },
+    Doomed: {
+        Title: "Doomed",
+        Description: "This Monkey will be removed at the start of its next turn.",
+    },
+    Immobile: {
+        Title: "Immobile",
+        Description: "Cannot increase or decrease delay. Cannot attack",
+    },
+    MustPop: {
+        Title: "Must Pop",
+        Description: "Monkey must attack this Bloon before others"
+    },
+    OnDestroyed: {
+        Title: "On Destroyed",
+        Description: "Triggers when Bloon is Popped (by damage or effect) or when it hits opposoing Hero.",
+    },
+    OnFire: {
+        Title: "On Fire",
+        Description: "Will take 30 damage at the end of its turn and before attacking.",
+    },
+    OnLeak: {
+        Title: "On Leak",
+        Description: "Triggers when a bloon attacks a hero (after defenders have acted).",
+    },
+    OnPlay: {
+        Title: "On Play",
+        Description: "Triggers when card is played",
+    },
+    OnPopped: {
+        Title: "On Popped",
+        Description: "Triggers when Bloon is Popped (by damage or effect). Does not trigger if Bloon hits opposing Hero.",
+    },
+    OnAttack: {
+        Title: "On Attack",
+        Description: "Triggers when this Monkey attacks.",
+    },
+    OnReload: {
+        Title: "On Reload",
+        Description: "Triggers when this Monkey reloads.",
+    },
+    OnReplace: {
+        Title: "On Replace",
+        Description: "Triggers when this Monkey is replaced by another Monkey.",
+    },
+    OnTurnStart: {
+        Title: "On Turn Start",
+        Description: "Triggers at start of turn",
+    },
+    OnTurnEnd: {
+        Title: "On Turn End",
+        Description: "Triggers once turn has ended",
+    },
+    Pick: {
+        Title: "Pick {VALUE}",
+        Description: "Look at the next {VALUE} cards in your deck. Choose one and add it to your hand. Other cards go to the bottom of your deck.",
+    },
+    Shield: {
+        Title: "Shield {VALUE}",
+        Description: "Shield will block {VALUE} incoming damage.",
+    },
+    SplashDamage: {
+        Title: "Splash Damage",
+        Description: "Also deals damage to Bloons on either side of the target"
+    },
+    Stunned: {
+        Title: "Stunned",
+        Description: "Monkey can't attack or reload until stun wears off. Bloon delay does not reduce at end of turn.",
+    },
+    Temporary: {
+        Title: "Temporary",
+        Description: "Is removed at end of turn after ammo reaches 0."
+    },
+    Unique: {
+        Title: "Unique",
+        Description: "You can only have one copy of this card.",
+    }
 }
 
-const keywordDescriptions = {
-    Defender: "Can defend on opponent's turn, has +{VALUE} damage on opponent's turn.",
-    DoubleAttack: "Attacks twice.",
-    Doomed: "This Monkey will be removed at the start of its next turn.",
-    OnDamaged: "Triggers on losing health from any source.",
-    OnDestroyed: "Triggers when Bloon is Popped (by damage or effect) or when it hits opposoing Hero.",
-    OnFire: "Will take 30 damage at the end of its turn and before attacking.",
-    OnLeak: "Triggers when a bloon attacks a hero (after defenders have acted).",
-    OnPlay: "Triggers when card is played",
-    OnPopped: "Triggers when Bloon is Popped (by damage or effect). Does not trigger if Bloon hits opposing Hero.",
-    OnAttack: "Triggers when this Monkey attacks.",
-    OnReload: "Triggers when this Monkey reloads.",
-    OnReplace: "Triggers when this Monkey is replaced by another Monkey.",
-    OnTurnStart: "Triggers at start of turn",
-    OnTurnEnd: "Triggers once turn has ended",
-    Pick: "Look at the next {VALUE} cards in your deck. Choose one and add it to your hand. Other cards go to the bottom of your deck.",
-    Shield: "Shield will block {VALUE} incoming damage.",
-    Stunned: "Monkey can't attack or reload until stun wears off. Bloon delay does not reduce at end of turn.",
-    Unique: "You can only have one copy of this card."
-}
 const loadDraft = (event) => {
     const fileList = event.target.files;
     const firstFile = fileList[0];
@@ -563,9 +623,10 @@ const draftLoaded = (cardData) => {
 
     setCardValue("input-flavor-text", cardData.Flavor)
     setToggleCheck("damage-checkbox", cardData.hasDamage)
+    setToggleCheck("temporary-toggle", cardData.hasAmmo)
     setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
     setToggleCheck("detail-toggle", cardData.isDetailsEnabled)
-    damageCheckboxClicked()
+    setMonkeyStatVisibility()
     storedImg = document.createElement("img");
     addDraftImage(cardData.Image, storedImg)
 
@@ -616,10 +677,10 @@ const addDraftKeywords = (Keywords) => {
         let Keyword = Keywords[i].keyword
         let Value = Keywords[i].value
 
-        let finalDescription = keywordDescriptions[Keyword].replace("{VALUE}", Value)
+        let finalDescription = keywords[Keyword].Description.replace("{VALUE}", Value)
         keywordDescription.textContent = finalDescription
 
-        let finalTitle = keywordTitles[Keyword].replace("{VALUE}", Value)
+        let finalTitle = keywords[Keyword].Title.replace("{VALUE}", Value)
         keywordTitle.textContent = finalTitle
         keywordTitleStroke.textContent = finalTitle
 
@@ -685,6 +746,7 @@ const saveDraft = () => {
             Description: getCardValue("input-description-text"),
             Flavor: getCardValue("input-flavor-text"),
             hasDamage: getToggleCheck("damage-checkbox"),
+            hasAmmo: getToggleCheck("temporary-toggle"),
             costsBloontonium: getToggleCheck("bloontonium-toggle"),
             isDetailsEnabled: getToggleCheck("detail-toggle"),
             Keywords: keywordListData,
@@ -785,27 +847,29 @@ const updateCardLayout = (type) => {
 };
 
 var damageChecked = true
-const damageCheckboxClicked = () => {
-  cardTypes.monkey.damageVisibility = damageCheckbox.checked
-  cardTypes.monkey.ammoVisibility = damageCheckbox.checked
-  cardTypes.monkey.delayVisibility = damageCheckbox.checked
-    if (damageChecked != damageCheckbox.checked)
-    {
+const setMonkeyStatVisibility = () => {
+
+    if (damageChecked != damageCheckbox.checked) {
         inputDamageEnabled.classList.toggle("disabled-text")
         damageChecked = !damageChecked
     }
-  if (damageCheckbox.checked) {
-    inputDamage.disabled = false
-    inputAmmo.disabled = false
-    inputDelay.disabled = false
-  }
-  else {
-    inputDamage.disabled = true
-    inputAmmo.disabled = true
-    inputDelay.disabled = true
-  }
-  toggleVisibilities(cardTypes[cardType])
+
+    cardTypes.monkey.damageVisibility = TemporaryCheck()
+    cardTypes.monkey.ammoVisibility = damageChecked
+    cardTypes.monkey.delayVisibility = TemporaryCheck()
+
+    inputDamage.disabled = !TemporaryCheck()
+    inputAmmo.disabled = !damageChecked
+    inputDelay.disabled = !TemporaryCheck()
+
+    toggleVisibilities(cardTypes[cardType])
 };
+
+const temporaryToggle = document.getElementById("temporary-toggle")
+
+const TemporaryCheck = () => {
+    return !temporaryToggle.checked && damageCheckbox.checked
+}
 
 const openUploadModal = (targetImg) => {
   const uploadModal = document.getElementById("uploadImgModal")
@@ -990,8 +1054,9 @@ const downloadButtonMethod = (url, name) => {
 
 
 const startup = () => {
-  damageCheckbox.checked = true
-  copiesSlider.value = 1
+    damageCheckbox.checked = true
+    temporaryToggle.checked = false
+    copiesSlider.value = 1
 }
 
 var cardType = "monkey"

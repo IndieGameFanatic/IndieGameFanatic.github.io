@@ -62,7 +62,12 @@
 				<div class="form-element">
 					<label for="damage-checkbox">Enable Damage</label><br>
 					<input checked type="checkbox" name="damage-checkbox" id="damage-checkbox"
-						   onclick="damageCheckboxClicked()" class="disableable">
+						   onclick="setMonkeyStatVisibility()" class="disableable">
+				</div>
+				<div class="form-element">
+					<label for="temporary-toggle">Is Temporary</label><br>
+					<input type="checkbox" name="temporary-toggle" id="temporary-toggle"
+						   onclick="setMonkeyStatVisibility()" class="disableable">
 				</div>
 				<div class="form-element">
 					<label for="input-damage-text">Damage</label><br>
@@ -115,6 +120,7 @@
 						<option value="Amelia">Amelia</option>
 						<option value="Adora">Adora</option>
 						<option value="ZeeJay">Zee Jay</option>
+						<option value="StrikerJones">Striker Jones</option>
 					</select>
 				</div>
 			</div>
@@ -130,9 +136,14 @@
 				<div class="form-element">
 					<label for="keyword-dropdown" id="keyword-dropdown-label">Keywords</label><br>
 					<select name="keyword-dropdown" id="keyword-dropdown" class="disableable" disabled style="width: 170px;">
+						<option value="Armor">Armor</option>
+						<option value="ArmorPiercing">Armor-Piercing</option>
 						<option value="Defender">Defender</option>
-						<option value="Stunned">Stunned</option>
+						<option value="Doomed">Doomed</option>	
 						<option value="DoubleAttack">Double Attack</option>
+						<option value="TripleAttack">Triple Attack</option>
+						<option value="Immobile">Immobile</option>
+						<option value="MustPop">Must Pop</option>
 						<option value="OnAttack">On Attack</option>
 						<option value="OnReload">On Reload</option>
 						<option value="OnReplace">On Replace</option>
@@ -144,9 +155,11 @@
 						<option value="OnPlay">On Play</option>
 						<option value="OnTurnStart">On Turn Start</option>
 						<option value="OnTurnEnd">On Turn End</option>
-						<option value="Shield">Shield</option>
 						<option value="Pick">Pick</option>
-						<option value="Doomed">Doomed</option>
+						<option value="Shield">Shield</option>
+						<option value="SplashDamage">Splash Damage</option>
+						<option value="Stunned">Stunned</option>
+						<option value="Temporary">Temporary</option>
 						<option value="Unique">Unique</option>
 					</select>
 				</div>
