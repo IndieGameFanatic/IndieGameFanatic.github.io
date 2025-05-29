@@ -8,6 +8,19 @@
 }
 
 @font-face {
+	font-family: 'Bloons TD (Small Infinite)';
+	src: url(./src/font/BloonsTD-SmallInfinite.ttf);
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Bloons TD (No Infinite)';
+	src: url(./src/font/BloonsTD-NoInfinite.ttf);
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
 	font-family: 'Source Sans 3 SemiBold';
 	src: url(./src/font/SourceSans3-Semibold.ttf);
 	font-weight: normal;
@@ -378,6 +391,14 @@ input[type="file"] {
 	margin: 0;
 	font-family: 'Bloons TD';
 	text-align: center;
+}
+
+.delay-text-stroke {
+	font-family: 'Bloons TD (No Infinite)' !important
+}
+
+.delay-text {
+	font-family: 'Bloons TD (Small Infinite)' !important
 }
 
 .bold-text {
