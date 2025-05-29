@@ -1031,9 +1031,10 @@ const downloadImg = () => {
 
 const titleText = (isHero, sanitize) => {
     let title
+
     if (!isHero) title = document.getElementById("title-text").textContent;
     else title = document.getElementById("hero-name").textContent;
-    let sanitizeText(title);
+
     if (sanitize) return sanitizeText(title).replace(/ /gi, '-').toLowerCase().substring(0, 50);
     else return title
 }
