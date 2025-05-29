@@ -484,6 +484,7 @@ const cardTypes = {
 const keywords = {
     Armor: {
         Title: "Armor {VALUE}",
+        OptionTitle: "Armor",
         Description: "Reduce damage recieved by {VALUE}",
     },
     ArmorPiercing: {
@@ -492,6 +493,7 @@ const keywords = {
     },
     Defender: {
         Title: "Defender +{VALUE}",
+        OptionTitle: "Defender",
         Description: "Can defend on opponent's turn, has +{VALUE} damage on opponent's turn.",
     },
     DoubleAttack: {
@@ -556,10 +558,12 @@ const keywords = {
     },
     Pick: {
         Title: "Pick {VALUE}",
+        OptionTitle: "Pick",
         Description: "Look at the next {VALUE} cards in your deck. Choose one and add it to your hand. Other cards go to the bottom of your deck.",
     },
     Shield: {
         Title: "Shield {VALUE}",
+        OptionTitle: "Shield",
         Description: "Shield will block {VALUE} incoming damage.",
     },
     SplashDamage: {
@@ -577,6 +581,16 @@ const keywords = {
     Unique: {
         Title: "Unique",
         Description: "You can only have one copy of this card.",
+    }
+}
+
+const setKeywordOptions = () => {
+    for (keyword in keywords) {
+        var keywordOption = document.createElement("option")
+        keywordOption.value = keyword
+        if (keywords[keyword].OptionTitle) keywordOption.textContent = keywords[keyword].OptionTitle
+        else keywordOption.textContent = keywords[keyword].Title
+        keywordDropdown.add(keywordOption)
     }
 }
 
@@ -1200,3 +1214,4 @@ editAbilityOptionEvent()
 // other things which need to happen at startup
 startup()
 toggleAbilityInputs()
+setKeywordOptions()
