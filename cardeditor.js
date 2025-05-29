@@ -771,7 +771,7 @@ const saveCardImage = () => {
     else return null
 }
 const getCardValue = (element) => {
-    return sanitizeText(document.getElementById(element).value);
+    return document.getElementById(element).value;
 }
 const ManualInput = new Event("input")
 const ManualChange = new Event("change")
@@ -1029,13 +1029,13 @@ const downloadImg = () => {
     downloadedContainer.style.height = "510px"
 }
 
-const titleText = (isHero, isFileName) => {
+const titleText = (isHero, sanitize) => {
     let title
     if (!isHero) title = document.getElementById("title-text").textContent;
     else title = document.getElementById("hero-name").textContent;
-    let sanitizedTitleText = sanitizeText(title);
-    if (isFileName) sanitizedTitleText = sanitizedTitleText.replace(/ /gi, '-').toLowerCase().substring(0, 50);
-    return sanitizedTitleText
+    let sanitizeText(title);
+    if (sanitize) return sanitizeText(title).replace(/ /gi, '-').toLowerCase().substring(0, 50);
+    else return title
 }
 
 const sanitizeText = (text) => {
