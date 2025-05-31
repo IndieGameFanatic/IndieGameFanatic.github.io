@@ -488,7 +488,7 @@ const keywords = {
         Description: "Reduce damage recieved by {VALUE}",
     },
     ArmorPiercing: {
-        Title: "Armor-Piercing",
+        Title: "Armor Piercing",
         Description: "Hit Bloons lose all Armor",
     },
     Defender: {
@@ -515,6 +515,10 @@ const keywords = {
     MustPop: {
         Title: "Must Pop",
         Description: "Monkey must attack this Bloon before others"
+    },
+    OnDamaged: {
+        Title: "On Damaged",
+        Description: "Triggers on losing health from any source",
     },
     OnDestroyed: {
         Title: "On Destroyed",
