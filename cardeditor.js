@@ -522,7 +522,7 @@ const keywords = {
     },
     OnDestroyed: {
         Title: "On Destroyed",
-        Description: "Triggers when Bloon is Popped (by damage or effect) or when it hits opposoing Hero.",
+        Description: "Triggers when Bloon is Popped (by damage or effect) or when it hits opposing Hero.",
     },
     OnFire: {
         Title: "On Fire",
