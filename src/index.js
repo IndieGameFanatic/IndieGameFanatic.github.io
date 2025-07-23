@@ -1254,3 +1254,4 @@ globalThis.removeAbility = removeAbility
 globalThis.closeUploadModal = closeUploadModal
 globalThis.uploadImgFromURL = uploadImgFromURL
 globalThis.uploadImg = uploadImg
+globalThis.setCoinQuantity = setCoinQuantity
