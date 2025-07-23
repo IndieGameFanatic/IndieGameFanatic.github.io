@@ -608,11 +608,11 @@ const keywords = {
 }
 
 const setKeywordOptions = () => {
-    for (i in keywords) {
+    for (let keyword in keywords) {
         var keywordOption = document.createElement("option")
-        keywordOption.value = i
-        if (keywords[i].OptionTitle) keywordOption.textContent = keywords[i].OptionTitle
-        else keywordOption.textContent = keywords[i].Title
+        keywordOption.value = keyword
+        if (keywords[keyword].OptionTitle) keywordOption.textContent = keywords[keyword].OptionTitle
+        else keywordOption.textContent = keywords[keyword].Title
         keywordDropdown.add(keywordOption)
     }
 }
