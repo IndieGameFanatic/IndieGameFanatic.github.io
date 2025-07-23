@@ -1,4 +1,4 @@
-import MarkdownIt from "./node_modules/markdown-it/index.js"
+// import MarkdownIt from "./node_modules/markdown-it/index.js"
 
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
@@ -9,12 +9,12 @@ const editCardTextEvent = (element, hasStroke) => {
   inputCardText.value = ""
     inputCardText.addEventListener("input", function (event) {
         inputCardText.value = event.target.value.replace("$/inf", "∞")
-        cardText.innerHTML = md.renderInline(event.target.value)
+        cardText.textContent = event.target.value
   })
     if (hasStroke) {
         const cardStroke = document.getElementById(`${element}-stroke`)
         inputCardText.addEventListener("input", function (event) {
-            cardStroke.innerHTML = md.renderInline(event.target.value)
+            cardStroke.innerHTML = event.target.value
         })
     }
 }
@@ -1235,8 +1235,8 @@ startup()
 toggleAbilityInputs()
 setKeywordOptions()
 
-const md = MarkdownIt()
-md.disable(['link', 'image'])
+// const md = MarkdownIt()
+// md.disable(['link', 'image'])
 
 globalThis.updateCardLayout = updateCardLayout
 globalThis.setMonkeyStatVisibility = setMonkeyStatVisibility
