@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+		<!-- for screenshotting -->
+<script src="/src/script/html2canvas.js"></script>
+	<!-- main script -->
+<script type="module" src="main.js"></script>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BCS Custom Cards</title>
+	<link rel="stylesheet" href="/cardeditor.css">
+	<!-- temp favicon -->
+	<link rel="icon" type="image/x-icon" href="/src/img/favicon.ico">
+</head>
+
+<body>
+	<h1>BCS Custom Cards</h1>
+	<div class="format-help">
+		Formatting Help ⓘ
+		<span class="format-help-tooltip">
+			*text* → <em>text</em> <br>
+			**text** → <strong>text</strong> <br>
+			***text*** → <em><strong>text</strong></em> <br>
+			~~text~~ → <s>text</s> <br>
+			`text` → <code>text</code> <br>
+			$/inf → ∞ 
+		</span>
+	</div>
+	<!-- 2 col constructor-->
+	<div class="two-col">
+		<!-- col 1/2 -->
+		<div id="card-form" class="form-flex two-col-item">
+			<div class=form-element>
+				<label>Card Type</label><br>
+				<img class="img-btn img-border" src="/src/img/Button/Monkey.png" alt="Monkey"
+					 onclick="updateCardLayout('monkey')" />
+				<img class="img-btn img-border" src="/src/img/Button/Bloon.png" alt="Bloon"
+					 onclick="updateCardLayout('bloon')" />
+				<img class="img-btn img-border" src="/src/img/Button/Power.png" alt="Power"
+					 onclick="updateCardLayout('power')" />
+				<img class="img-btn img-border" src="/src/img/Button/Hero.png" alt="Hero"
+					 onclick="updateCardLayout('hero')" />
+			</div>
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label for="input-title-text">Title</label><br>
+					<input type="text" id="input-title-text" name="input-title-text" size="24">
+				</div>
+				<div class="form-element">
+					<label for="input-class-text">Class</label><br>
+					<input type="text" id="input-class-text" name="input-class-text" size="24">
+				</div>
+				<div class="form-element">
+					<label for="input-description-text">Description</label><br>
+					<textarea name="input-description-text" id="input-description-text" cols="51" rows="4"></textarea>
+				</div>
+			</div>
+			<div class="form-element">
+				<label for="input-cost-text">Cost</label><br>
+				<input type="text" id="input-cost-text" name="input-cost-text" size="3">
+			</div>
+			<div class="form-element">
+				<label for="bloontonium-toggle">Costs Bloontonium</label><br>
+				<input type="checkbox" id="bloontonium-toggle">
+			</div>
+			<div class="form-element">
+				<label for="copies-slider" id="copies-label">Copies: 1</label><br>
+				<input type="range" min="1" max="4" value="1" name="copies-slider" id="copies-slider"
+					   oninput="setCoinQuantity()">
+			</div>
+			<!-- is this a not a farm? -->
+			<div class="multi-form-element" id="enable-damage-elements">
+				<div class="form-element">
+					<label for="damage-checkbox">Enable Damage</label><br>
+					<input checked type="checkbox" name="damage-checkbox" id="damage-checkbox"
+						   onclick="setMonkeyStatVisibility()" class="disableable">
+				</div>
+				<div class="form-element">
+					<label for="temporary-toggle">Is Temporary</label><br>
+					<input type="checkbox" name="temporary-toggle" id="temporary-toggle"
+						   onclick="setMonkeyStatVisibility()" class="disableable">
+				</div>
+				<div class="form-element">
+					<label for="input-damage-text">Damage</label><br>
+					<input type="text" id="input-damage-text" name="input-damage-text" size="3" class="disableable"><br>
+				</div>
+				<div class="form-element">
+					<label for="input-ammo-text">Ammo</label><br>
+					<input type="text" id="input-ammo-text" name="input-ammo-text" size="3" class="disableable">
+				</div>
+				<div class="form-element">
+					<label for="input-delay-text">Delay</label><br>
+					<input type="text" id="input-delay-text" name="input-delay-text" size="3" class="disableable">
+				</div>
+			</div>
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label>Rarity</label><br>
+					<select id="rarity-pin-dropdown">
+						<option value="None">None</option>
+						<option value="Common">Common</option>
+						<option value="Uncommon">Uncommon</option>
+						<option value="Rare">Rare</option>
+						<option value="SuperRare">Super Rare</option>
+						<option value="UltraRare">Ultra Rare</option>
+					</select>
+				</div>
+				<div class="form-element">
+					<label for="class-pin-dropdown">Class Pin</label><br>
+					<select name="class-pin-dropdown" id="class-pin-dropdown">
+						<option value="None">None</option>
+						<option value="Primary">Primary</option>
+						<option value="Military">Military</option>
+						<option value="Magic">Magic</option>
+						<option value="Support">Support</option>
+						<option value="BasicBloon">Basic Bloon</option>
+						<option value="AdvancedBloon">Advanced Bloon</option>
+						<option value="LargeBloon">Large Bloon</option>
+						<option value="BasicPower">Basic Power</option>
+						<option value="AdvancedPower">Advanced Power</option>
+						<option value="ExoticPower">Exotic Power</option>
+					</select>
+				</div>
+				<div class="form-element">
+					<label for="hero-pin-dropdown">Hero Restriction</label><br>
+					<select name="hero-pin-dropdown" id="hero-pin-dropdown">
+						<option value="None">None</option>
+						<option value="Quincy">Quincy</option>
+						<option value="Gwendolin">Gwendolin</option>
+						<option value="Obyn">Obyn</option>
+						<option value="Amelia">Amelia</option>
+						<option value="Adora">Adora</option>
+						<option value="ZeeJay">Zee Jay</option>
+						<option value="StrikerJones">Striker Jones</option>
+					</select>
+				</div>
+			</div>
+			<div class="multi-form-element disabled-text" id="enable-detail-elements">
+				<div class="form-element">
+					<label for="detail-toggle" id="detail-toggle-label">Enable Additional Details</label><br>
+					<input type="checkbox" name="detail-toggle" id="detail-toggle">
+				</div>
+				<div class="form-element">
+					<label for="input-flavor-text">Flavor</label><br>
+					<textarea name="input-flavor-text" id="input-flavor-text" class="disableable" disabled cols="27" rows="2"> </textarea>
+				</div>
+				<div class="form-element">
+					<label for="keyword-dropdown" id="keyword-dropdown-label">Keywords</label><br>
+					<select name="keyword-dropdown" id="keyword-dropdown" class="disableable" disabled style="width: 170px;">
+					</select>
+				</div>
+				<div class="form-element">
+					<label for="keyword-value" id="keyword-value-label">Value</label><br>
+					<input type="number" value="0" min="0" size="3" name="keyword-value" id="keyword-value" class="disableable"
+						   disabled>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="add-keyword" class="label-btn disableable" onclick="addKeyword()">Add Keyword</button>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="remove-keyword" class="label-btn disableable" onclick="removeKeyword()">Delete Keyword</button>
+				</div>
+			</div>
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label for="x-input" id="x-input-label">X Position</label><br>
+					<input type="number" value="0" size="3" name="x-input" id="x-input">
+				</div>
+				<div class="form-element">
+					<label for="y-input" id="y-input-label">Y Position</label><br>
+					<input type="number" value="0" size="3" name="y-input" id="y-input">
+				</div>
+				<div class="form-element">
+					<label for="w-input" id="w-input-label">Width %</label><br>
+					<input type="number" min="10" value="100" max="500" size="3" name="w-input" id="w-input">
+				</div>
+				<div class="form-element">
+					<label for="h-input" id="h-input-label">Height %</label><br>
+					<input type="number" min="10" value="100" max="500" size="3" name="h-input" id="h-input">
+				</div>
+				<div class="form-element">
+					<label for="ratio-toggle" id="ratio-toggle-label">Keep Ratio</label><br>
+					<input type="checkbox" checked name="ratio-toggle" id="ratio-toggle">
+				</div>
+			</div>
+			<div class="multi-form-element">
+				<div class="form-element">
+					<button id="reset-btn" class="label-btn" onclick="resetImageValues()">Reset</button>
+				</div>
+				<div class="form-element">
+					<button class="label-btn" id="show-img-upload-modal" onclick="openUploadModal('cardImg')">Upload Image</button>
+					<!-- <input type="file" name="img-upload" id="img-upload" onchange="uploadImg(event)"> -->
+				</div>
+				<div class="form-element">
+					<button id="save-draft-btn" class="label-btn" onclick="saveDraft()">Save Draft</button>
+				</div>
+				<div class="form-element">
+					<label class="label-btn" for="load-draft">Load Draft</label>
+					<input type="file" name="load-draft" id="load-draft" onchange="loadDraft(event)" accept="application/json">
+				</div>
+				<div class="form-element">
+					<button id="download-btn" class="label-btn" onclick="downloadImg()">Download Image</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- col 2/2 -->
+		<!-- positions card container -->
+		<div class="card-two-col two-col-item" id="card-justifier">
+			<!-- contains card and surroundings; gets screenshotted -->
+			<div class="card-container" id="card-container">
+				<!-- contains card main box; some of it is cut off as elements hang from box -->
+				<div class="card" id="card">
+					<!-- sizes based on card border -->
+					<img class="card-img" id="card-img">
+					<!-- can be Bloon/Monkey/SpellCardBorder -->
+					<img class="card-border" id="card-border" src="/src/img/Border/MonkeyCardBorder.png">
+					<img class="cost coin1" src="/src/img/CardIcon/Coin.png">
+					<!-- hidden initially -->
+					<img class="cost coin2" src="/src/img/CardIcon/Coin.png">
+					<img class="cost coin3" src="/src/img/CardIcon/Coin.png">
+					<img class="cost coinplus" src="/src/img/CardIcon/Plus.png">
+					<!-- Monkey/BloonDamage, hidden if spell, -->
+					<img class="damage" id="card-damage" src="/src/img/CardIcon/MonkeyDamage.png">
+					<!-- Monkey, hidden if spell/bloon, -->
+					<img class="ammo" id="card-ammo" src="/src/img/CardIcon/Ammo.png">
+					<!-- hidden if spell -->
+					<img class="delay" id="card-delay" src="/src/img/CardIcon/Delay.png">
+					<!-- pins for card, hidden initially-->
+					<img class="rarity-pin" src="/src/img/RarityPin/None.png" id="rarity-pin">
+					<img class="hero-pin" id="hero-pin" src="/src/img/HeroPin/None.png">
+					<img class="class-pin" id="class-pin" src="/src/img/ClassPin/None.png">
+					<!-- card text -->
+					<div id="title-text-container" class="title-text-container">
+						<span class="bold-text" id="title-text"></span>
+						<span class="thick-stroke" id="title-text-stroke"></span>
+					</div>
+					<div id="class-text-container" class="class-text-container">
+						<span class="bold-text" id="class-text"></span>
+						<span class="thick-stroke" id="class-text-stroke"></span>
+					</div>
+					<div id="cost-text-container" class="cost-text-container">
+						<span class="bold-text" id="cost-text"></span>
+						<span class="thicker-stroke" id="cost-text-stroke"></span>
+					</div>
+					<div class="damage-text-container" id="damage-text-container">
+						<span class="bold-text" id="damage-text"></span>
+						<span class="thicker-stroke" id="damage-text-stroke"></span>
+					</div>
+					<div class="ammo-text-container" id="ammo-text-container">
+						<span class="bold-text" id="ammo-text"></span>
+						<span class="thicker-stroke" id="ammo-text-stroke"></span>
+					</div>
+					<div class="delay-text-container" id="delay-text-container">
+						<span class="bold-text delay-text" id="delay-text"></span>
+						<span class="thicker-stroke delay-text-stroke" id="delay-text-stroke"></span>
+					</div>
+					<!-- old flavor text -->
+					<!-- <span class="flavor-text no-outline" id="flavor-text"></span> -->
+					<span class="description-text no-outline" id="description-text"></span>
+				</div>
+				<div class="detail-box" id="detail-box">
+					<div id="keyword-holder">
+						<div class="detail-box-element" id="keyword-element">
+							<img src="/src/img/Keyword/Defender.png" class="keyword-img" id="keyword-img">
+							<div class="detail-title-text-container" id="keyword-text-container">
+								<span class="bold-text-detail" id="keyword-title">Defender +10</span>
+								<span class="thick-stroke-detail" id="keyword-title-stroke">Defender +10</span>
+							</div>
+							<span class="no-outline detail-description" id="keyword-description"></span>
+						</div>
+					</div>
+					<span class="flavor-text no-outline" id="flavor-text"></span>
+				</div>
+			</div>
+		</div>
+		<!-- col 1/2 (Heroes Only) -->
+		<div id="card-form-hero" class="form-flex two-col-item" style="display: none;">
+			<div class=form-element>
+				<label>Card Type</label><br>
+				<img class="img-btn img-border" src="/src/img/Button/Monkey.png" alt="Monkey"
+					 onclick="updateCardLayout('monkey')" />
+				<img class="img-btn img-border" src="/src/img/Button/Bloon.png" alt="Bloon"
+					 onclick="updateCardLayout('bloon')" />
+				<img class="img-btn img-border" src="/src/img/Button/Power.png" alt="Power"
+					 onclick="updateCardLayout('power')" />
+				<img class="img-btn img-border" src="/src/img/Button/Hero.png" alt="Hero"
+					 onclick="updateCardLayout('hero')" />
+			</div>
+			<div class="multi-form-element">
+				<div class="form-element">
+					<label for="input-hero-name" id="hero-name-label">Hero Name</label><br>
+					<input type="text" id="input-hero-name" name="input-hero-name" size="24">
+				</div>
+				<div class="form-element">
+					<label for="hero-img-btn" id="hero-img-label">Hero Image</label><br>
+					<button id="hero-img-btn" class="label-btn" onclick="openUploadModal('heroPortrait')">Upload Image</button>
+				</div>
+				<div class="form-element">
+					<label for="enable-portrait-toggle" id="enable-portrait-label" checked>Enable Hero Portrait</label><br>
+					<input type="checkbox" id="enable-portrait-toggle">
+				</div>
+				<div class="form-element">
+					<label for="hero-template-btn" id="hero-template-label">Hero Portrait Template</label><br>
+					<button id="hero-template-btn" class="label-btn" onclick="downloadButtonMethod('/src/img/HeroCreator/HeroPortraitTemplate.png', 'HeroTemplate.png')">Download Template</button>
+				</div>
+			</div>
+			<div class="multi-form-element">
+				<div class="multi-form-element disabled-text" id="enable-ability-elements">
+					<div class="form-element disableable">
+						<label for="ability-options" id="ability-options-label">Ability to Edit</label><br>
+						<select id="ability-options" class="disableable" style="width: 260px;">
+						</select>
+					</div>
+					<div class="form-element">
+						<br>
+						<button id="move-ability-up" class="label-btn disableable" onclick="moveAbility(-1)">Move Up</button>
+					</div>
+					<div class="form-element">
+						<br>
+						<button id="move-ability-down" class="label-btn disableable" onclick="moveAbility(+1)">Move Down</button>
+					</div>
+					<div class="form-element">
+						<label for="input-ability-name" id="ability-name-label">Ability Name</label><br>
+						<input type="text" id="input-ability-name" name="input-ability-name" size="19" class="disableable">
+					</div>
+					<div class="form-element">
+						<label for="is-passive-toggle" id="is-passive-label">Passive</label><br>
+						<input type="checkbox" id="is-passive-toggle" class="disableable">
+					</div>
+					<div class="form-element">
+						<label for="input-bloontonium-cost" id="ability-cost-label">Cost</label><br>
+						<input type="number" min="0" id="input-bloontonium-cost" size="3" class="disableable">
+					</div>
+					<div class="form-element">
+						<label for="ability-img-btn" id="ability-img-label">Icon</label><br>
+						<button id="ability-img-btn" class="label-btn disableable" onclick="openUploadModal('abilityIcon')">Upload Image</button>
+					</div>
+					<div class="form-element">
+						<label for="input-ability-description">Ability Description</label><br>
+						<textarea id="input-ability-description" cols="51" rows="3" class="disableable"></textarea>
+					</div>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="add-ability" class="label-btn" onclick="addAbility()">Add Ability</button>
+				</div>
+				<div class="form-element">
+					<br>
+					<button id="delete-ability" class="label-btn" onclick="removeAbility()">Delete Ability</button>
+				</div>
+			</div>
+			<div class="form-element">
+				<button id="save-draft-btn" class="label-btn" onclick="saveDraft()">Save Draft</button>
+			</div>
+			<div class="form-element">
+				<label class="label-btn" for="load-draft">Load Draft</label>
+				<input type="file" name="load-draft" id="load-draft" onchange="loadDraft(event)" accept="application/json">
+			</div>
+			<div class="form-element">
+				<button id="download-btn" class="label-btn" onclick="downloadImg()">Download Image</button>
+			</div>
+		</div>
+		<!-- col 2/2 (Heroes Only) -->
+		<div class="card-two-col two-col-item" id="hero-justifier" style="display: none; justify-content: center;">
+			<!-- contains card and surroundings; gets screenshotted -->
+			<div class="hero-container" id="hero-container">
+				<img src="/src/img/HeroCreator/EmptyPortrait.png" class="hero-portrait" id="hero-portrait">
+				<div class="detail-box-hero" id="detail-box-hero">
+					<img src="/src/img/HeroCreator/TopBannerYellow.png" class="hero-name-banner" />
+					<div class="hero-name-container" id="hero-name-container">
+						<span class="bold-text" id="hero-name"></span>
+						<span class="thick-stroke" id="hero-name-stroke" style="top: 0.0625em;"></span>
+					</div>
+					<div id="ability-holder" class="ability-holder">
+						<div class="detail-box-element" id="ability-element" style="min-height: 85.7px;">
+							<div class="ability-icon-container">
+								<img src="/src/img/HeroCreator/ActiveAbilityButton.png" class="ability-icon-button" id="ability-icon-button">
+								<img class="ability-icon" id="ability-icon">
+							</div>
+							<img src="/src/img/HeroCreator/BloontoniumIcon.png" class="bloontonium-img" id="bloontonium-img">
+							<div style="width: 0px; position: relative;">
+								<div class="bloontonium-cost-container">
+									<span class="bold-text-detail" id="bloontonium-cost">0</span>
+									<span class="thick-stroke-detail" id="bloontonium-cost-stroke" style="width: 100%;">0</span>
+								</div>
+							</div>
+							<div class="ability-text-container" id="ability-text-container">
+								<div id="ability-name-container" style="min-height: 35px">
+									<span class="bold-text-detail" id="ability-name" style="padding-bottom: 4.9px; min-height: 12.5px;"></span>
+									<span class="thick-stroke-detail" id="ability-name-stroke" style="top: 0.051em;"></span>
+								</div>
+								<span class="no-outline detail-description" id="ability-description" style="min-height: 56px;"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="uploadImgModal" class="modal">
+		<div class="modal-box">
+			<span class="close" onclick="closeUploadModal()">&times;</span>
+			<div class="uploader" id="img-uploader">
+				<label class="label-btn" for="img-upload">Browse Local Files</label>
+				<input type="file" name="img-upload" id="img-upload" onchange="uploadImg(event)" accept="image/*">
+				<div class="url-input">
+					<input type="text" id="url-input" placeholder="Paste image URL here">
+					<button class="label-btn" onclick="uploadImgFromURL()">Add</button>
+				</div>
+				<p>Image Preview</p>
+				<img src="data:," class="thumbnail" id="img-thumbnail">
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
