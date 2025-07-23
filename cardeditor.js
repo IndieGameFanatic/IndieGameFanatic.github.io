@@ -582,9 +582,25 @@ const keywords = {
         Title: "Temporary",
         Description: "Is removed at end of turn after ammo reaches 0."
     },
+    TemporaryAmmo: {
+        Title: "Temporary Ammo",
+        Description: "Extra ammo that is removed at the start of the turn"
+    },
     Unique: {
         Title: "Unique",
         Description: "You can only have one copy of this card.",
+    },
+    AcidPool: {
+        Title: "Acid Pool",
+        Description: "Deals 30 damage to any Bloon ending its turn on it. Lasts 2 turns"
+    },
+    StrongAcidPool: {
+        Title: "Strong Acid Pool",
+        Description: "Deals 50 damage to any Bloon ending its turn on it. Lasts 2 turns"
+    },
+    ZeroGold: {
+        Title: "Zero Gold",
+        Description: "Triggers an additional effect if you have 0 Gold"
     }
 }
 
