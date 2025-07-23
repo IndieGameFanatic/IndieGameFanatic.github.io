@@ -1,6 +1,3 @@
-try { const md = require('markdown-it') }
-catch { console.log("Fail") }
-
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
   const inputCardText = document.getElementById(`input-${element}`)
@@ -39,9 +36,7 @@ const editAbilityTextEvent = (element, hasStroke) => {
     }
 }
 
-const switchAbilityToEdit = () => {
-
-}
+const switchAbilityToEdit = () => { }
 const addKeyword = () => {
     let finalDescription = keywords[keywordDropdown.value].Description.replace("{VALUE}", keywordValue.value)
     keywordDescription.textContent = finalDescription
@@ -608,7 +603,7 @@ const keywords = {
 }
 
 const setKeywordOptions = () => {
-    for (let keyword in keywords) {
+    for (keyword in keywords) {
         var keywordOption = document.createElement("option")
         keywordOption.value = keyword
         if (keywords[keyword].OptionTitle) keywordOption.textContent = keywords[keyword].OptionTitle
@@ -1238,7 +1233,3 @@ editAbilityOptionEvent()
 startup()
 toggleAbilityInputs()
 setKeywordOptions()
-
-try {const r = markdownit()
-r.render('**BOLD!**') }
-catch {}
