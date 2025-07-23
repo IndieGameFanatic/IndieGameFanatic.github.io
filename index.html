@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+		<!-- for screenshotting -->
+<script src="src/script/html2canvas.js"></script>
+	<!-- main script -->
+<script type="module" src="cardeditor.js"></script>
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +18,14 @@
 	<h1>BCS Custom Cards</h1>
 	<div class="format-help">
 		Formatting Help ⓘ
-		<span class="format-help-tooltip">$/inf: Types an ∞</span>
+		<span class="format-help-tooltip">
+			*text* → <em>text</em> <br>
+			**text** → <strong>text</strong> <br>
+			***text*** → <em><strong>text</strong></em> <br>
+			~~text~~ → <s>text</s> <br>
+			`text` → <code>text</code> <br>
+			$/inf → ∞ 
+		</span>
 	</div>
 	<!-- 2 col constructor-->
 	<div class="two-col">
@@ -404,10 +416,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- for screenshotting -->
-	<script src="src/script/html2canvas.js"></script>
-	<!-- main script -->
-	<script src="cardeditor.js"></script>
 </body>
 
 </html>

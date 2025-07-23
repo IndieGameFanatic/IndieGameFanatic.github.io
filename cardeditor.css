@@ -21,17 +21,31 @@
 }
 
 @font-face {
-	font-family: 'Source Sans 3 SemiBold';
+	font-family: 'Source Sans 3';
 	src: url(./src/font/SourceSans3-Semibold.ttf);
 	font-weight: normal;
 	font-style: normal;
 }
 
-@font-face {
-	font-family: 'Source Sans 3 MidItalics';
-	src: url(./src/font/SourceSans3-MediumItalic.ttf);
-	font-weight: normal;
+	@font-face {
+	font-family: 'Source Sans 3';
+	src: url(./src/font/SourceSans3-Bold.ttf);
+	font-weight: bold;
 	font-style: normal;
+}
+
+	@font-face {
+	font-family: 'Source Sans 3';
+	src: url(./src/font/SourceSans3-SemiBoldItalic.ttf);
+	font-weight: normal;
+	font-style: italic;
+}
+
+	@font-face {
+	font-family: 'Source Sans 3';
+	src: url(./src/font/SourceSans3-BoldItalic.ttf);
+	font-weight: bold;
+	font-style: italic;
 }
 
 .form-flex {
@@ -119,7 +133,7 @@ label {
 
 select {
 	font-size: 1.25em;
-	font-family: 'Source Sans 3 SemiBold';
+	font-family: 'Source Sans 3';
 	padding: 0;
 	background-color: var(--accent-card-form);
 	border: var(--border-default);
@@ -149,7 +163,7 @@ input[type="checkbox"] {
 
 input[type="number"] {
 	font-size: 1.5em;
-	font-family: 'Source Sans 3 SemiBold';
+	font-family: 'Source Sans 3';
 	padding: 0;
 	background-color: var(--accent-card-form);
 	border: var(--border-default);
@@ -159,7 +173,7 @@ input[type="number"] {
 
 input[type="text"] {
 	font-size: 1.5em;
-	font-family: 'Source Sans 3 SemiBold';
+	font-family: 'Source Sans 3';
 	padding: 0;
 	background-color: var(--accent-card-form);
 	border: var(--border-default);
@@ -170,7 +184,7 @@ input[type="text"] {
 textarea {
 	resize: none;
 	font-size: 1.5em;
-	font-family: 'Source Sans 3 SemiBold';
+	font-family: 'Source Sans 3';
 	background-color: var(--accent-card-form);
 	border: var(--border-default);
 	border-radius: 10px;
@@ -536,7 +550,7 @@ input[type="file"] {
 	position: absolute;
 	white-space: pre-line;
 	transform: translate(-50%, -50%);
-	font-weight: 600;
+	font-weight: normal;
 	left: 49.8%;
 	top: 74%;
 	font-size: 3.2em;
@@ -548,7 +562,8 @@ input[type="file"] {
 }
 
 .flavor-text-unused {
-	font-family: 'Source Sans 3 MidItalics';
+	font-style: italic;
+	font-family: 'Source Sans 3';
 	paint-order: stroke fill;
 	white-space: pre-line;
 	position: absolute;
@@ -565,7 +580,7 @@ input[type="file"] {
 .flavor-text {
 	position: relative;
 	display: block;
-	font-family: 'Source Sans 3 MidItalics';
+	font-family: 'Source Sans 3';
 	white-space: pre-line;
 	font-size: 1em;
 	padding: 1.25em;
@@ -573,6 +588,7 @@ input[type="file"] {
 	text-align: center;
 	height: auto;
 	word-break: break-word;
+	font-style: italic;
 }
 
 .no-outline {
@@ -701,7 +717,7 @@ p {
 }
 
 body {
-	font-family: 'Source Sans 3 SemiBold';
+	font-family: 'Source Sans 3';
 	background-color: var(--bg-main);
 	color: var(--text-main);
 	-webkit-text-stroke: 0.07em black;

@@ -1,3 +1,5 @@
+import MarkdownIt from "./node_modules/markdown-it/index.mjs"
+
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
   const inputCardText = document.getElementById(`input-${element}`)
@@ -7,12 +9,12 @@ const editCardTextEvent = (element, hasStroke) => {
   inputCardText.value = ""
     inputCardText.addEventListener("input", function (event) {
         inputCardText.value = event.target.value.replace("$/inf", "∞")
-        cardText.textContent = event.target.value
+        cardText.innerHTML = md.renderInline(event.target.value)
   })
     if (hasStroke) {
         const cardStroke = document.getElementById(`${element}-stroke`)
         inputCardText.addEventListener("input", function (event) {
-            cardStroke.textContent = event.target.value
+            cardStroke.innerHTML = md.renderInline(event.target.value)
         })
     }
 }
@@ -351,7 +353,7 @@ const editHeroNameEvent = () => {
     })
 }
 
-const editAbilityNameEvent = () => {
+const fitAbilityName = () => {
     abilityNameInput.addEventListener("input", function (event) {
         const option = document.getElementById(`ability-option-${abilityOptions.value}`)
         option.textContent = abilityNameInput.value
@@ -359,7 +361,7 @@ const editAbilityNameEvent = () => {
     })
 }
 
-const editAbilityDescriptionEvent = () => {
+const fitAbilityDescription = () => {
     const abilityDescriptionInput = document.getElementById("input-ability-description")
     abilityDescriptionInput.addEventListener("input", function (event) {
         fitTextToHeight(document.getElementById(`ability-description-${abilityOptions.value}`), 1.2, 56)
@@ -602,7 +604,7 @@ const keywords = {
 }
 
 const setKeywordOptions = () => {
-    for (keyword in keywords) {
+    for (let keyword in keywords) {
         var keywordOption = document.createElement("option")
         keywordOption.value = keyword
         if (keywords[keyword].OptionTitle) keywordOption.textContent = keywords[keyword].OptionTitle
@@ -1209,8 +1211,8 @@ editCardTextEvent("hero-name", true)
 editAbilityTextEvent("ability-name", true)
 editAbilityTextEvent("bloontonium-cost", true)
 editAbilityTextEvent("ability-description", false)
-editAbilityNameEvent()
-editAbilityDescriptionEvent()
+fitAbilityName()
+fitAbilityDescription()
 
 
 editDropdownEvent("rarity-pin", "RarityPin")
@@ -1232,3 +1234,23 @@ editAbilityOptionEvent()
 startup()
 toggleAbilityInputs()
 setKeywordOptions()
+
+const md = MarkdownIt()
+md.disable(['link', 'image'])
+
+globalThis.updateCardLayout = updateCardLayout
+globalThis.setMonkeyStatVisibility = setMonkeyStatVisibility
+globalThis.addKeyword = addKeyword
+globalThis.removeKeyword = removeKeyword
+globalThis.resetImageValues = resetImageValues
+globalThis.openUploadModal = openUploadModal
+globalThis.saveDraft = saveDraft
+globalThis.loadDraft = loadDraft
+globalThis.downloadImg = downloadImg
+globalThis.downloadButtonMethod = downloadButtonMethod
+globalThis.moveAbility = moveAbility
+globalThis.addAbility = addAbility
+globalThis.removeAbility = removeAbility
+globalThis.closeUploadModal = closeUploadModal
+globalThis.uploadImgFromURL = uploadImgFromURL
+globalThis.uploadImg = uploadImg
