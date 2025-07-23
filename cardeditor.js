@@ -1,3 +1,5 @@
+import MarkdownIt from "./node_modules/markdown-it/index.mjs"
+
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
   const inputCardText = document.getElementById(`input-${element}`)
@@ -1235,3 +1237,6 @@ editAbilityOptionEvent()
 startup()
 toggleAbilityInputs()
 setKeywordOptions()
+
+const md = markdownit()
+md.render('**BOLD!**')
