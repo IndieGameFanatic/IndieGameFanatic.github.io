@@ -1,4 +1,4 @@
-//import MarkdownIt from 'markdown-it';
+// import MarkdownIt from 'markdown-it'
 
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
@@ -1235,8 +1235,8 @@ startup()
 toggleAbilityInputs()
 setKeywordOptions()
 
-//const md = MarkdownIt()
-//md.disable(['link', 'image'])
+// const md = MarkdownIt()
+// md.disable(['link', 'image'])
 
 globalThis.updateCardLayout = updateCardLayout
 globalThis.setMonkeyStatVisibility = setMonkeyStatVisibility
