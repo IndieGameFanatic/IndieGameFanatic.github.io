@@ -1,4 +1,5 @@
-const md = require('markdown-it')
+try { const md = require('markdown-it') }
+catch { console.log("Fail") }
 
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
