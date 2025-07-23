@@ -1239,5 +1239,6 @@ startup()
 toggleAbilityInputs()
 setKeywordOptions()
 
-const md = markdownit()
-md.render('**BOLD!**')
+try {const r = markdownit()
+r.render('**BOLD!**') }
+catch {}
