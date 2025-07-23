@@ -1,4 +1,4 @@
-// import MarkdownIt from "./node_modules/markdown-it/index.js"
+//import MarkdownIt from 'markdown-it';
 
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
@@ -14,7 +14,7 @@ const editCardTextEvent = (element, hasStroke) => {
     if (hasStroke) {
         const cardStroke = document.getElementById(`${element}-stroke`)
         inputCardText.addEventListener("input", function (event) {
-            cardStroke.innerHTML = event.target.value
+            cardStroke.textContent = event.target.value
         })
     }
 }
@@ -44,7 +44,7 @@ const addKeyword = () => {
     let finalTitle = keywords[keywordDropdown.value].Title.replace("{VALUE}", keywordValue.value)
     keywordTitle.textContent = finalTitle
     keywordTitleStroke.textContent = finalTitle
-    keywordImg.src = `src/img/Keyword/${keywordDropdown.value}.png`
+    keywordImg.src = `/src/img/Keyword/${keywordDropdown.value}.png`
     let newKeyword = keywordElement.cloneNode(true)
     newKeyword.style.display = "flex"
     let addedKeyword = keywordHolder.appendChild(newKeyword)
@@ -150,7 +150,7 @@ async function addDraftAbilities(Abilities) {
         refreshSelectedAbility()
         toggleAbilityInputs()
     }
-    abilityElement.Icon.src = "src/img/None.png"
+    abilityElement.Icon.src = "/src/img/None.png"
 }
 
 const refreshSelectedAbility = () => {
@@ -213,8 +213,8 @@ const togglePassive = () => {
     passiveToggle.checked = false
     passiveToggle.addEventListener("input", function (event) {
         const abilityButton = document.getElementById(`ability-icon-button-${abilityOptions.value}`)
-        if (passiveToggle.checked) abilityButton.src = "src/img/HeroCreator/PassiveAbilityButton.png"
-        else abilityButton.src = "src/img/HeroCreator/ActiveAbilityButton.png"
+        if (passiveToggle.checked) abilityButton.src = "/src/img/HeroCreator/PassiveAbilityButton.png"
+        else abilityButton.src = "/src/img/HeroCreator/ActiveAbilityButton.png"
     })
 }
 
@@ -224,10 +224,10 @@ const toggleBloontoniumCost = () => {
     const CostText = document.getElementById("cost-text-container")
     BloontoniumToggle.checked = false
     BloontoniumToggle.addEventListener("input", function (event) {
-        let CostImg = "src/img/CardIcon/Coin.png"
+        let CostImg = "/src/img/CardIcon/Coin.png"
         let CostTop = "4%"
         if (BloontoniumToggle.checked) {
-            CostImg = "src/img/CardIcon/Bloontonium.png"
+            CostImg = "/src/img/CardIcon/Bloontonium.png"
             CostTop = "5%"
         }
         for (let i = 0; i < Coins.length - 1; i++) {
@@ -289,7 +289,7 @@ const editDropdownEvent = (ID, folderName) => {
     // on reload, the empty image is selected by default
     Dropdown.value = "None"
     Dropdown.addEventListener("change", function (event) {
-    DropdownImg.src = `src/img/${folderName}/${Dropdown.value}.png`})
+    DropdownImg.src = `/src/img/${folderName}/${Dropdown.value}.png`})
 }
 
 const editAbilityOptionEvent = () => {
@@ -407,8 +407,8 @@ const toggleVisibilities = (cardTypeObj) => {
 // card art properties for every card type
 const cardTypes = {
   monkey: {
-    borderSrc: "src/img/Border/MonkeyCardBorder.png",
-    damageSrc: "src/img/CardIcon/MonkeyDamage.png",
+    borderSrc: "/src/img/Border/MonkeyCardBorder.png",
+    damageSrc: "/src/img/CardIcon/MonkeyDamage.png",
     imgHeight: "96%",
     imgWidth: "92%",
     damageLeft: "90%",
@@ -432,8 +432,8 @@ const cardTypes = {
     delayVisibility: true
   },
   bloon: {
-    borderSrc: "src/img/Border/BloonCardBorder.png",
-    damageSrc: "src/img/CardIcon/BloonDamage.png",
+    borderSrc: "/src/img/Border/BloonCardBorder.png",
+    damageSrc: "/src/img/CardIcon/BloonDamage.png",
     imgHeight: "55%",
     imgWidth: "75%",
     damageLeft: "88%",
@@ -457,7 +457,7 @@ const cardTypes = {
     delayVisibility: true
   },
   power: {
-    borderSrc: "src/img/Border/PowerCardBorder.png",
+    borderSrc: "/src/img/Border/PowerCardBorder.png",
     imgHeight: "55%",
     imgWidth: "86%",
     imgTransform: "translate(-51%, -7%)",
@@ -634,7 +634,7 @@ const heroDraftLoaded = (cardData) => {
     fitTextToHeight(document.getElementById("hero-name-container"), 2, 41)
     setToggleCheck("enable-portrait-toggle", cardData.PortraitEnabled)
     const heroPortrait = document.getElementById("hero-portrait")
-    addDraftImage(cardData.Image, heroPortrait, "src/img/HeroCreator/EmptyPortrait.png")
+    addDraftImage(cardData.Image, heroPortrait, "/src/img/HeroCreator/EmptyPortrait.png")
     addDraftAbilities(cardData.Abilities)
 }
 
@@ -672,7 +672,7 @@ const draftLoaded = (cardData) => {
     addDraftKeywords(cardData.Keywords)
 }
 
-function addDraftImage(imgData, imgSrc, emptyImg = "src/img/None.png") {
+function addDraftImage(imgData, imgSrc, emptyImg = "/src/img/None.png") {
     if (imgData) {
         const newImg = document.createElement("img");
         newImg.crossOrigin = "anonymous";
@@ -687,7 +687,7 @@ function addDraftImage(imgData, imgSrc, emptyImg = "src/img/None.png") {
     }
 }
 
-function addDraftImagePromise(imgData, imgSrc, resolve, emptyImg = "src/img/None.png") {
+function addDraftImagePromise(imgData, imgSrc, resolve, emptyImg = "/src/img/None.png") {
     if (imgData) {
         const newImg = document.createElement("img");
         newImg.crossOrigin = "anonymous";
@@ -717,7 +717,7 @@ const addDraftKeywords = (Keywords) => {
         keywordTitle.textContent = finalTitle
         keywordTitleStroke.textContent = finalTitle
 
-        keywordImg.src = `src/img/Keyword/${Keyword}.png`
+        keywordImg.src = `/src/img/Keyword/${Keyword}.png`
         let newKeyword = keywordElement.cloneNode(true)
         newKeyword.style.display = "flex"
         let addedKeyword = keywordHolder.appendChild(newKeyword)
@@ -1235,8 +1235,8 @@ startup()
 toggleAbilityInputs()
 setKeywordOptions()
 
-// const md = MarkdownIt()
-// md.disable(['link', 'image'])
+//const md = MarkdownIt()
+//md.disable(['link', 'image'])
 
 globalThis.updateCardLayout = updateCardLayout
 globalThis.setMonkeyStatVisibility = setMonkeyStatVisibility

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 		<!-- for screenshotting -->
-<script src="src/script/html2canvas.js"></script>
+<script src="/src/script/html2canvas.js"></script>
 	<!-- main script -->
-<script type="module" src="./cardeditor.js"></script>
+<script type="module" src="main.js"></script>
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BCS Custom Cards</title>
-	<link rel="stylesheet" href="./cardeditor.css">
+	<link rel="stylesheet" href="/cardeditor.css">
 	<!-- temp favicon -->
-	<link rel="icon" type="image/x-icon" href="./src/img/favicon.ico">
+	<link rel="icon" type="image/x-icon" href="/src/img/favicon.ico">
 </head>
 
 <body>
@@ -33,13 +33,13 @@
 		<div id="card-form" class="form-flex two-col-item">
 			<div class=form-element>
 				<label>Card Type</label><br>
-				<img class="img-btn img-border" src="src/img/Button/Monkey.png" alt="Monkey"
+				<img class="img-btn img-border" src="/src/img/Button/Monkey.png" alt="Monkey"
 					 onclick="updateCardLayout('monkey')" />
-				<img class="img-btn img-border" src="src/img/Button/Bloon.png" alt="Bloon"
+				<img class="img-btn img-border" src="/src/img/Button/Bloon.png" alt="Bloon"
 					 onclick="updateCardLayout('bloon')" />
-				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
+				<img class="img-btn img-border" src="/src/img/Button/Power.png" alt="Power"
 					 onclick="updateCardLayout('power')" />
-				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
+				<img class="img-btn img-border" src="/src/img/Button/Hero.png" alt="Hero"
 					 onclick="updateCardLayout('hero')" />
 			</div>
 			<div class="multi-form-element">
@@ -217,22 +217,22 @@
 					<!-- sizes based on card border -->
 					<img class="card-img" id="card-img">
 					<!-- can be Bloon/Monkey/SpellCardBorder -->
-					<img class="card-border" id="card-border" src="src/img/Border/MonkeyCardBorder.png">
-					<img class="cost coin1" src="src/img/CardIcon/Coin.png">
+					<img class="card-border" id="card-border" src="/src/img/Border/MonkeyCardBorder.png">
+					<img class="cost coin1" src="/src/img/CardIcon/Coin.png">
 					<!-- hidden initially -->
-					<img class="cost coin2" src="src/img/CardIcon/Coin.png">
-					<img class="cost coin3" src="src/img/CardIcon/Coin.png">
-					<img class="cost coinplus" src="src/img/CardIcon/Plus.png">
+					<img class="cost coin2" src="/src/img/CardIcon/Coin.png">
+					<img class="cost coin3" src="/src/img/CardIcon/Coin.png">
+					<img class="cost coinplus" src="/src/img/CardIcon/Plus.png">
 					<!-- Monkey/BloonDamage, hidden if spell, -->
-					<img class="damage" id="card-damage" src="src/img/CardIcon/MonkeyDamage.png">
+					<img class="damage" id="card-damage" src="/src/img/CardIcon/MonkeyDamage.png">
 					<!-- Monkey, hidden if spell/bloon, -->
-					<img class="ammo" id="card-ammo" src="src/img/CardIcon/Ammo.png">
+					<img class="ammo" id="card-ammo" src="/src/img/CardIcon/Ammo.png">
 					<!-- hidden if spell -->
-					<img class="delay" id="card-delay" src="src/img/CardIcon/Delay.png">
+					<img class="delay" id="card-delay" src="/src/img/CardIcon/Delay.png">
 					<!-- pins for card, hidden initially-->
-					<img class="rarity-pin" src="src/img/RarityPin/None.png" id="rarity-pin">
-					<img class="hero-pin" id="hero-pin" src="src/img/HeroPin/None.png">
-					<img class="class-pin" id="class-pin" src="src/img/ClassPin/None.png">
+					<img class="rarity-pin" src="/src/img/RarityPin/None.png" id="rarity-pin">
+					<img class="hero-pin" id="hero-pin" src="/src/img/HeroPin/None.png">
+					<img class="class-pin" id="class-pin" src="/src/img/ClassPin/None.png">
 					<!-- card text -->
 					<div id="title-text-container" class="title-text-container">
 						<span class="bold-text" id="title-text"></span>
@@ -265,7 +265,7 @@
 				<div class="detail-box" id="detail-box">
 					<div id="keyword-holder">
 						<div class="detail-box-element" id="keyword-element">
-							<img src="src/img/Keyword/Defender.png" class="keyword-img" id="keyword-img">
+							<img src="/src/img/Keyword/Defender.png" class="keyword-img" id="keyword-img">
 							<div class="detail-title-text-container" id="keyword-text-container">
 								<span class="bold-text-detail" id="keyword-title">Defender +10</span>
 								<span class="thick-stroke-detail" id="keyword-title-stroke">Defender +10</span>
@@ -281,13 +281,13 @@
 		<div id="card-form-hero" class="form-flex two-col-item" style="display: none;">
 			<div class=form-element>
 				<label>Card Type</label><br>
-				<img class="img-btn img-border" src="src/img/Button/Monkey.png" alt="Monkey"
+				<img class="img-btn img-border" src="/src/img/Button/Monkey.png" alt="Monkey"
 					 onclick="updateCardLayout('monkey')" />
-				<img class="img-btn img-border" src="src/img/Button/Bloon.png" alt="Bloon"
+				<img class="img-btn img-border" src="/src/img/Button/Bloon.png" alt="Bloon"
 					 onclick="updateCardLayout('bloon')" />
-				<img class="img-btn img-border" src="src/img/Button/Power.png" alt="Power"
+				<img class="img-btn img-border" src="/src/img/Button/Power.png" alt="Power"
 					 onclick="updateCardLayout('power')" />
-				<img class="img-btn img-border" src="src/img/Button/Hero.png" alt="Hero"
+				<img class="img-btn img-border" src="/src/img/Button/Hero.png" alt="Hero"
 					 onclick="updateCardLayout('hero')" />
 			</div>
 			<div class="multi-form-element">
@@ -305,7 +305,7 @@
 				</div>
 				<div class="form-element">
 					<label for="hero-template-btn" id="hero-template-label">Hero Portrait Template</label><br>
-					<button id="hero-template-btn" class="label-btn" onclick="downloadButtonMethod('src/img/HeroCreator/HeroPortraitTemplate.png', 'HeroTemplate.png')">Download Template</button>
+					<button id="hero-template-btn" class="label-btn" onclick="downloadButtonMethod('/src/img/HeroCreator/HeroPortraitTemplate.png', 'HeroTemplate.png')">Download Template</button>
 				</div>
 			</div>
 			<div class="multi-form-element">
@@ -368,9 +368,9 @@
 		<div class="card-two-col two-col-item" id="hero-justifier" style="display: none; justify-content: center;">
 			<!-- contains card and surroundings; gets screenshotted -->
 			<div class="hero-container" id="hero-container">
-				<img src="src/img/HeroCreator/EmptyPortrait.png" class="hero-portrait" id="hero-portrait">
+				<img src="/src/img/HeroCreator/EmptyPortrait.png" class="hero-portrait" id="hero-portrait">
 				<div class="detail-box-hero" id="detail-box-hero">
-					<img src="src/img/HeroCreator/TopBannerYellow.png" class="hero-name-banner" />
+					<img src="/src/img/HeroCreator/TopBannerYellow.png" class="hero-name-banner" />
 					<div class="hero-name-container" id="hero-name-container">
 						<span class="bold-text" id="hero-name"></span>
 						<span class="thick-stroke" id="hero-name-stroke" style="top: 0.0625em;"></span>
@@ -378,10 +378,10 @@
 					<div id="ability-holder" class="ability-holder">
 						<div class="detail-box-element" id="ability-element" style="min-height: 85.7px;">
 							<div class="ability-icon-container">
-								<img src="src/img/HeroCreator/ActiveAbilityButton.png" class="ability-icon-button" id="ability-icon-button">
+								<img src="/src/img/HeroCreator/ActiveAbilityButton.png" class="ability-icon-button" id="ability-icon-button">
 								<img class="ability-icon" id="ability-icon">
 							</div>
-							<img src="src/img/HeroCreator/BloontoniumIcon.png" class="bloontonium-img" id="bloontonium-img">
+							<img src="/src/img/HeroCreator/BloontoniumIcon.png" class="bloontonium-img" id="bloontonium-img">
 							<div style="width: 0px; position: relative;">
 								<div class="bloontonium-cost-container">
 									<span class="bold-text-detail" id="bloontonium-cost">0</span>
