@@ -36,7 +36,6 @@ const editAbilityTextEvent = (element, hasStroke) => {
     }
 }
 
-const switchAbilityToEdit = () => { }
 const addKeyword = () => {
     let finalDescription = keywords[keywordDropdown.value].Description.replace("{VALUE}", keywordValue.value)
     keywordDescription.textContent = finalDescription
