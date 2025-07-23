@@ -1,4 +1,4 @@
-import MarkdownIt from "markdown-it/index.js"
+import MarkdownIt from 'markdown-it'
 
 // make text input affect card text
 const editCardTextEvent = (element, hasStroke) => {
