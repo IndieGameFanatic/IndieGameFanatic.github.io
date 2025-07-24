@@ -559,9 +559,12 @@ input[type="file"] {
 	width: 85%;
 	height: auto;
 	word-break: break-word;
-	text-shadow: 0em 0.1em black;
+	text-shadow: 0em 0.033em black;
 }
 
+.description-text-download {
+	 text-shadow: 0em 0.016em black !important;
+}
 .flavor-text-unused {
 	font-style: italic;
 	font-family: 'Source Sans 3';

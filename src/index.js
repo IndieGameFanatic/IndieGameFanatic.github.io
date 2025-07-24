@@ -1050,6 +1050,8 @@ const downloadImg = () => {
         downloadedContainer = document.getElementById("hero-container")
         downloadedContainer.style.height = `${Math.max(detailBoxHero.offsetHeight + 40, 510)}px`
     }
+    cardDescriptionText.classList.toggle("description-text-download")
+    console.log(cardDescriptionText.classList)
   html2canvas(downloadedContainer, {
     backgroundColor: null,
     useCORS: true,
@@ -1059,6 +1061,7 @@ const downloadImg = () => {
     let imageData = canvas.toDataURL("image/png")
     downloadButtonMethod(imageData, `bcs-${titleText(isHero, true)}.png`)
   })
+  cardDescriptionText.classList.toggle("description-text-download")
     downloadedContainer.style.height = "510px"
 }
 
