@@ -134,9 +134,9 @@ async function addDraftAbilities(abilityInfoArr) {
         addAbility()
         const abilityInfo = abilityInfoArr[abilityIndex]
 
-        setValueWithEvent("input-ability-description", abilityInfo.Description)
-        setValueWithEvent("input-ability-name", abilityInfo.Name)
-        setValueWithEvent("input-bloontonium-cost", abilityInfo.Cost)
+        setInputManually("input-ability-description", abilityInfo.Description)
+        setInputManually("input-ability-name", abilityInfo.Name)
+        setInputManually("input-bloontonium-cost", abilityInfo.Cost)
         if (abilityInfo.Passive) setToggleCheck("is-passive-toggle", abilityInfo.Passive)
         else if (abilityInfo.Button) setToggleCheck("is-passive-toggle", abilityInfo.Button.includes("Passive")) // deprecated
 
@@ -626,7 +626,7 @@ const loadDraft = (event) => {
 const heroDraftLoaded = (cardData) => {
     updateCardLayout(cardData.Type)
 
-    setValueWithEvent("input-hero-name", cardData.Title)
+    setInputManually("input-hero-name", cardData.Title)
     fitTextToHeight(document.getElementById("hero-name-container"), 2, 41)
     setToggleCheck("enable-portrait-toggle", cardData.PortraitEnabled)
     const heroPortrait = document.getElementById("hero-portrait")
@@ -636,21 +636,21 @@ const heroDraftLoaded = (cardData) => {
 
 const draftLoaded = (cardData) => {
     updateCardLayout(cardData.Type)
-    setValueWithEvent("input-title-text", cardData.Title)
-    setValueWithEvent("input-cost-text", cardData.Cost)
-    setValueWithEvent("input-damage-text", cardData.Damage)
-    setValueWithEvent("input-delay-text", cardData.Delay)
-    setValueWithEvent("input-ammo-text", cardData.Ammo)
-    setValueWithEvent("copies-slider", cardData.Copies)
-    setValueWithEvent("input-class-text", cardData.Class)
-    setValueWithEvent("rarity-pin-dropdown", cardData.Rarity)
-    setValueWithEvent("hero-pin-dropdown", cardData.Hero)
-    setValueWithEvent("class-pin-dropdown", cardData.ClassPin)
+    setInputManually("input-title-text", cardData.Title)
+    setInputManually("input-cost-text", cardData.Cost)
+    setInputManually("input-damage-text", cardData.Damage)
+    setInputManually("input-delay-text", cardData.Delay)
+    setInputManually("input-ammo-text", cardData.Ammo)
+    setInputManually("copies-slider", cardData.Copies)
+    setInputManually("input-class-text", cardData.Class)
+    setInputManually("rarity-pin-dropdown", cardData.Rarity)
+    setInputManually("hero-pin-dropdown", cardData.Hero)
+    setInputManually("class-pin-dropdown", cardData.ClassPin)
 
-    setValueWithEvent("input-description-text", cardData.Description)
+    setInputManually("input-description-text", cardData.Description)
     fitTextToHeight(cardDescriptionText, 3.2, descriptionMaxHeight)
 
-    setValueWithEvent("input-flavor-text", cardData.Flavor)
+    setInputManually("input-flavor-text", cardData.Flavor)
     setToggleCheck("damage-checkbox", cardData.hasDamage)
     setToggleCheck("temporary-toggle", cardData.hasAmmo)
     setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
@@ -659,10 +659,10 @@ const draftLoaded = (cardData) => {
     storedImg = document.createElement("img");
     addDraftImage(cardData.Image, storedImg)
 
-    setValueWithEvent("x-input", cardData.ImageTransform[0])
-    setValueWithEvent("y-input", cardData.ImageTransform[1])
-    setValueWithEvent("w-input", cardData.ImageTransform[2])
-    setValueWithEvent("h-input", cardData.ImageTransform[3])
+    setInputManually("x-input", cardData.ImageTransform[0])
+    setInputManually("y-input", cardData.ImageTransform[1])
+    setInputManually("w-input", cardData.ImageTransform[2])
+    setInputManually("h-input", cardData.ImageTransform[3])
     setToggleCheck("ratio-toggle", cardData.KeepRatio)
     updateCardImage()
     addDraftKeywords(cardData.Keywords)
@@ -780,7 +780,7 @@ const getCardValue = (element) => {
 }
 const ManualInput = new Event("input")
 const ManualChange = new Event("change")
-const setValueWithEvent = (element, value) => {
+const setInputManually = (element, value) => {
     const e = document.getElementById(element)
     e.value = value
     e.dispatchEvent(ManualInput)
