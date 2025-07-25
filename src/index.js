@@ -19,7 +19,7 @@ const editCardTextEvent = (element, hasStroke) => {
     }
 }
 
-const editAbilityTextEvent = (element, hasStroke) => {
+const editAbilityTextEvent = (element, hasStroke, part) => {
     const inputCardText = document.getElementById(`input-${element}`)
     // on reload, remove text from input
     // ideally you would keep everything but that's a lot harder
@@ -27,13 +27,14 @@ const editAbilityTextEvent = (element, hasStroke) => {
     inputCardText.addEventListener("input", function (event) {
         inputCardText.value = event.target.value.replace("$/inf", "∞")
         const cardText = document.getElementById(`${element}-${abilityOptions.value}`)
-        cardText.textContent = event.target.value
+        cardText.innerHTML = md.renderInline(event.target.value)
+        currentAbilityInfo[part] = event.target.value
     })
     if (hasStroke) {
         
         inputCardText.addEventListener("input", function (event) {
             const cardStroke = document.getElementById(`${element}-stroke-${abilityOptions.value}`)
-            cardStroke.textContent = event.target.value
+            cardStroke.innerHTML = md.renderInline(event.target.value)
         })
     }
 }
@@ -68,15 +69,24 @@ const addAbility = () => {
         abilityElement[property].id = `${abilityElementIDs[property]}-${i}`
     }
 
+    let abilityInfo = {
+        Name: `Ability ${i}`,
+        Description: "Ability Description",
+        Cost: "0",
+        Passive: false,
+        Icon: "",
+        AbilityID: i,
+    }
+
     let newOption = document.createElement("option")
     newOption.value = i
-    newOption.textContent = `Ability ${i}`
+    newOption.textContent = abilityInfo.Name
     newOption.id = `ability-option-${i}`
     abilityOptions.appendChild(newOption)
 
-    abilityElement.Name.textContent = `Ability ${i}`
-    abilityElement.NameStroke.textContent = `Ability ${i}`
-    abilityElement.Description.textContent = `Ability Description`
+    abilityElement.Name.textContent = abilityInfo.Name
+    abilityElement.NameStroke.textContent = abilityInfo.Name
+    abilityElement.Description.textContent = abilityInfo.Description
     abilityElement.Element.style.order = `${i}`
 
     let newAbility = abilityElement.Element.cloneNode(true)
@@ -88,82 +98,69 @@ const addAbility = () => {
         abilityElement[property].id = `${abilityElementIDs[property]}`
     }
 
+    abilityInfoArray.push(abilityInfo)
     abilityArray.push(i)
     refreshSelectedAbility()
     toggleAbilityInputs()
+    
 }
-
 const removeAbility = () => {
     if (abilityArray.length <= 0) return;
     let index = abilityArray.indexOf(Number(abilityOptions.value))
+    let markdownIndex = abilityInfoArray.indexOf(currentAbilityInfo)
+
     const removedAbility = document.getElementById(`ability-element-${abilityOptions.value}`)
     const removedAbilityOption = document.getElementById(`ability-option-${abilityOptions.value}`)
     removedAbility.remove()
     removedAbilityOption.remove()
     abilityArray.splice(index, 1)
+    abilityInfoArray.splice(markdownIndex, 1)
 
     if (abilityArray.length != 0) refreshSelectedAbility();
     toggleAbilityInputs()
 }
 
-async function addDraftAbilities(Abilities) {
-    while (abilityArray.length > 0) removeAbility()
-    for (let k in Abilities) {
-        let i = 1
-        while (abilityArray.includes(i) || i < LongMax(abilityArray)) i++
-        for (let property in abilityElement) {
-            abilityElement[property].id = `${abilityElementIDs[property]}-${i}`
-        }
-        const ability = Abilities[k]
-        let newOption = document.createElement("option")
-        newOption.value = i
-        newOption.textContent = `Ability ${i}`
-        newOption.id = `ability-option-${i}`
-        abilityOptions.appendChild(newOption)
-        abilityElement.Name.textContent = ability.Name
-        abilityElement.NameStroke.textContent = ability.Name
-        abilityElement.Description.textContent = ability.Description
-        abilityElement.Element.style.order = `${i}`
-        abilityElement.Cost.textContent = ability.Cost
-        abilityElement.CostStroke.textContent = ability.Cost
-        abilityElement.Button.src = ability.Button
+const findCurrentAbilityInfo = () => {
+    return abilityInfoArray.find(x => x.AbilityID == abilityOptions.value)
+}
 
-        let loadImgPromise = new Promise(
-            function (resolve) { addDraftImagePromise(ability.Icon, abilityElement.Icon, resolve) })
-        const n = await loadImgPromise
-        let newAbility = abilityElement.Element.cloneNode(true)
-        newAbility.style.display = "flex"
-        abilityHolder.appendChild(newAbility)
-        abilityOptions.value = i
-
-        const nameContainerID = abilityElement.NameContainer.id
-        const descriptionID = abilityElement.Description.id
-
-        for (let property in abilityElement) {
-            abilityElement[property].id = `${abilityElementIDs[property]}`
-        }
-
-        fitTextToHeight(document.getElementById(nameContainerID), 1.225, 35)
-        fitTextToHeight(document.getElementById(descriptionID), 1.2, 56)
-
-        abilityArray.push(i)
-        refreshSelectedAbility()
-        toggleAbilityInputs()
+async function addDraftAbilities(abilityInfoArr) {
+    while (abilityArray.length > 0) {
+        removeAbility()
     }
-    abilityElement.Icon.src = "/src/img/None.png"
+    let i = 1
+    for (let abilityIndex in abilityInfoArr) {
+
+        addAbility()
+        const abilityInfo = abilityInfoArr[abilityIndex]
+
+        setValueWithEvent("input-ability-description", abilityInfo.Description)
+        setValueWithEvent("input-ability-name", abilityInfo.Name)
+        setValueWithEvent("input-bloontonium-cost", abilityInfo.Cost)
+        if (abilityInfo.Passive) setToggleCheck("is-passive-toggle", abilityInfo.Passive)
+        else if (abilityInfo.Button) setToggleCheck("is-passive-toggle", abilityInfo.Button.includes("Passive")) // deprecated
+
+        let Icon = document.getElementById(`${abilityElementIDs.Icon}-${i}`)
+        let loadImgPromise = new Promise(
+            function (resolve) { addDraftImagePromise(abilityInfo.Icon, Icon, resolve) })
+        const n = await loadImgPromise
+
+        i++
+    }
 }
 
 const refreshSelectedAbility = () => {
-    const abilityButton = document.getElementById(`ability-icon-button-${abilityOptions.value}`)
-    const abilityName = document.getElementById(`ability-name-${abilityOptions.value}`)
-    const abilityDescription = document.getElementById(`ability-description-${abilityOptions.value}`)
-    const bloontoniumCost = document.getElementById(`bloontonium-cost-${abilityOptions.value}`)
+    currentAbilityInfo = findCurrentAbilityInfo()
 
-    abilityNameInput.value = abilityName.textContent
-    abilityDescriptionInput.value = abilityDescription.textContent
-    bloontoniumCostInput.value = bloontoniumCost.textContent
-    passiveToggle.checked = abilityButton.src.includes("Passive")
+    abilityNameInput.value = currentAbilityInfo.Name
+    abilityDescriptionInput.value = currentAbilityInfo.Description
+    bloontoniumCostInput.value = currentAbilityInfo.Cost
+    passiveToggle.checked = currentAbilityInfo.Passive
+
+    console.log(currentAbilityInfo)
 }
+
+var currentAbilityInfo
 
 const toggleAbilityInputs = () => {
     const isDisabled = abilityArray.length == 0
@@ -182,10 +179,8 @@ const moveAbility = (movement) => {
     const selectedValue = abilityOptions.value;
     const selectedIndex = abilityArray.indexOf(Number(selectedValue));
     const movedIndex = selectedIndex + movement;
-    console.log(abilityArray);
     if (movedIndex >= abilityArray.length || movedIndex < 0) return;
     const movedValue = abilityArray[movedIndex];
-    console.log(`selected value: ${selectedValue}, moved value: ${movedValue}`);
 
     const selectedElement = document.getElementById(`ability-element-${selectedValue}`);
     const movedElement = document.getElementById(`ability-element-${movedValue}`);
@@ -198,7 +193,7 @@ const moveAbility = (movement) => {
     [selectedOption.value, movedOption.value] = [movedOption.value, selectedOption.value];
     [selectedOption.id, movedOption.id] = [movedOption.id, selectedOption.id];
     [abilityArray[selectedIndex], abilityArray[movedIndex]] = [abilityArray[movedIndex], abilityArray[selectedIndex]];
-
+    [abilityInfoArray[selectedIndex], abilityInfoArray[movedIndex]] = [abilityInfoArray[movedIndex], abilityInfoArray[selectedIndex]]
     abilityOptions.value = selectedValue;
 }
 const removeKeyword = () => {
@@ -215,6 +210,7 @@ const togglePassive = () => {
         const abilityButton = document.getElementById(`ability-icon-button-${abilityOptions.value}`)
         if (passiveToggle.checked) abilityButton.src = "/src/img/HeroCreator/PassiveAbilityButton.png"
         else abilityButton.src = "/src/img/HeroCreator/ActiveAbilityButton.png"
+        currentAbilityInfo.Passive = passiveToggle.checked
     })
 }
 
@@ -344,14 +340,15 @@ const editDescriptionEvent = () => {
     })
 }
 
-const editHeroNameEvent = () => {
+const fitHeroName = () => {
     const heroNameContainer = document.getElementById("hero-name-container")
-    const heroNameInput = document.getElementById("input-hero-name")
     
     heroNameInput.addEventListener("input", function (event) {
         fitTextToHeight(heroNameContainer, 2, 41)
     })
 }
+
+const heroNameInput = document.getElementById("input-hero-name")
 
 const fitAbilityName = () => {
     abilityNameInput.addEventListener("input", function (event) {
@@ -362,7 +359,6 @@ const fitAbilityName = () => {
 }
 
 const fitAbilityDescription = () => {
-    const abilityDescriptionInput = document.getElementById("input-ability-description")
     abilityDescriptionInput.addEventListener("input", function (event) {
         fitTextToHeight(document.getElementById(`ability-description-${abilityOptions.value}`), 1.2, 56)
     })
@@ -630,7 +626,7 @@ const loadDraft = (event) => {
 const heroDraftLoaded = (cardData) => {
     updateCardLayout(cardData.Type)
 
-    setCardValue("input-hero-name", cardData.Title)
+    setValueWithEvent("input-hero-name", cardData.Title)
     fitTextToHeight(document.getElementById("hero-name-container"), 2, 41)
     setToggleCheck("enable-portrait-toggle", cardData.PortraitEnabled)
     const heroPortrait = document.getElementById("hero-portrait")
@@ -640,21 +636,21 @@ const heroDraftLoaded = (cardData) => {
 
 const draftLoaded = (cardData) => {
     updateCardLayout(cardData.Type)
-    setCardValue("input-title-text", cardData.Title)
-    setCardValue("input-cost-text", cardData.Cost)
-    setCardValue("input-damage-text", cardData.Damage)
-    setCardValue("input-delay-text", cardData.Delay)
-    setCardValue("input-ammo-text", cardData.Ammo)
-    setCardValue("copies-slider", cardData.Copies)
-    setCardValue("input-class-text", cardData.Class)
-    setCardValue("rarity-pin-dropdown", cardData.Rarity)
-    setCardValue("hero-pin-dropdown", cardData.Hero)
-    setCardValue("class-pin-dropdown", cardData.ClassPin)
+    setValueWithEvent("input-title-text", cardData.Title)
+    setValueWithEvent("input-cost-text", cardData.Cost)
+    setValueWithEvent("input-damage-text", cardData.Damage)
+    setValueWithEvent("input-delay-text", cardData.Delay)
+    setValueWithEvent("input-ammo-text", cardData.Ammo)
+    setValueWithEvent("copies-slider", cardData.Copies)
+    setValueWithEvent("input-class-text", cardData.Class)
+    setValueWithEvent("rarity-pin-dropdown", cardData.Rarity)
+    setValueWithEvent("hero-pin-dropdown", cardData.Hero)
+    setValueWithEvent("class-pin-dropdown", cardData.ClassPin)
 
-    setCardValue("input-description-text", cardData.Description)
+    setValueWithEvent("input-description-text", cardData.Description)
     fitTextToHeight(cardDescriptionText, 3.2, descriptionMaxHeight)
 
-    setCardValue("input-flavor-text", cardData.Flavor)
+    setValueWithEvent("input-flavor-text", cardData.Flavor)
     setToggleCheck("damage-checkbox", cardData.hasDamage)
     setToggleCheck("temporary-toggle", cardData.hasAmmo)
     setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
@@ -663,10 +659,10 @@ const draftLoaded = (cardData) => {
     storedImg = document.createElement("img");
     addDraftImage(cardData.Image, storedImg)
 
-    setCardValue("x-input", cardData.ImageTransform[0])
-    setCardValue("y-input", cardData.ImageTransform[1])
-    setCardValue("w-input", cardData.ImageTransform[2])
-    setCardValue("h-input", cardData.ImageTransform[3])
+    setValueWithEvent("x-input", cardData.ImageTransform[0])
+    setValueWithEvent("y-input", cardData.ImageTransform[1])
+    setValueWithEvent("w-input", cardData.ImageTransform[2])
+    setValueWithEvent("h-input", cardData.ImageTransform[3])
     setToggleCheck("ratio-toggle", cardData.KeepRatio)
     updateCardImage()
     addDraftKeywords(cardData.Keywords)
@@ -725,30 +721,6 @@ const addDraftKeywords = (Keywords) => {
         keywordListData.push({ keyword: Keyword, value: Value })
     }
 }
-const saveAbilities = () => {
-    const abilities = []
-    for (let i = 0; i < abilityArray.length; i++) {
-        var abilityDetails = {
-            Name: "",
-            Description: "",
-            Cost: "",
-            Button: "",
-            Icon: "",
-        }
-        for (let property in abilityDetails) {
-            const str = `${abilityElementIDs[property]}-${abilityArray[i]}`
-
-            const savedElement = document.getElementById(str)
-            if (property == "Button" || property == "Icon") {
-                console.log(savedElement.id)
-                abilityDetails[property] = savedElement.src
-            }
-            else abilityDetails[property] = savedElement.textContent
-        }
-        abilities.push(abilityDetails)
-    }
-    return abilities
-}
 const saveDraft = () => {
     var cardData
     const isHero = cardTypes[cardType].isHero
@@ -756,8 +728,8 @@ const saveDraft = () => {
         cardData = {
             Type: cardType,
             isHero: isHero,
-            Title: titleText(true, false),
-            Abilities: saveAbilities(),
+            Title: markdownTitle(true),
+            Abilities: abilityInfoArray,
             PortraitEnabled: getToggleCheck("enable-portrait-toggle"),
             Image: document.getElementById("hero-portrait").src,
         }
@@ -766,7 +738,7 @@ const saveDraft = () => {
         cardData = {
             Type: cardType,
             isHero: isHero,
-            Title: titleText(false, false),
+            Title: markdownTitle(false),
             Cost: getCardValue("input-cost-text"),
             Damage: getCardValue("input-damage-text"),
             Delay: getCardValue("input-delay-text"),
@@ -794,7 +766,7 @@ const saveDraft = () => {
     var downloadLink = document.createElement("a")
     const blob = new Blob([JSONData], { type: 'application/json' })
     downloadLink.href = window.URL.createObjectURL(blob)
-    downloadLink.download = `bcs-draft-${titleText(isHero, true)}`
+    downloadLink.download = `bcs-draft-${sanitizedTitleText(isHero)}`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
@@ -808,7 +780,7 @@ const getCardValue = (element) => {
 }
 const ManualInput = new Event("input")
 const ManualChange = new Event("change")
-const setCardValue = (element, value) => {
+const setValueWithEvent = (element, value) => {
     const e = document.getElementById(element)
     e.value = value
     e.dispatchEvent(ManualInput)
@@ -993,6 +965,7 @@ const uploadImg = (event) => {
       else if (selectedImgTarget == uploadImgTargets.abilityIcon) {
           let abilityIcon = document.getElementById(`ability-icon-${abilityOptions.value}`)
           abilityIcon.src = newImg.src
+          currentAbilityInfo.Icon = newImg.src
       }
       else selectedImgTarget.src = newImg.src;
     };
@@ -1023,6 +996,7 @@ const uploadImgFromURL = () => {
       else if (selectedImgTarget == uploadImgTargets.abilityIcon) {
           let abilityIcon = document.getElementById(`ability-icon-${abilityOptions.value}`)
           abilityIcon.src = newImg.src
+          currentAbilityInfo.Icon = newImg.src
       }
       else selectedImgTarget.src = newImg.src;
     };
@@ -1059,20 +1033,24 @@ const downloadImg = () => {
   }).then(function (canvas) {
 
     let imageData = canvas.toDataURL("image/png")
-    downloadButtonMethod(imageData, `bcs-${titleText(isHero, true)}.png`)
+    downloadButtonMethod(imageData, `bcs-${sanitizedTitleText(isHero)}.png`)
   })
   cardDescriptionText.classList.toggle("description-text-download")
     downloadedContainer.style.height = "510px"
 }
 
-const titleText = (isHero, sanitize) => {
+const sanitizedTitleText = (isHero) => {
     let title
-
     if (!isHero) title = document.getElementById("title-text").textContent;
     else title = document.getElementById("hero-name").textContent;
+    return sanitizeText(title).replace(/ /gi, '-').toLowerCase().substring(0, 50);
+}
 
-    if (sanitize) return sanitizeText(title).replace(/ /gi, '-').toLowerCase().substring(0, 50);
-    else return title
+const markdownTitle = (isHero) => {
+    let title
+    if (!isHero) title = titleTextInput.value
+    else title = title = heroNameInput.value
+    return title
 }
 
 const sanitizeText = (text) => {
@@ -1156,6 +1134,7 @@ const abilityElementIDs = {
     Cost: "bloontonium-cost",
     CostStroke: "bloontonium-cost-stroke",
 }
+const titleTextInput = document.getElementById("input-title-text")
 const inputAbilityEnabled = document.getElementById("enable-ability-elements")
 const abilityHolder = document.getElementById("ability-holder")
 const abilityOptions = document.getElementById("ability-options")
@@ -1169,6 +1148,7 @@ const bloontoniumCostInput = document.getElementById("input-bloontonium-cost")
 const abilityIconUpload = document.getElementById("ability-img-btn")
 
 var abilityArray = []
+var abilityInfoArray = []
 
 const uploadImgTargets = {
     cardImg: document.getElementById("card-img"),
@@ -1211,9 +1191,9 @@ editCardTextEvent("description-text", false)
 editCardTextEvent("flavor-text", false)
 
 editCardTextEvent("hero-name", true)
-editAbilityTextEvent("ability-name", true)
-editAbilityTextEvent("bloontonium-cost", true)
-editAbilityTextEvent("ability-description", false)
+editAbilityTextEvent("ability-name", true, "Name")
+editAbilityTextEvent("bloontonium-cost", true, "Cost")
+editAbilityTextEvent("ability-description", false, "Description")
 fitAbilityName()
 fitAbilityDescription()
 
@@ -1227,7 +1207,7 @@ editImageScaleEvent("w-input", "w")
 editImageScaleEvent("h-input", "h")
 toggleKeepRatio()
 editDescriptionEvent()
-editHeroNameEvent()
+fitHeroName()
 toggleDetails()
 togglePassive()
 toggleHeroPortrait()
