@@ -651,8 +651,10 @@ const draftLoaded = (cardData) => {
     fitTextToHeight(cardDescriptionText, 3.2, descriptionMaxHeight)
 
     setInputManually("input-flavor-text", cardData.Flavor)
-    setToggleCheck("damage-checkbox", cardData.hasDamage)
-    setToggleCheck("temporary-toggle", cardData.hasAmmo)
+    setToggleCheck("attack-toggle", cardData.hasDamage)
+    setToggleCheck("ammo-toggle", cardData.hasAmmo)
+    if (cardData.hasDelay) setToggleCheck("delay-toggle", cardData.hasDelay)
+    else setToggleCheck("delay-toggle", cardData.hasDelay)
     setToggleCheck("bloontonium-toggle", cardData.costsBloontonium)
     setToggleCheck("detail-toggle", cardData.isDetailsEnabled)
     setMonkeyStatVisibility()
@@ -750,8 +752,9 @@ const saveDraft = () => {
             ClassPin: getCardValue("class-pin-dropdown"),
             Description: getCardValue("input-description-text"),
             Flavor: getCardValue("input-flavor-text"),
-            hasDamage: getToggleCheck("damage-checkbox"),
-            hasAmmo: getToggleCheck("temporary-toggle"),
+            hasDamage: getToggleCheck("attack-toggle"),
+            hasAmmo: getToggleCheck("ammo-toggle"),
+            hasDelay: getToggleCheck("delay-toggle"),
             costsBloontonium: getToggleCheck("bloontonium-toggle"),
             isDetailsEnabled: getToggleCheck("detail-toggle"),
             Keywords: keywordListData,
@@ -851,30 +854,18 @@ const updateCardLayout = (type) => {
   toggleVisibilities(cardTypeObj)
 };
 
-var damageChecked = true
 const setMonkeyStatVisibility = () => {
 
-    if (damageChecked != damageCheckbox.checked) {
-        inputDamageEnabled.classList.toggle("disabled-text")
-        damageChecked = !damageChecked
-    }
+    cardTypes.monkey.damageVisibility = attackToggle.checked
+    cardTypes.monkey.ammoVisibility = ammoToggle.checked
+    cardTypes.monkey.delayVisibility = delayToggle.checked
 
-    cardTypes.monkey.damageVisibility = TemporaryCheck()
-    cardTypes.monkey.ammoVisibility = damageChecked
-    cardTypes.monkey.delayVisibility = TemporaryCheck()
-
-    inputDamage.disabled = !TemporaryCheck()
-    inputAmmo.disabled = !damageChecked
-    inputDelay.disabled = !TemporaryCheck()
+    inputDamage.disabled = !attackToggle.checked
+    inputAmmo.disabled = !ammoToggle.checked
+    inputDelay.disabled = !delayToggle.checked
 
     toggleVisibilities(cardTypes[cardType])
 };
-
-const temporaryToggle = document.getElementById("temporary-toggle")
-
-const TemporaryCheck = () => {
-    return !temporaryToggle.checked && damageCheckbox.checked
-}
 
 const openUploadModal = (targetImg) => {
   const uploadModal = document.getElementById("uploadImgModal")
@@ -1069,15 +1060,19 @@ const downloadButtonMethod = (url, name) => {
 
 
 const startup = () => {
-    damageCheckbox.checked = true
-    temporaryToggle.checked = false
+    attackToggle.checked = true
+    ammoToggle.checked = true
+    delayToggle.checked = true
     copiesSlider.value = 1
 }
 
 var cardType = "monkey"
 
 const copiesSlider = document.getElementById("copies-slider")
-const damageCheckbox = document.getElementById("damage-checkbox")
+
+const attackToggle = document.getElementById("attack-toggle")
+const ammoToggle = document.getElementById("ammo-toggle")
+const delayToggle = document.getElementById("delay-toggle")
 
 const cardForm = document.getElementById("card-form")
 const cardFormHero = document.getElementById("card-form-hero")

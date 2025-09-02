@@ -73,13 +73,18 @@
 			<!-- is this a not a farm? -->
 			<div class="multi-form-element" id="enable-damage-elements">
 				<div class="form-element">
-					<label for="damage-checkbox">Enable Damage</label><br>
-					<input checked type="checkbox" name="damage-checkbox" id="damage-checkbox"
+					<label for="attack-toggle">Has Attack</label><br>
+					<input checked type="checkbox" name="attack-toggle" id="attack-toggle"
 						   onclick="setMonkeyStatVisibility()" class="disableable">
 				</div>
 				<div class="form-element">
-					<label for="temporary-toggle">Is Temporary</label><br>
-					<input type="checkbox" name="temporary-toggle" id="temporary-toggle"
+					<label for="ammo-toggle">Has Ammo</label><br>
+					<input type="checkbox" name="ammo-toggle" id="ammo-toggle"
+						   onclick="setMonkeyStatVisibility()" class="disableable">
+				</div>
+				<div class="form-element">
+					<label for="delay-toggle">Has Delay</label><br>
+					<input type="checkbox" name="delay-toggle" id="delay-toggle"
 						   onclick="setMonkeyStatVisibility()" class="disableable">
 				</div>
 				<div class="form-element">
