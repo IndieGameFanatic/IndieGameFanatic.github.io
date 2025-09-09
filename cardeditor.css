@@ -255,7 +255,7 @@ input[type="file"] {
 /* translate(-50%, -50%) for centering images  */
 /* left top for where center is */
 .card-container {
-	width: 375px;
+	width: 385px;
 	height: 510px;
 	display: flex;
 	position: absolute;
@@ -713,7 +713,7 @@ input[type="file"] {
 	background-color: var(--bg-detail-box);
 	border-radius: 3%;
 	position: relative;
-	left: 375px;
+	left: 385px;
 	top: 35px;
 	display: none;
 	user-select: none;
