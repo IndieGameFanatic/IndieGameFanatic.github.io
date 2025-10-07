@@ -486,10 +486,18 @@ const keywords = {
         Title: "Armor Piercing",
         Description: "Hit Bloons lose all Armor",
     },
+    Camo: {
+        Title: "Camo",
+        Description: "Attackers must target non-Camo Bloons first",
+    },
     Defender: {
         Title: "Defender +{VALUE}",
         OptionTitle: "Defender",
         Description: "Can defend on opponent's turn, has +{VALUE} damage on opponent's turn.",
+    },
+    Detect: {
+        Title: "Detect",
+        Description: "Can target Camo Bloons normally"
     },
     DoubleAttack: {
         Title: "Double Attack",
@@ -559,6 +567,19 @@ const keywords = {
         Title: "Pick {VALUE}",
         OptionTitle: "Pick",
         Description: "Look at the next {VALUE} cards in your deck. Choose one and add it to your hand. Other cards go to the bottom of your deck.",
+    },
+    Regrow: {
+        Title: "Regrow {VALUE}",
+        OptionTitle: "Regrow",
+        Description: "On Turn Start: Heal {VALUE}"
+    },
+    Revive: {
+        Title: "Revive",
+        Description: "When Destroyed, resummon this Bloon with current Delay and without Revive"
+    },
+    Undead: {
+        Title: "Undead",
+        Description: "When Destroyed, does not go to Graveyard"
     },
     Shield: {
         Title: "Shield {VALUE}",
