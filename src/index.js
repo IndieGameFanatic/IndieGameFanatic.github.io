@@ -41,10 +41,10 @@ const editAbilityTextEvent = (element, hasStroke, part) => {
 
 const addKeyword = () => {
     let finalDescription = keywords[keywordDropdown.value].Description.replace("{VALUE}", keywordValue.value)
-    keywordDescription.textContent = finalDescription
+    keywordDescription.innerHTML = md.renderInline(finalDescription)
     let finalTitle = keywords[keywordDropdown.value].Title.replace("{VALUE}", keywordValue.value)
-    keywordTitle.textContent = finalTitle
-    keywordTitleStroke.textContent = finalTitle
+    keywordTitle.innerHTML = md.renderInline(finalTitle)
+    keywordTitleStroke.innerHTML = md.renderInline(finalTitle)
     keywordImg.src = `/src/img/Keyword/${keywordDropdown.value}.png`
     let newKeyword = keywordElement.cloneNode(true)
     newKeyword.style.display = "flex"
@@ -571,7 +571,7 @@ const keywords = {
     Regrow: {
         Title: "Regrow {VALUE}",
         OptionTitle: "Regrow",
-        Description: "On Turn Start: Heal {VALUE}"
+        Description: "**On Turn Start:** Heal {VALUE}"
     },
     Revive: {
         Title: "Revive",
@@ -730,11 +730,11 @@ const addDraftKeywords = (Keywords) => {
         let Value = Keywords[i].value
 
         let finalDescription = keywords[Keyword].Description.replace("{VALUE}", Value)
-        keywordDescription.textContent = finalDescription
+        keywordDescription.innerHTML = md.renderInline(finalDescription)
 
         let finalTitle = keywords[Keyword].Title.replace("{VALUE}", Value)
-        keywordTitle.textContent = finalTitle
-        keywordTitleStroke.textContent = finalTitle
+        keywordTitle.innerHTML = md.renderInline(finalTitle)
+        keywordTitleStroke.innerHTML = cardText.innerHTML = md.renderInline(finalTitle)
 
         keywordImg.src = `/src/img/Keyword/${Keyword}.png`
         let newKeyword = keywordElement.cloneNode(true)
