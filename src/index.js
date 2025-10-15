@@ -493,7 +493,7 @@ const keywords = {
     Defender: {
         Title: "Defender +{VALUE}",
         OptionTitle: "Defender",
-        Description: "Can defend on opponent's turn, has +{VALUE} damage on opponent's turn.",
+        Description: "Can defend on opponent's turn, has +{VALUE} damage on opponent's turn",
     },
     Detect: {
         Title: "Detect",
@@ -501,15 +501,15 @@ const keywords = {
     },
     DoubleAttack: {
         Title: "Double Attack",
-        Description: "Attacks twice.",
+        Description: "Attacks twice",
     },
     TripleAttack: {
         Title: "Triple Attack",
-        Description: "Attacks three times."
+        Description: "Attacks three times"
     },
     Doomed: {
         Title: "Doomed",
-        Description: "This Monkey will be removed at the start of its next turn.",
+        Description: "This Monkey will be removed at the start of its next turn",
     },
     Immobile: {
         Title: "Immobile",
@@ -525,15 +525,15 @@ const keywords = {
     },
     OnDestroyed: {
         Title: "On Destroyed",
-        Description: "Triggers when Bloon is Popped (by damage or effect) or when it hits opposing Hero.",
+        Description: "Triggers when Bloon is Popped (by damage or effect) or when it hits opposing Hero",
     },
     OnFire: {
         Title: "On Fire",
-        Description: "Will take 30 damage at the end of its turn and before attacking.",
+        Description: "Will take 30 damage at the end of its turn and before attacking",
     },
     OnLeak: {
         Title: "On Leak",
-        Description: "Triggers when a bloon attacks a hero (after defenders have acted).",
+        Description: "Triggers when a bloon attacks a hero (after defenders have acted)",
     },
     OnPlay: {
         Title: "On Play",
@@ -541,19 +541,19 @@ const keywords = {
     },
     OnPopped: {
         Title: "On Popped",
-        Description: "Triggers when Bloon is Popped (by damage or effect). Does not trigger if Bloon hits opposing Hero.",
+        Description: "Triggers when Bloon is Popped (by damage or effect). Does not trigger if Bloon hits opposing Hero",
     },
     OnAttack: {
         Title: "On Attack",
-        Description: "Triggers when this Monkey attacks.",
+        Description: "Triggers when this Monkey attacks",
     },
     OnReload: {
         Title: "On Reload",
-        Description: "Triggers when this Monkey reloads.",
+        Description: "Triggers when this Monkey reloads",
     },
     OnReplace: {
         Title: "On Replace",
-        Description: "Triggers when this Monkey is replaced by another Monkey.",
+        Description: "Triggers when this Monkey is replaced by another Monkey",
     },
     OnTurnStart: {
         Title: "On Turn Start",
@@ -566,7 +566,7 @@ const keywords = {
     Pick: {
         Title: "Pick {VALUE}",
         OptionTitle: "Pick",
-        Description: "Look at the next {VALUE} cards in your deck. Choose one and add it to your hand. Other cards go to the bottom of your deck.",
+        Description: "Look at the next {VALUE} cards in your deck. Choose one and add it to your hand. Other cards go to the bottom of your deck",
     },
     Regrow: {
         Title: "Regrow {VALUE}",
@@ -584,7 +584,7 @@ const keywords = {
     Shield: {
         Title: "Shield {VALUE}",
         OptionTitle: "Shield",
-        Description: "Shield will block {VALUE} incoming damage.",
+        Description: "Shield will block {VALUE} incoming damage",
     },
     SplashDamage: {
         Title: "Splash Damage",
@@ -592,11 +592,11 @@ const keywords = {
     },
     Stunned: {
         Title: "Stunned",
-        Description: "Monkey can't attack or reload until stun wears off. Bloon delay does not reduce at end of turn.",
+        Description: "Monkey can't attack or reload until stun wears off. Bloon delay does not reduce at end of turn",
     },
     Temporary: {
         Title: "Temporary",
-        Description: "Is removed at end of turn after ammo reaches 0."
+        Description: "Is removed at end of turn after ammo reaches 0"
     },
     TemporaryAmmo: {
         Title: "Temporary Ammo",
@@ -604,7 +604,7 @@ const keywords = {
     },
     Unique: {
         Title: "Unique",
-        Description: "You can only have one copy of this card.",
+        Description: "You can only have one copy of this card",
     },
     AcidPool: {
         Title: "Acid Pool",
