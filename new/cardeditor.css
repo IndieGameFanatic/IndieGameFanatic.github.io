@@ -1,0 +1,35 @@
+.card-type-selector{
+    position: relative;
+    background-color: #36343C;
+    border: 2px solid black;
+    margin: auto;
+    width: 550px;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px;
+}
+
+.card-type-button{
+    width: 23%;
+    padding: 2%;
+    margin:auto;
+}
+
+body {
+    background-color: #3C3C3C;
+}
+
+.centralizer {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-container{
+    position:relative;
+    top: 25px;
+    margin: auto;
+}
+
+.card-border{
+    width: 318px;
+}
