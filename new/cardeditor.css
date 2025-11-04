@@ -3,15 +3,16 @@
     background-color: #36343C;
     border: 2px solid black;
     margin: auto;
-    width: 42%;
+    width: 100%;
+    height: 150px;
     display: flex;
     justify-content: center;
     border-radius: 25px;
+    max-width: 635px;
 }
 
 .card-type-button{
-    width: 23%;
-    padding: 2%;
+    width: 19.6%;
     margin:auto;
 }
 
